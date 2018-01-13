@@ -1,110 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title><![CDATA[NTU-ML-机器学习问题]]></title>
-      <url>/20180113-NTU-ML-1/</url>
-      <content type="html"><![CDATA[<h1 id="Introdction"><a href="#Introdction" class="headerlink" title="Introdction"></a>Introdction</h1><h3 id="What-is-Machine-Learning"><a href="#What-is-Machine-Learning" class="headerlink" title="What is Machine Learning"></a>What is Machine Learning</h3><ul>
-<li><p>机器学习：计算机通过数据和计算获得一定技巧的过程。</p>
-</li>
-<li><p>技巧：指的是在某些事情上表现更加出色，比如预测、识别等等。</p>
-</li>
-</ul>
-<h3 id="Why-using-Machine-Learning"><a href="#Why-using-Machine-Learning" class="headerlink" title="Why using Machine Learning"></a>Why using Machine Learning</h3><ul>
-<li><p>一些数据或者信息，人来无法获取，可能是一些人无法识别的事物，或是数据信息量特别大；</p>
-</li>
-<li><p>人的处理满足不了需求，比如：定义很多很多的规则满足物体识别或者其他需求；在短时间内通过大量信息做出判断等等。</p>
-</li>
-</ul>
-<h3 id="When-to-use-Machine-Learning"><a href="#When-to-use-Machine-Learning" class="headerlink" title="When to use Machine Learning"></a>When to use Machine Learning</h3><ul>
-<li><p>存在一个模式或者说表现可以让我们对它进行改进提高；</p>
-</li>
-<li><p>规则并不容易那么定义；</p>
-</li>
-<li><p>需要有数据。</p>
-</li>
-</ul>
-<h2 id="Components-of-Machine-Learning"><a href="#Components-of-Machine-Learning" class="headerlink" title="Components of Machine Learning"></a>Components of Machine Learning</h2><p>一个机器学习问题，主要由以下几部分构成：</p>
-<ul>
-<li>输入： $\textbf{x} \in \mathcal{X}$</li>
-<li>输出： $\textbf{y} \in \mathcal{Y}$</li>
-<li>目标函数：$f: \mathcal{X} \rightarrow \mathcal{Y}$</li>
-<li>数据：$\mathcal{D} = { (\textbf{x}_1, \textbf{y}_1), (\textbf{x}_2, \textbf{y}_2) \ldots (\textbf{x}_N, \textbf{y}_N),}$</li>
-<li>假设：$g: \mathcal{X} \rightarrow \mathcal{Y}$</li>
-</ul>
-<p>目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，我们手头有一组由 $f$ 生成的数据 $\mathcal{D}$，目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。</p>
-<h2 id="Learning-Flow"><a href="#Learning-Flow" class="headerlink" title="Learning Flow"></a>Learning Flow</h2><p>以一个更加详细的流程图来说明这一过程：</p>
-<p><img src="/20180113-NTU-ML-1/what.png" alt=""></p>
-<p>目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，$\mathcal{X}$ 与 $\mathcal{Y}$ 在一起构成了数据 $\mathcal{D}$，我们的目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。为此，我们必须选定一个假设空间 $\mathcal{H}$，然后使用算法 $\mathcal{A}$，选择 $\mathcal{H}$ 里的一个假设作为 $g$。</p>
-<p>在这里有几个需要注意的地方：</p>
-<ul>
-<li>机器学习的输入在这个流程图中就变成了两个部分，一个是训练样本集，而另一个就是假设空间 $\mathcal{H}$。</li>
-<li>我们所说的机器学习模型在这个流程图中也不仅仅是算法 $\mathcal{A}$，而且还包含了假设空间 $\mathcal{H}$。</li>
-</ul>
-<p>上图还是一个相对比较简单的机器学习流程图，在往后的文章中会不断的根据新学的知识继续扩展这幅图的元素。</p>
-<h2 id="Types-of-Learning"><a href="#Types-of-Learning" class="headerlink" title="Types of Learning"></a>Types of Learning</h2><h3 id="Learning-with-Different-Output-Space-mathcal-Y"><a href="#Learning-with-Different-Output-Space-mathcal-Y" class="headerlink" title="Learning with Different Output Space $\mathcal{Y}$"></a>Learning with Different Output Space $\mathcal{Y}$</h3><p>按照数据的输出，可以把 ML 分为以下几类：</p>
-<ul>
-<li>二类别分类问题：$\mathcal{Y} \in {0, 1}$</li>
-<li>多类别分类问题：$\mathcal{Y} \in {0, 1, \cdots, K}$</li>
-<li>回归问题：$\mathcal{Y} \in R$</li>
-<li>结构学习</li>
-</ul>
-<h3 id="Learning-with-Different-Data-Label-y-n"><a href="#Learning-with-Different-Data-Label-y-n" class="headerlink" title="Learning with Different Data Label $y_n$"></a>Learning with Different Data Label $y_n$</h3><p>按照数据的标签，可以把 ML 分为以下几类：</p>
-<ul>
-<li>supervised： 所有 $x_n$ 都具有 $y_n$</li>
-<li>unsupervised： 所有 $x_n$ 都没有 $y_n$</li>
-<li>semi-supervised： 一些 $x_n$ 具有 $y_n$</li>
-</ul>
-<h3 id="Learning-with-Different-Protocol-f"><a href="#Learning-with-Different-Protocol-f" class="headerlink" title="Learning with Different Protocol $f$"></a>Learning with Different Protocol $f$</h3><p>按照数据的传输方式，可以把 ML 分为以下几类：</p>
-<ul>
-<li>batch： 一次性把所有的数据给算法</li>
-<li>online： 连续的数据，一次处理一个数据</li>
-<li>active： 机器通过主动询问某些问题来学习</li>
-</ul>
-<h3 id="Learning-with-Different-Input-Space-mathcal-X"><a href="#Learning-with-Different-Input-Space-mathcal-X" class="headerlink" title="Learning with Different Input Space $\mathcal{X}$"></a>Learning with Different Input Space $\mathcal{X}$</h3><p>按照数据的输入，可以把 ML 分为以下几类：</p>
-<ul>
-<li>concrete： 精细的、复杂的、有序的，已经完成预处理的数据</li>
-<li>raw： 原始的，未经处理或者经过很少处理的数据</li>
-<li>abstract：抽象的，无法轻易表明含义的数据</li>
-</ul>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Machine Learning </tag>
-            
-            <tag> Notes </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[NTU-ML-《机器学习基石》笔记系列]]></title>
-      <url>/20180113-NTU-ML-0/</url>
-      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>“机器学习基石”是 Coursera  上一门关于机器学习的课程，由国立台湾大学的老师林轩田讲授。该课程一共有16节课，主要介绍了机器学习领域的基础理论知识。</p>
-<h2 id="授课大纲"><a href="#授课大纲" class="headerlink" title="授课大纲"></a>授课大纲</h2><p>课程的大纲如下，以下的每个小项目对应到约一小时的课程：</p>
-<p>When Can Machines Learn? [何时可以使用机器学习]<br>– The Learning Problem [机器学习问题]<br>– Learning to Answer Yes/No [二元分类]<br>– Types of Learning [各式机器学习问题]<br>– Feasibility of Learning [机器学习的可行性]</p>
-<p>Why Can Machines Learn? [为什么机器可以学习]<br>– Training versus Testing [训练与测试]<br>– Theory of Generalization [举一反三的一般化理论]<br>– The VC Dimension [VC 维度]<br>– Noise and Error [噪声时错误]</p>
-<p>How Can Machines Learn? [机器可以怎么样学习]<br>– Linear Regression [线性回归]<br>– Linear Soft Classification [软性的线性分类]<br>– Linear Classification beyond Yes/No [二元分类以外的分类问题]<br>– Nonlinear Transformation [非线性转换]</p>
-<p>How Can Machines Learn Better? [机器可以怎么样学得更好]<br>– Hazard of Overfitting [过度训练的危险]<br>– Preventing Overfitting I: Regularization [避免过度训练一：控制调适]<br>– Preventing Overfitting II: Validation [避免过度训练二：自我检测]<br>– Three Learning Principles [三个机器学习的重要原则]</p>
-<h2 id="计划"><a href="#计划" class="headerlink" title="计划"></a>计划</h2><p>我将把课程按照自己的理解，整理成一份通俗易懂的笔记，一方面记录所学知识，另一方面与大家一起分享，共同进步。</p>
-<p>点击右侧可关注我的 github 地址。</p>
-<h2 id="笔记链接"><a href="#笔记链接" class="headerlink" title="笔记链接"></a>笔记链接</h2>]]></content>
-      
-        
-        <tags>
-            
-            <tag> Machine Learning </tag>
-            
-            <tag> Notes </tag>
-            
-        </tags>
-        
-    </entry>
-    
-  
-  
+<search>
+  <entry>
+    <title><![CDATA[NTU-ML-机器学习问题]]></title>
+    <url>%2F20180113-NTU-ML-1%2F</url>
+    <content type="text"><![CDATA[IntrodctionWhat is Machine Learning 机器学习：计算机通过数据和计算获得一定技巧的过程。 技巧：指的是在某些事情上表现更加出色，比如预测、识别等等。 Why using Machine Learning 一些数据或者信息，人来无法获取，可能是一些人无法识别的事物，或是数据信息量特别大； 人的处理满足不了需求，比如：定义很多很多的规则满足物体识别或者其他需求；在短时间内通过大量信息做出判断等等。 When to use Machine Learning 存在一个模式或者说表现可以让我们对它进行改进提高； 规则并不容易那么定义； 需要有数据。 Components of Machine Learning一个机器学习问题，主要由以下几部分构成： 输入： $\textbf{x} \in \mathcal{X}$ 输出： $\textbf{y} \in \mathcal{Y}$ 目标函数：$f: \mathcal{X} \rightarrow \mathcal{Y}$ 数据：$\mathcal{D} = { (\textbf{x}_1, \textbf{y}_1), (\textbf{x}_2, \textbf{y}_2) \ldots (\textbf{x}_N, \textbf{y}_N),}$ 假设：$g: \mathcal{X} \rightarrow \mathcal{Y}$ 目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，我们手头有一组由 $f$ 生成的数据 $\mathcal{D}$，目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。 Learning Flow以一个更加详细的流程图来说明这一过程： 目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，$\mathcal{X}$ 与 $\mathcal{Y}$ 在一起构成了数据 $\mathcal{D}$，我们的目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。为此，我们必须选定一个假设空间 $\mathcal{H}$，然后使用算法 $\mathcal{A}$，选择 $\mathcal{H}$ 里的一个假设作为 $g$。 在这里有几个需要注意的地方： 机器学习的输入在这个流程图中就变成了两个部分，一个是训练样本集，而另一个就是假设空间 $\mathcal{H}$。 我们所说的机器学习模型在这个流程图中也不仅仅是算法 $\mathcal{A}$，而且还包含了假设空间 $\mathcal{H}$。 上图还是一个相对比较简单的机器学习流程图，在往后的文章中会不断的根据新学的知识继续扩展这幅图的元素。 Types of LearningLearning with Different Output Space $\mathcal{Y}$按照数据的输出，可以把 ML 分为以下几类： 二类别分类问题：$\mathcal{Y} \in {0, 1}$ 多类别分类问题：$\mathcal{Y} \in {0, 1, \cdots, K}$ 回归问题：$\mathcal{Y} \in R$ 结构学习 Learning with Different Data Label $y_n$按照数据的标签，可以把 ML 分为以下几类： supervised： 所有 $x_n$ 都具有 $y_n$ unsupervised： 所有 $x_n$ 都没有 $y_n$ semi-supervised： 一些 $x_n$ 具有 $y_n$ Learning with Different Protocol $f$按照数据的传输方式，可以把 ML 分为以下几类： batch： 一次性把所有的数据给算法 online： 连续的数据，一次处理一个数据 active： 机器通过主动询问某些问题来学习 Learning with Different Input Space $\mathcal{X}$按照数据的输入，可以把 ML 分为以下几类： concrete： 精细的、复杂的、有序的，已经完成预处理的数据 raw： 原始的，未经处理或者经过很少处理的数据 abstract：抽象的，无法轻易表明含义的数据]]></content>
+      <tags>
+        <tag>Machine Learning</tag>
+        <tag>Notes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[NTU-ML-《机器学习基石》笔记系列]]></title>
+    <url>%2F20180113-NTU-ML-0%2F</url>
+    <content type="text"><![CDATA[前言“机器学习基石”是 Coursera 上一门关于机器学习的课程，由国立台湾大学的老师林轩田讲授。该课程一共有16节课，主要介绍了机器学习领域的基础理论知识。 授课大纲课程的大纲如下，以下的每个小项目对应到约一小时的课程： When Can Machines Learn? [何时可以使用机器学习]– The Learning Problem [机器学习问题]– Learning to Answer Yes/No [二元分类]– Types of Learning [各式机器学习问题]– Feasibility of Learning [机器学习的可行性] Why Can Machines Learn? [为什么机器可以学习]– Training versus Testing [训练与测试]– Theory of Generalization [举一反三的一般化理论]– The VC Dimension [VC 维度]– Noise and Error [噪声时错误] How Can Machines Learn? [机器可以怎么样学习]– Linear Regression [线性回归]– Linear Soft Classification [软性的线性分类]– Linear Classification beyond Yes/No [二元分类以外的分类问题]– Nonlinear Transformation [非线性转换] How Can Machines Learn Better? [机器可以怎么样学得更好]– Hazard of Overfitting [过度训练的危险]– Preventing Overfitting I: Regularization [避免过度训练一：控制调适]– Preventing Overfitting II: Validation [避免过度训练二：自我检测]– Three Learning Principles [三个机器学习的重要原则] 计划我将把课程按照自己的理解，整理成一份通俗易懂的笔记，一方面记录所学知识，另一方面与大家一起分享，共同进步。 点击右侧可关注我的 github 地址。 笔记链接]]></content>
+      <tags>
+        <tag>Machine Learning</tag>
+        <tag>Notes</tag>
+      </tags>
+  </entry>
 </search>
