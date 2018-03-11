@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine Learning,Notes," />
 
 
 
@@ -94,13 +94,28 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eathen&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+<meta name="description" content="在这篇文章中，我们主要探讨，机器到底能不能进行学习这个问题。 Learning is Impossible?从前面的文章中，我们已经知道，机器学习的过程，就是通过现有的训练集 $D$ 学习，得到预测函数 $h$，并且使得它接近于目标函数 $f$。 我们必须思考的问题是：这种预测是可能的么？也就是说，机器能通过学习得到 $h$，使得 $h \approx f$ 吗？ No free lunch机器学">
+<meta name="keywords" content="Machine Learning,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NTU-ML-学习的可行性">
+<meta property="og:url" content="http://yoursite.com/20180118-NTU-ML-3/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
+<meta property="og:description" content="在这篇文章中，我们主要探讨，机器到底能不能进行学习这个问题。 Learning is Impossible?从前面的文章中，我们已经知道，机器学习的过程，就是通过现有的训练集 $D$ 学习，得到预测函数 $h$，并且使得它接近于目标函数 $f$。 我们必须思考的问题是：这种预测是可能的么？也就是说，机器能通过学习得到 $h$，使得 $h \approx f$ 吗？ No free lunch机器学">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/classification_example_1.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/no_free_lunch.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/hoeffding%27s_inequality_1.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/connection.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/flow_1.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/infer.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/flow_2.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/bad_data.png">
+<meta property="og:image" content="http://yoursite.com/20180118-NTU-ML-3/flow_3.png">
+<meta property="og:updated_time" content="2018-01-18T05:23:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eathen&#39;s Blog">
+<meta name="twitter:title" content="NTU-ML-学习的可行性">
+<meta name="twitter:description" content="在这篇文章中，我们主要探讨，机器到底能不能进行学习这个问题。 Learning is Impossible?从前面的文章中，我们已经知道，机器学习的过程，就是通过现有的训练集 $D$ 学习，得到预测函数 $h$，并且使得它接近于目标函数 $f$。 我们必须思考的问题是：这种预测是可能的么？也就是说，机器能通过学习得到 $h$，使得 $h \approx f$ 吗？ No free lunch机器学">
+<meta name="twitter:image" content="http://yoursite.com/20180118-NTU-ML-3/classification_example_1.png">
 
 
 
@@ -141,13 +156,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/"/>
+  <link rel="canonical" href="http://yoursite.com/20180118-NTU-ML-3/"/>
 
 
 
 
 
-  <title>Archive | Eathen's Blog</title>
+  <title>NTU-ML-学习的可行性 | Eathen's Blog</title>
   
 
 
@@ -166,7 +181,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
   <a href="https://github.com/eathen-zheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -295,259 +310,345 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180118-NTU-ML-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eathen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/longmao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eathen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">NTU-ML-学习的可行性</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-18T13:23:02+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-01-18T13:23:02+08:00">
+                2018-01-18
+              </time>
+            
+          </span>
+
           
-        
-        Um..! 6 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/20180118-NTU-ML-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180118-NTU-ML-3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/20180118-NTU-ML-3/" class="leancloud_visitors" data-flag-title="NTU-ML-学习的可行性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count">℃</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-5/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">NTU-ML-为什么机器能够学习(2)</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2,226
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:57:18+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  9
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-4/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-为什么机器能够学习(1)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:40:14+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180118-NTU-ML-3/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-学习的可行性</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-18T13:23:02+08:00"
-              content="2018-01-18" >
-          01-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>在这篇文章中，我们主要探讨，机器到底能不能进行学习这个问题。</p>
+<h2 id="Learning-is-Impossible"><a href="#Learning-is-Impossible" class="headerlink" title="Learning is Impossible?"></a>Learning is Impossible?</h2><p>从前面的文章中，我们已经知道，机器学习的过程，就是通过现有的训练集 $D$ 学习，得到预测函数 $h$，并且使得它接近于目标函数 $f$。</p>
+<p>我们必须思考的问题是：<br>这种预测是可能的么？也就是说，机器能通过学习得到 $h$，使得 $h \approx f$ 吗？</p>
+<h3 id="No-free-lunch"><a href="#No-free-lunch" class="headerlink" title="No free lunch"></a>No free lunch</h3><p>机器学习领域有一个著名的理论，叫做 “没有免费的午餐” 定理（No Free Lunch Theorem, 简称 NFL 定理）。用比较通俗易懂的话来讲，意思就是说：“学习” 可能是做不到的。</p>
+<p>在训练样本集（in-sample）中，可以求得一个最佳的假设 $g$，该假设最大可能的接近目标函数 $f$，但是在训练样本集之外的其他样本（out-of-sample）中，假设 $g$ 和目标函数 $f$ 可能差别很远。</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>我们举一个例子来说明上面这段话的意思。现在假设有这样一个数据集 $X=\{000,001,…,111\}$ 总共8个数据，使用函数 $f$ 对数据集中的每一个数据分类（圈或叉）。现在我们手头有5个训练样本，我们想让机器使用这些训练样本学习到函数$f$。<br><img src="/20180118-NTU-ML-3/classification_example_1.png" alt=""></p>
+<p>由于机器只能看到训练集的样本（5个），因此它能学习得到函数 $g$，使得在这些训练样本上，$g$ 与 $f$ 的预测结果一样。</p>
+<p>但是，因为机器看不见训练集外的样本（剩下的3个），对于这些样本，机器只能自己猜测$g(x)$的值。而无论机器预测的结果是怎么样的，我们总能够找到$f$，使得在这些训练集外的样本上，$g \neq f$。</p>
+<p><img src="/20180118-NTU-ML-3/no_free_lunch.png" alt=""></p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>从上面的例子我们可以看出，机器能学习的，只是它看得见的样本（in-sample），而对于它看不见的样本（out-of-sample），学习效果就很难保证了。</p>
+<p>如果是这样子的话，机器学习的作用的很有限了，毕竟我们更需要的，是机器机帮我们处理没见过的数据。</p>
+<p>嗯，事情一定没这么简单。</p>
+<h2 id="Probability-to-the-Rescue"><a href="#Probability-to-the-Rescue" class="headerlink" title="Probability to the Rescue"></a>Probability to the Rescue</h2><p>我们想象这样一个场景：有一个罐子，这个罐子里装有橙色和绿色两种颜色的珠子，我们如何在不查遍所有珠子的情况下，得知罐子中橙子珠子所占的比例呢？一个想法就是使用抽样的方法，通过频率来预测概率。</p>
+<p>假设罐子中橙色珠子的概率为 $\mu$（未知），则绿色珠子的概率为 $1-\mu$；假设通过抽样查出的橙色珠子比例为 $v$（已知），则绿色珠子的比例为 $1-v$。那么我们可不可以通过 $v$ 来预测 $\mu$ 呢？</p>
+<p><img src="/20180118-NTU-ML-3/hoeffding&#39;s_inequality_1.png" alt=""></p>
+<h3 id="Hoeffding’s-inequality"><a href="#Hoeffding’s-inequality" class="headerlink" title="Hoeffding’s inequality"></a>Hoeffding’s inequality</h3><p>数学上有个霍夫丁不等式，专门回答了这个问题。这个不等式是这样子的：</p>
+<p>当样本数量 $N$ 足够大时，$v$ 和 $\mu$ 有如下关系：<br>$$\Bbb{P}[\left|\nu-\mu\right|\gt\epsilon]\le2\exp\big(-2\epsilon^2N\big)$$</p>
+<p>从上面的式子可以看出，随着样本数量 $N$ 的逐渐增大，$v$ 与 $\mu$ 接近的概率也逐渐增大，因此可以说 $v$ 与 $\mu$ 大概近似相等（probably approximately correct，PAC），因此，选择合适的 $N$ 以及 $\epsilon$，就可以通过 $v$ 预测 $\mu$。</p>
+<h2 id="Connection-to-Learning"><a href="#Connection-to-Learning" class="headerlink" title="Connection to Learning"></a>Connection to Learning</h2><p>我们可以将以上的情景与机器学习问题对应起来，如下图所示：</p>
+<p><img src="/20180118-NTU-ML-3/connection.png" alt=""></p>
+<p>相对应的概念如下所示：</p>
+<ul>
+<li>罐子：数据集，包括 in-sample 以及 out-of-sample </li>
+<li>橙色珠子：数据 $x_n$, 其中 $h(x_n) \neq f(x_n)$</li>
+<li>绿色珠子：数据 $x_n$, 其中 $h(x_n) = f(x_n)$</li>
+<li>橙色珠子概率 $\mu$：$h(x) \neq f(x)$ 的概率</li>
+<li>抽到的珠子：训练样本（我们看得到的那些）</li>
+<li>抽到橙色珠子：在某个样本点 $x_n$ 上，$h(x_n) \neq f(x_n) = y_n$</li>
+<li>抽到绿色珠子：在某个样本点 $x_n$ 上，$h(x_n) = f(x_n) = y_n$</li>
+<li>橙色珠子频率 $v$：$h(x) \neq f(x)$ 的频率</li>
+<li>抽样动作：判断 $h(x_n)$ 与 $f(x_n)=y_n$ 是否相等</li>
+</ul>
+<p>于是在样本数足够多的情况下，我们可以通过测试 $h(x_n) \neq y_n$ 的频率来推断 $h(x) \neq f(x)$ 的概率。这里需要注意的是，$x_n$ 需要是独立同分布的，但是我们并不需要知道具体的分布函数是什么。</p>
+<h3 id="Learning-Flow"><a href="#Learning-Flow" class="headerlink" title="Learning Flow"></a>Learning Flow</h3><p>我们对学习流程图进行完善，如下图所示：</p>
+<p><img src="/20180118-NTU-ML-3/flow_1.png" alt=""></p>
+<p>我们在流程图中增加了一个数据的分布函数 $P$，我们并不知道这个分布具体的样子（但是没关系），我们利用这个分布进行抽样，产生训练样本，同时利用这些训练样本，计算 $h(x) \neq f(x)$ 的频率 $E_{in}(h)$，并且使用这个频率来估计 $h(x) \neq f(x)$ 的概率 $E_{out}(h)$。这里所说的 $h$，是我们从假设集 (hypothesis set) 中选择的一个特定的 $h$。</p>
+<p><img src="/20180118-NTU-ML-3/infer.png" alt=""></p>
+<h3 id="The-Formal-Guarantee"><a href="#The-Formal-Guarantee" class="headerlink" title="The Formal Guarantee"></a>The Formal Guarantee</h3><p>将霍夫丁不等式中的 $\mu$ 换成 $E_{out}(h)$，$v$ 换成 $E_{in}(h)$，就可以得到下面的式子：</p>
+<p>$$\Bbb{P}\left[\left|E_{in}(h)-E_{out}(h)\right|\gt\epsilon\right]\le2\exp\big(-2\epsilon^2N\big)$$</p>
+<p>上面的公式保证了在一定条件下，$E_{in}(h)$ 与 $E_{out}(h)$ 不会相差太远，那么只要我们能选择合适的 $h$ 使得 $E_{in}(h)$ 比较小，那么 $E_{out}(h)$ 也会比较小。</p>
+<h3 id="Verification-of-One-h"><a href="#Verification-of-One-h" class="headerlink" title="Verification of One $h$"></a>Verification of One $h$</h3><p>整理一下，对于一个固定的 $h$，霍夫丁不等式告诉我们，在样本数足够多的情况下，如果 $E_{in}(h)$ 很小，那么 $E_{out}(h)$ 也会大概率比较小。</p>
+<p>机器学习要做的事，是通过算法 $\mathcal{A}$ 从假设集 $H$ 中选择 $g$，使得 $g$ 尽可能接近 $f$。换句话来讲，需要在假设集 $H$ 中找到一个 $h$，使得 $E_{in}(h)$ 很小，然后把 $h$ 当成最终的预测函数 $g$。</p>
+<p>我们现在做的事情，因为只涉及了一个 $h$，准确来讲不是 “学习”，而是 “验证”，即对于一个 $h$，通过 $E_{in}(h)$ 估计 $E_{out}(h)$。</p>
+<p><img src="/20180118-NTU-ML-3/flow_2.png" alt=""></p>
+<p>我们还需要探讨，如果算法是在多个 $h$ 中进行选择（而不是只有一个 $h$，不需要选择），那么情况有什么变化。也就是从探讨 $E_{in}(h)$ 与 $E_{out}(h)$ 的关系，变成探讨 $E_{in}(g)$ 与 $E_{out}(g)$ 的关系。</p>
+<h2 id="Connection-to-Real-Learning"><a href="#Connection-to-Real-Learning" class="headerlink" title="Connection to Real Learning"></a>Connection to Real Learning</h2><p>首先我们考虑假设集中的假设是有限多个的情况。</p>
+<p>来看一下下面这个表格，表格中的每一行表示一个固定的 $h$ 的情况，表格中的每一列表示一笔数据集，表格里的 “BAD” 表示，在这笔数据集上，对于某个特定的 $h$，$E_{in}(h)$ 与 $E_{out}(h)$ 相差很大，我们把这样的数据叫做是这个 $h$ 上的 BAD data。</p>
+<p><img src="/20180118-NTU-ML-3/bad_data.png" alt=""></p>
+<p>霍夫丁不等式告诉我们，对于一个固定的$h$，出现 $E_{in}(h)$ 与 $E_{out}(h)$ 相差很大的概率很小，也就是说，对于表格中的每一行， BAD data 出现的概率很小，在这样的情况下，我们才能通过 $E_{in}$ 来预测 $E_{out}$。<br>$$<br>\Bbb{P}\big[ \big| E_{in}(h) - E_{out}(h) \big| &gt; \epsilon \big] \le 2 \exp  \big( -2 \epsilon^2 N \big)<br>$$<br>同样的，当有多个 $h$ 可选择时，我们也希望 BAD data 出现的概率小，这样才能让算法在假设集中自由选择 $h$，保证能通过$E_{in}$ 来预测 $E_{out}$。</p>
+<p>这种情况下，只要数据对于某个 $h$ 而言是 BAD data，它在这个假设集中就是 BAD data，其出现的概率为：<br>$$<br>\begin{split}<br>\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}]<br>&amp;=\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_1\ or\ BAD\ \mathcal{D}\ for\ h_2\ or\ …\ or\ BAD\ \mathcal{D}\ for\ h_M]\\<br>&amp;\le\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_1]+ \Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_2]+ …+\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_M]<br>\\<br>&amp;\le2\exp\big(-2\epsilon^2N\big)+\exp\big(-2\epsilon^2N\big)+\exp\big(-2\epsilon^2N\big)+…+\exp\big(-2\epsilon^2N\big)\\<br>&amp;=2M\exp\big(-2\epsilon^2N\big)<br>\end{split}<br>$$其中 $M$ 表示的是假设集中 $h$ 的个数。</p>
+<p>因此得到结论：如果 $M$ 的值是有限的，在 $N$ 足够大的情况下，BAD data 出现的概率很小，即无论哪个 $h$，都有 $E_{in}(h) \approx E_{out}(h)$ （PAC），那么我们通过合适的算法选择一个 $E_{in}$ 小的 $h$，就能保证 $E_{out}$ 小（PAC），于是学习成功了。</p>
+<p>最后完善学习流程图：</p>
+<p><img src="/20180118-NTU-ML-3/flow_3.png" alt=""></p>
+<p>以上，我们讨论了假设集中的假设是有限多个的情况下，$E_{in}(g)$ 与 $E_{out}(g)$ 的关系。关于假设集中的假设是无限多个的情况，将在接下来的文章中讨论。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180115-NTU-ML-2/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-感知器算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-15T17:29:49+08:00"
-              content="2018-01-15" >
-          01-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180113-NTU-ML-1/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-机器学习问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-13T11:59:16+08:00"
-              content="2018-01-13" >
-          01-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180113-NTU-ML-0/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-《机器学习基石》笔记系列</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-13T11:09:12+08:00"
-              content="2018-01-13" >
-          01-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <div>
+        
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/20180118-NTU-ML-3/">NTU-ML-学习的可行性</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
+  <p><span>发布时间:</span>2018年01月18日 - 13:01</p>
+  <p><span>最后更新:</span>2018年01月18日 - 13:01</p>
+  <p><span>原始链接:</span><a href="/20180118-NTU-ML-3/" title="NTU-ML-学习的可行性">http://yoursite.com/20180118-NTU-ML-3/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180118-NTU-ML-3/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        
+      </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Eathen WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="Eathen Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Notes/" rel="tag"><i class="fa fa-tag"></i> Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180115-NTU-ML-2/" rel="next" title="NTU-ML-感知器算法">
+                <i class="fa fa-chevron-left"></i> NTU-ML-感知器算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/20180311-NTU-ML-4/" rel="prev" title="NTU-ML-为什么机器能够学习(1)">
+                NTU-ML-为什么机器能够学习(1) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -555,6 +656,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -575,8 +687,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -653,6 +774,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-is-Impossible"><span class="nav-number">1.</span> <span class="nav-text">Learning is Impossible?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#No-free-lunch"><span class="nav-number">1.1.</span> <span class="nav-text">No free lunch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example"><span class="nav-number">1.2.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">1.3.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Probability-to-the-Rescue"><span class="nav-number">2.</span> <span class="nav-text">Probability to the Rescue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hoeffding’s-inequality"><span class="nav-number">2.1.</span> <span class="nav-text">Hoeffding’s inequality</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connection-to-Learning"><span class="nav-number">3.</span> <span class="nav-text">Connection to Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-Flow"><span class="nav-number">3.1.</span> <span class="nav-text">Learning Flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Formal-Guarantee"><span class="nav-number">3.2.</span> <span class="nav-text">The Formal Guarantee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Verification-of-One-h"><span class="nav-number">3.3.</span> <span class="nav-text">Verification of One $h$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connection-to-Real-Learning"><span class="nav-number">4.</span> <span class="nav-text">Connection to Real Learning</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -786,6 +923,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -832,6 +973,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'eathen-zheng',
+            repo: 'eathen-zheng.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'c361223a2e95974b4bd609f5a9d1425697bc3bbb',
+            
+                client_id: 'bbcd092f12c76900097f'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 

@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine Learning,Notes," />
 
 
 
@@ -94,13 +94,25 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eathen&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+<meta name="description" content="接着上一篇所讨论的问题，继续讨论。 Recap and Preview回顾一下机器学习的流程图： 机器学习可以理解为寻找到 $g$，使得 $g \approx f$，也就是 $E_{out}(g) \approx 0$ 的过程。为了完成这件事情，有两个关键的步骤：  保证 $E_{out}(g) \approx E_{in}(g)$，由 “训练” 过程来完成 保证 $E_{in}(g) \appr">
+<meta name="keywords" content="Machine Learning,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NTU-ML-为什么机器能够学习(1)">
+<meta property="og:url" content="http://yoursite.com/20180311-NTU-ML-4/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
+<meta property="og:description" content="接着上一篇所讨论的问题，继续讨论。 Recap and Preview回顾一下机器学习的流程图： 机器学习可以理解为寻找到 $g$，使得 $g \approx f$，也就是 $E_{out}(g) \approx 0$ 的过程。为了完成这件事情，有两个关键的步骤：  保证 $E_{out}(g) \approx E_{in}(g)$，由 “训练” 过程来完成 保证 $E_{in}(g) \appr">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/1115873/201703/1115873-20170304171209563-1374809968.png">
+<meta property="og:image" content="http://yoursite.com/20180311-NTU-ML-4/learning_flow.png">
+<meta property="og:image" content="http://yoursite.com/20180311-NTU-ML-4/dichotomy.png">
+<meta property="og:image" content="http://yoursite.com/20180311-NTU-ML-4/positive_rays.png">
+<meta property="og:image" content="http://yoursite.com/20180311-NTU-ML-4/positive_intervals.png">
+<meta property="og:image" content="http://yoursite.com/20180311-NTU-ML-4/convex_sets.png">
+<meta property="og:updated_time" content="2018-03-11T13:40:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eathen&#39;s Blog">
+<meta name="twitter:title" content="NTU-ML-为什么机器能够学习(1)">
+<meta name="twitter:description" content="接着上一篇所讨论的问题，继续讨论。 Recap and Preview回顾一下机器学习的流程图： 机器学习可以理解为寻找到 $g$，使得 $g \approx f$，也就是 $E_{out}(g) \approx 0$ 的过程。为了完成这件事情，有两个关键的步骤：  保证 $E_{out}(g) \approx E_{in}(g)$，由 “训练” 过程来完成 保证 $E_{in}(g) \appr">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/1115873/201703/1115873-20170304171209563-1374809968.png">
 
 
 
@@ -141,13 +153,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/"/>
+  <link rel="canonical" href="http://yoursite.com/20180311-NTU-ML-4/"/>
 
 
 
 
 
-  <title>Archive | Eathen's Blog</title>
+  <title>NTU-ML-为什么机器能够学习(1) | Eathen's Blog</title>
   
 
 
@@ -166,7 +178,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
   <a href="https://github.com/eathen-zheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -295,259 +307,426 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180311-NTU-ML-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eathen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/longmao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eathen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">NTU-ML-为什么机器能够学习(1)</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T21:40:14+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-11T21:40:14+08:00">
+                2018-03-11
+              </time>
+            
+          </span>
+
           
-        
-        Um..! 6 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/20180311-NTU-ML-4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180311-NTU-ML-4/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/20180311-NTU-ML-4/" class="leancloud_visitors" data-flag-title="NTU-ML-为什么机器能够学习(1)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count">℃</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-5/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">NTU-ML-为什么机器能够学习(2)</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,483
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:57:18+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-4/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-为什么机器能够学习(1)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:40:14+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180118-NTU-ML-3/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-学习的可行性</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-18T13:23:02+08:00"
-              content="2018-01-18" >
-          01-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>接着上一篇所讨论的问题，继续讨论。</p>
+<h2 id="Recap-and-Preview"><a href="#Recap-and-Preview" class="headerlink" title="Recap and Preview"></a>Recap and Preview</h2><p>回顾一下机器学习的流程图：<br><img src="http://images2015.cnblogs.com/blog/1115873/201703/1115873-20170304171209563-1374809968.png" alt=""><br><img src="/20180311-NTU-ML-4/learning_flow.png" alt=""></p>
+<p>机器学习可以理解为寻找到 $g$，使得 $g \approx f$，也就是 $E_{out}(g) \approx 0$ 的过程。<br>为了完成这件事情，有两个关键的步骤：</p>
+<ul>
+<li>保证 $E_{out}(g) \approx E_{in}(g)$，由 “训练” 过程来完成</li>
+<li>保证 $E_{in}(g) \approx 0$，由 “验证” 过程来完成</li>
+</ul>
+<p>当这两件事情都得到保证之后，我们就可以得到 $E_{out}(g) \approx 0$，于是完成了学习。</p>
+<p>$M$ 的取值（hypothesis 的数目）会影响上面说的两个步骤：</p>
+<ul>
+<li>$M$ 太小，能保证 $E_{out}(g) \approx E_{in}(g)$，但是不能保证 $E_{in}(g) \approx 0$<br>（因为可选择的 hypothesis 的数目太少）；</li>
+<li>$M$ 太大，能保证 $E_{in}(g) \approx 0$，但是不能保证 $E_{out}(g) \approx E_{in}(g)$$\big(\begin{split}<br>\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}]<br>\le2M\exp(-2\epsilon^2N)<br>\end{split}<br>\big)$。</li>
+</ul>
+<p>因此需要想办法解决 $M$ 较大时，$E_{out}(g) \approx E_{in}(g)$ 的问题。</p>
+<h2 id="Effective-Number-of-Lines"><a href="#Effective-Number-of-Lines" class="headerlink" title="Effective Number of Lines"></a>Effective Number of Lines</h2><p>由上一篇文章我们知道：<br>$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \le 2M \exp(-2 \epsilon^2 N)$$</p>
+<p>对于这个式子，$M = \infty$ 时，右侧的值很大，$E_{out}(g) \approx E_{in}(g)$ 不能保证。我们的想法是：尝试用一个合适的数 $m_H$ 代替式子中的 $M$，使无穷变成有限，如下式：<br>$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \stackrel{?}{\le} 2 \cdot m_{\mathcal{H}} \cdot \exp(-2 \epsilon^2 N)$$</p>
+<p>第一个式子中的 $M$ 来源于 “Union Bound”<br>$$\Bbb{P} [ \mathcal{B}_{1} \hphantom{1} or \hphantom{1} \mathcal{B}_{2} \hphantom{1} or \dots \mathcal{B}_{M} ] \le \Bbb{P} [ \mathcal{B}_{1}] + \Bbb{P} [ \mathcal{B}_{2}] + \dots + \Bbb{P} [ \mathcal{B}_{M}]$$</p>
+<p>其中 $\Bbb{P}[\mathcal{B}_{M}]$ 表示的是第 $M$ 个假设函数 $h_M$ 在数据集上发生坏事情（即存在 BAD DATA，$E_{out}(h_M) \neq E_{in}(h_M)$）的概率。</p>
+<p>然而当 $M$ 很大时，假设集中存在许多相似的假设函数 $h$，它们发生坏事情的概率和情形都很接近，这样使用 “Union Bound” 来计算整个假设集发生坏事情的概率，便存在许多重复的地方，于是算出来的概率会比实际的高很多（over-estimating）。</p>
+<p>我们换一种思路，从数据点的分类结果来对假设集进行分类，这样就避免了假设之间相互重合的问题。以二元分类来阐述怎么解决这个问题：我们根据分类结果，对 $h$ 进行分类。</p>
+<table>
+<thead>
+<tr>
+<th>样本点大小 $N$</th>
+<th>假设集 $H$ 等价类（考虑最多的情况）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2 类：$\{o\}$、$\{x\}$</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4 类：$\{oo\}$、$\{ox\}$、$\{xo\}$、$\{xx\}$</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>N</td>
+<td>$2^{N} 类$</td>
+</tr>
+</tbody>
+</table>
+<p>对于一个大小为 $N$ 的数据集，任意一个假设函数 $h$ 都属于上述 $2^N$ 个等价类之间的一个，因此我们可以用 $2^N$ 来代替原不等式中的 $M$。</p>
+<h2 id="Effective-Number-of-Hypotheses"><a href="#Effective-Number-of-Hypotheses" class="headerlink" title="Effective Number of Hypotheses"></a>Effective Number of Hypotheses</h2><p>我们把上面提到的等价类的概念起一个名字叫做 Dichotomy。<br><img src="/20180311-NTU-ML-4/dichotomy.png" alt=""></p>
+<p>具体的 Dichotomy 的 size 与这 $N$ 个数据的具体取值有关（但是不会大于 $2^N$），为方便讨论我们取最大那个 size 来分析，取名为 growth function，记作 $m_\mathcal{H}(N)$，意思是假设空间在 $N$ 个样本点上能产生的最大二分数量。<br>$$m_\mathcal{H}(N) = \max \limits_{\textbf{x}_1,\textbf{x}_2,…,\textbf{x}_N \in \mathcal{X}} \big| \mathcal{H}(\textbf{x}_1,\textbf{x}_2,…,\textbf{x}_N) \big|$$<br>接下来我们需要计算 $m_\mathcal{H}(N)$，首先考虑几种不同的模型的 $m_\mathcal{H}(N)$</p>
+<ul>
+<li><p>Positive Rays<br>确定一个点，规定在这个点的正方向为正，即 $h(x)=+1$，反方向为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = N + 1$，如下图所示。<br><img src="/20180311-NTU-ML-4/positive_rays.png" alt=""></p>
+</li>
+<li><p>Positive Intervals<br>确定两个点，规定在这两个点之间为正，即 $h(x)=+1$，两个点之外为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = {N+1 \choose 2} + 1$，如下图所示。<br><img src="/20180311-NTU-ML-4/positive_intervals.png" alt=""></p>
+</li>
+<li><p>Convex Sets<br>顶点在同一个圆上的凸多边形，规定圆上与多边形相交的点为正，即 $h(x)=+1$，没有与多边形相交的点为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = 2^N$，如下图所示。<br><img src="/20180311-NTU-ML-4/convex_sets.png" alt=""></p>
+</li>
+<li><p>2D perceptrons<br>就是前面举的平面上的点分类的例子，某些情况下 $m_\mathcal{H}(N) &lt; 2^N$。</p>
+</li>
+</ul>
+<p>将上面几种情况总结如下：</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>$m_\mathcal{H}(N)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Positive Rays</td>
+<td>$m_\mathcal{H}(N) = N + 1$</td>
+</tr>
+<tr>
+<td>Positive Intervals</td>
+<td>$m_\mathcal{H}(N) = {N+1 \choose 2} + 1$</td>
+</tr>
+<tr>
+<td>Convex Sets</td>
+<td>$m_\mathcal{H}(N) = 2^N$</td>
+</tr>
+<tr>
+<td>2D perceptrons</td>
+<td>$m_\mathcal{H}(N) &lt; 2^N$ in some case</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Break-Point"><a href="#Break-Point" class="headerlink" title="Break Point"></a>Break Point</h2><p>我们希望 $m_H(N)$ 是多项式形式而不是指数形式的，这样当 $N$ 很大的时候，不等式右边趋近于0，才能保证 $E_{out}(g) \approx E_{in}(g)$：<br>$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \stackrel{?}{\le} 2 \cdot m_{\mathcal{H}} \cdot \exp(-2 \epsilon^2 N)$$</p>
+<p>因此，将 $m_{\mathcal{H}}$ 替换为 $2^N$ 还不够，为此我们引入一个概念叫 break point，定义如下</p>
+<ul>
+<li>if no $k$  inputs can be shattered by $\mathcal{H}$, call $k$ a break point for $\mathcal{H}$<ul>
+<li>$m_{\mathcal{H}}(k) &lt; 2^{k}$</li>
+<li>$k+1$, $k+2$, $k+3$, $…$ also break points</li>
+<li>will study minimum break point $k$</li>
+</ul>
+</li>
+</ul>
+<p>对应的，上面所提到的四种模型的 break point 如下：</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>$m_\mathcal{H}(N)$</th>
+<th>break point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Positive Rays</td>
+<td>$m_\mathcal{H}(N) = N + 1$</td>
+<td>break point at 2</td>
+</tr>
+<tr>
+<td>Positive Intervals</td>
+<td>$m_\mathcal{H}(N) = {N+1 \choose 2} + 1$</td>
+<td>break point at 3</td>
+</tr>
+<tr>
+<td>Convex Sets</td>
+<td>$m_\mathcal{H}(N) = 2^N$</td>
+<td>no break point</td>
+</tr>
+<tr>
+<td>2D perceptrons</td>
+<td>$m_\mathcal{H}(N) &lt; 2^N$ in some case</td>
+<td>break point at 4</td>
+</tr>
+</tbody>
+</table>
+<p>我们猜测 $m_\mathcal{H}(N)$ 与 break point 有下面的关系：</p>
+<ul>
+<li>no break point：$m_\mathcal{H}(N) = 2^N$</li>
+<li>break point $k$：$m_\mathcal{H}(N) = O(N^{k-1})$</li>
+</ul>
+<p>如果猜测成立，那么在有 break point 的情况下，$m_H(N)$ 便是一个多项式形式，这样就能保证 $E_{out}(g) \approx E_{in}(g)$ 了。</p>
+<p>因此，接下来我们需要探讨，break point 与 $m_\mathcal{H}(N)$ 之间的关系，我们将在下几篇文章中对此进行讨论。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180115-NTU-ML-2/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-感知器算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-15T17:29:49+08:00"
-              content="2018-01-15" >
-          01-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180113-NTU-ML-1/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-机器学习问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-13T11:59:16+08:00"
-              content="2018-01-13" >
-          01-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180113-NTU-ML-0/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-《机器学习基石》笔记系列</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-13T11:09:12+08:00"
-              content="2018-01-13" >
-          01-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <div>
+        
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/20180311-NTU-ML-4/">NTU-ML-为什么机器能够学习(1)</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
+  <p><span>发布时间:</span>2018年03月11日 - 21:03</p>
+  <p><span>最后更新:</span>2018年03月11日 - 21:03</p>
+  <p><span>原始链接:</span><a href="/20180311-NTU-ML-4/" title="NTU-ML-为什么机器能够学习(1)">http://yoursite.com/20180311-NTU-ML-4/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180311-NTU-ML-4/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        
+      </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Eathen WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="Eathen Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Notes/" rel="tag"><i class="fa fa-tag"></i> Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180118-NTU-ML-3/" rel="next" title="NTU-ML-学习的可行性">
+                <i class="fa fa-chevron-left"></i> NTU-ML-学习的可行性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/20180311-NTU-ML-5/" rel="prev" title="NTU-ML-为什么机器能够学习(2)">
+                NTU-ML-为什么机器能够学习(2) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -555,6 +734,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -575,8 +765,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -653,6 +852,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recap-and-Preview"><span class="nav-number">1.</span> <span class="nav-text">Recap and Preview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effective-Number-of-Lines"><span class="nav-number">2.</span> <span class="nav-text">Effective Number of Lines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effective-Number-of-Hypotheses"><span class="nav-number">3.</span> <span class="nav-text">Effective Number of Hypotheses</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Break-Point"><span class="nav-number">4.</span> <span class="nav-text">Break Point</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -786,6 +1001,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -832,6 +1051,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'eathen-zheng',
+            repo: 'eathen-zheng.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'c361223a2e95974b4bd609f5a9d1425697bc3bbb',
+            
+                client_id: 'bbcd092f12c76900097f'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 
