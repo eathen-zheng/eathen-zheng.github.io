@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine Learning,Notes," />
 
 
 
@@ -94,14 +94,28 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="这一节主要讨论在有噪声的情况下，VC维理论是否仍适用。 Noise and Probabilistic Target回顾之前提到的机器学习的流程图，学习的目的，就是找到一个函数 $g$，使得它与目标函数 $f$ 差不多。 然而在现实生活中，往往伴随着噪声： 这些噪声的类别是多种多样的  noise in $y$：如标签标错了 noise in $x$：如原本的数据就存在噪声  没有噪音时，$x$">
+<meta name="keywords" content="Machine Learning,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20180313_NTU-ML-7">
+<meta property="og:url" content="http://yoursite.com/20180313-NTU-ML-7/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
+<meta property="og:description" content="这一节主要讨论在有噪声的情况下，VC维理论是否仍适用。 Noise and Probabilistic Target回顾之前提到的机器学习的流程图，学习的目的，就是找到一个函数 $g$，使得它与目标函数 $f$ 差不多。 然而在现实生活中，往往伴随着噪声： 这些噪声的类别是多种多样的  noise in $y$：如标签标错了 noise in $x$：如原本的数据就存在噪声  没有噪音时，$x$">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-01-13T02:03:31.024Z">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/flow_1.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/flow_2.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/flow_2.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/flow_3.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/flow_4.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/cost_matrix.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/weighted_classification.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/connect_error.png">
+<meta property="og:image" content="http://yoursite.com/20180313-NTU-ML-7/weighted_pocket.png">
+<meta property="og:updated_time" content="2018-03-13T01:16:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="20180313_NTU-ML-7">
+<meta name="twitter:description" content="这一节主要讨论在有噪声的情况下，VC维理论是否仍适用。 Noise and Probabilistic Target回顾之前提到的机器学习的流程图，学习的目的，就是找到一个函数 $g$，使得它与目标函数 $f$ 差不多。 然而在现实生活中，往往伴随着噪声： 这些噪声的类别是多种多样的  noise in $y$：如标签标错了 noise in $x$：如原本的数据就存在噪声  没有噪音时，$x$">
+<meta name="twitter:image" content="http://yoursite.com/20180313-NTU-ML-7/flow_1.png">
 
 
 
@@ -142,13 +156,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/20180313-NTU-ML-7/"/>
 
 
 
 
 
-  <title>about | Eathen's Blog</title>
+  <title>20180313_NTU-ML-7 | Eathen's Blog</title>
   
 
 
@@ -298,33 +312,324 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180313-NTU-ML-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eathen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/longmao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eathen's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">20180313_NTU-ML-7</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-13T09:16:57+08:00">
+                2018-03-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-13T09:16:57+08:00">
+                2018-03-13
+              </time>
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/20180313-NTU-ML-7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180313-NTU-ML-7/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/20180313-NTU-ML-7/" class="leancloud_visitors" data-flag-title="20180313_NTU-ML-7">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count">℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,328
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>这一节主要讨论在有噪声的情况下，VC维理论是否仍适用。</p>
+<h2 id="Noise-and-Probabilistic-Target"><a href="#Noise-and-Probabilistic-Target" class="headerlink" title="Noise and Probabilistic Target"></a>Noise and Probabilistic Target</h2><p>回顾之前提到的机器学习的流程图，学习的目的，就是找到一个函数 $g$，使得它与目标函数 $f$ 差不多。<br><img src="/20180313-NTU-ML-7/flow_1.png" alt=""></p>
+<p>然而在现实生活中，往往伴随着噪声：<br><img src="/20180313-NTU-ML-7/flow_2.png" alt=""></p>
+<p>这些噪声的类别是多种多样的</p>
+<ul>
+<li>noise in $y$：如标签标错了</li>
+<li>noise in $x$：如原本的数据就存在噪声</li>
+</ul>
+<p>没有噪音时，$x$ 服从同一个概率分布 $P$，$y=f(x)$ 是一个固定的值；有噪声时，$x$ 仍然服从同一个概率分布 $P$，$y \sim P(y|x)$ 不再是一个固定的值。</p>
+<p>以之前提到的珠子为例子，珠子的两种颜色分别表示了 $h(x)$ 与 $f(x)$ 相等或者不等的情况。我们通过抽样，利用珠子属于某种颜色的频率来估计 $h(x) = f(x)$ 的概率。</p>
+<p>在没有噪声的情况下，$y$ 是固定的，因此珠子的颜色是确定的。在有噪声的情况下，$y$ 不是固定的，因此珠子的颜色是变化的，此时我们仍然可以进行抽样的实验，只不过在进行统计的时候，我们记录的是珠子在抽出来那一刻的颜色。这样，我们就可以跟以前一样，通过频率来估计概率。</p>
+<p>因此，只要 $x \sim P$ 并且 $y \sim P(y|x)$，也就是说 $(x,y) \sim P(x,y)$，VC维理论仍然适用。于是，学习的目的，从预测 $f$ 变成了预测 $p(y|x)$，其中 $p(y|x)$ 由 $f(x)$ 以及噪声构成。</p>
+<p>对于 $f$，我们可以将其想象为分布 $P(y|x)$ 的一种特殊形式。</p>
+<ul>
+<li>$y = f(x)$时，$P(y|x) = 1$ </li>
+<li>$y \neq f(x)$时，$P(y|x) = 0$</li>
+</ul>
+<p>这样就可以将无噪声以及有噪声的情况统一起来，学习的流程图更新成以下形式：<br><img src="/20180313-NTU-ML-7/flow_2.png" alt=""></p>
+<h2 id="Error-Measure"><a href="#Error-Measure" class="headerlink" title="Error Measure"></a>Error Measure</h2><p>我们需要有一个准则来衡量所选择的假设函数 $g$ 与目标函数 $f$ 相似程度，通常的方法是定义一个错误函数（也叫做代价函数） $E(g,f)$。</p>
+<p>这个错误函数描述的是在整个样本空间（不只是训练样本）中，$g$ 与 $f$ 的相似程度，并且通常来讲，是 $g$ 与 $f$ 在每个样本点上的错误的平均。<br>$$E_{in}(g) = \frac{1}{N} \sum_{n=1}^{N} err \Big( g(x_n), f(x_n) \Big)$$$$E_{out}(g) = \underset{x \sim P}{\epsilon} err \Big( g(x_n), f(x_n) \Big)$$</p>
+<p>常用的两种错误衡量方式 $err \big( g(x), f(x) \big) = err \big( \tilde{y}, y \big)$：</p>
+<ul>
+<li>0/1 error for classification：$err \big( \tilde{y}, y \big) = \big[ \tilde{y} \neq y \big] $</li>
+<li>squared error for regression：$err \big( \tilde{y}, y \big) = \big( \tilde{y} - y \big) ^ 2 $</li>
+</ul>
+<p>错误衡量准则会对学习过程起到指导作用，因此对于同一个问题，使用不同的错误衡量准则，得到的结果可能不一样。</p>
+<p>对机器学习流程图进一步修改，加入了错误衡量的模块，该模块对算法和最终的假设选择都起着很大影响。<br><img src="/20180313-NTU-ML-7/flow_3.png" alt=""></p>
+<h2 id="Algorithmic-Error-Measure"><a href="#Algorithmic-Error-Measure" class="headerlink" title="Algorithmic Error Measure"></a>Algorithmic Error Measure</h2><p>在现实中，要设计出真正的错误衡量有时候会很困难，在设计错误衡量方式时，常常使用替代的方式 $\hat{err}$：</p>
+<ul>
+<li>有意义的错误衡量<br>例如 0/1 error，表示的是 flipping 的噪声，如果 0/1 error 很小，说明出错的样本数很少；<br>例如 squared error，表示的是噪声是高斯的分布，如果 squared error 很小，说明高斯噪声很少；</li>
+<li>对设计算法容易的错误衡量<br>例如有闭式解的算法对应的错误衡量方式；<br>例如具有凸函数性质的错误衡量方式。</li>
+</ul>
+<p>于是，学习的流程图改为下面的形式，其中 $err$ 表示的是真正的错误衡量方式，而$\hat{err}$ 表示的是我们用在算法中的错误衡量方式，我们使用 $\hat{err}$ 来替代 $err$ 进行算法中的优化以及假设函数的选择。<br><img src="/20180313-NTU-ML-7/flow_4.png" alt=""></p>
+<h2 id="Weighted-Classification"><a href="#Weighted-Classification" class="headerlink" title="Weighted Classification"></a>Weighted Classification</h2><p>我们可以使用 cost matrix 表示 0/1 error<br><img src="/20180313-NTU-ML-7/cost_matrix.png" alt=""></p>
+<p>其中 false reject 表示的是把 $y=+1$ 预测为 $y=-1$，false accept 表示的是把 $y=-1$ 预测为 $y=+1$。</p>
+<p>当这两类错误的 cost 相等时，表示这两类错误的重要性一致，当这两类错误的 cost 不相等时，表示其中一种错误更加严重，代价更高。</p>
+<p>于是我们可以根据实际的需要，赋予两种错误不同的代价，这叫做 weighted classification。</p>
+<p>下面是一个 cost matrix 的例子，在这个例子中，把 $y=+1$ 预测为 $y=-1$ 的代价是 $1$，而把 $y=-1$ 预测为 $y=+1$ 的代价是 $1000$，因此算法会惩罚后一种错误分类的情况。<br><img src="/20180313-NTU-ML-7/weighted_classification.png" alt=""></p>
+<p>通过改变样本的数目，可以将 weighted classification 转化为一般的 classification。用上一个例子来说明，我们可以将数据集中 $y=-1$ 的样本复制 1000 份，这样就相当于在没有加权的 0/1 error 下进行实验。于是可以使用之前用于 0/1 error 的算法，比如 pocket 算法。<br><img src="/20180313-NTU-ML-7/connect_error.png" alt=""></p>
+<p>将上面 cost matrix 的转化嵌入到算法中，便得到了 weighted pocket 算法<br><img src="/20180313-NTU-ML-7/weighted_pocket.png" alt=""></p>
+
       
     </div>
     
     
     
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <div>
+        
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/20180313-NTU-ML-7/">20180313_NTU-ML-7</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
+  <p><span>发布时间:</span>2018年03月13日 - 09:03</p>
+  <p><span>最后更新:</span>2018年03月13日 - 09:03</p>
+  <p><span>原始链接:</span><a href="/20180313-NTU-ML-7/" title="20180313_NTU-ML-7">http://yoursite.com/20180313-NTU-ML-7/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180313-NTU-ML-7/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        
+      </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Eathen WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="Eathen Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Notes/" rel="tag"><i class="fa fa-tag"></i> Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180311-NTU-ML-5/" rel="next" title="NTU-ML-为什么机器能够学习(2)">
+                <i class="fa fa-chevron-left"></i> NTU-ML-为什么机器能够学习(2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -364,8 +669,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -442,6 +756,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Noise-and-Probabilistic-Target"><span class="nav-number">1.</span> <span class="nav-text">Noise and Probabilistic Target</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-Measure"><span class="nav-number">2.</span> <span class="nav-text">Error Measure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Algorithmic-Error-Measure"><span class="nav-number">3.</span> <span class="nav-text">Algorithmic Error Measure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weighted-Classification"><span class="nav-number">4.</span> <span class="nav-text">Weighted Classification</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
