@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine Learning,Notes," />
 
 
 
@@ -94,13 +94,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eathen&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/01/index.html">
+<meta name="description" content="这一节主要介绍线性回归算法。 Linear Regression Problem对于输出空间 $\mathcal{Y} = \Bbb{R}$ 的一类问题，一个比较简单的想法就是：将 Linear Classification 的决策函数中的 sign 函数去掉，使用各种特征的加权结果来表示 $y$$$y \approx \sum_{i = 0}^{d} w_i x_i = \textbf{w}^T">
+<meta name="keywords" content="Machine Learning,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性回归算法">
+<meta property="og:url" content="http://yoursite.com/20180317-NTU-ML-8/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
+<meta property="og:description" content="这一节主要介绍线性回归算法。 Linear Regression Problem对于输出空间 $\mathcal{Y} = \Bbb{R}$ 的一类问题，一个比较简单的想法就是：将 Linear Classification 的决策函数中的 sign 函数去掉，使用各种特征的加权结果来表示 $y$$$y \approx \sum_{i = 0}^{d} w_i x_i = \textbf{w}^T">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/20180317-NTU-ML-8/LinReg_Algo.png">
+<meta property="og:image" content="http://yoursite.com/20180317-NTU-ML-8/illustrative_proof.png">
+<meta property="og:image" content="http://yoursite.com/20180317-NTU-ML-8/learning_curve.png">
+<meta property="og:updated_time" content="2018-03-17T03:20:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eathen&#39;s Blog">
+<meta name="twitter:title" content="线性回归算法">
+<meta name="twitter:description" content="这一节主要介绍线性回归算法。 Linear Regression Problem对于输出空间 $\mathcal{Y} = \Bbb{R}$ 的一类问题，一个比较简单的想法就是：将 Linear Classification 的决策函数中的 sign 函数去掉，使用各种特征的加权结果来表示 $y$$$y \approx \sum_{i = 0}^{d} w_i x_i = \textbf{w}^T">
+<meta name="twitter:image" content="http://yoursite.com/20180317-NTU-ML-8/LinReg_Algo.png">
 
 
 
@@ -141,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/01/"/>
+  <link rel="canonical" href="http://yoursite.com/20180317-NTU-ML-8/"/>
 
 
 
 
 
-  <title>Archive | Eathen's Blog</title>
+  <title>线性回归算法 | Eathen's Blog</title>
   
 
 
@@ -166,7 +175,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
   <a href="https://github.com/eathen-zheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -295,185 +304,322 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180317-NTU-ML-8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eathen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/longmao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eathen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">线性回归算法</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-17T11:20:42+08:00">
+                2018-03-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-17T11:20:42+08:00">
+                2018-03-17
+              </time>
+            
+          </span>
+
           
-        
-        Um..! 8 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/20180317-NTU-ML-8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180317-NTU-ML-8/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/20180317-NTU-ML-8/" class="leancloud_visitors" data-flag-title="线性回归算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count">℃</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180118-NTU-ML-3/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">NTU-ML-学习的可行性</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  831
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-18T13:23:02+08:00"
-              content="2018-01-18" >
-          01-18
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  4
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180115-NTU-ML-2/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-感知器算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-15T17:29:49+08:00"
-              content="2018-01-15" >
-          01-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180113-NTU-ML-1/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-机器学习问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-13T11:59:16+08:00"
-              content="2018-01-13" >
-          01-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>这一节主要介绍线性回归算法。</p>
+<h2 id="Linear-Regression-Problem"><a href="#Linear-Regression-Problem" class="headerlink" title="Linear Regression Problem"></a>Linear Regression Problem</h2><p>对于输出空间 $\mathcal{Y} = \Bbb{R}$ 的一类问题，一个比较简单的想法就是：将 Linear Classification 的决策函数中的 sign 函数去掉，使用各种特征的加权结果来表示 $y$<br>$$y \approx \sum_{i = 0}^{d} w_i x_i = \textbf{w}^T \textbf{x}$$ 这就是线性回归算法，它的假设空间为 $$h(\textbf{x}) = \textbf{w}^T \textbf{x}$$ 线性回归的目标是寻找一条直线 （$\Bbb{R}^2$） 或者一个平面 （$\Bbb{R}^3$）或者超平面（$\Bbb{R}^n$），使得误差最小，常用的误差函数是平方误差 $$E_{in}(\textbf{w}) = \frac{1}{N} \sum_{n = 1}^{N} \left( h(\textbf{x}_n) - y_n \right)^2$$$$E_{out}(\textbf{w}) = \underset{(x,y) \sim P}{\epsilon} \Big( \textbf{w}^T \textbf{x} - y \Big)$$</p>
+<h2 id="Linear-Regression-Algorithm"><a href="#Linear-Regression-Algorithm" class="headerlink" title="Linear Regression Algorithm"></a>Linear Regression Algorithm</h2><p>将 $E_{in}$ 写成矩阵形式<br>$$<br>\begin{split}<br>E_{in}(\textbf{w}) &amp;= \frac{1}{N} \sum_{n = 1}^{N} \left(h(\textbf{x}_n) - y_n\right)^2 \\<br>&amp;= \frac{1}{N} \Bigg\Vert<br>\begin{matrix}<br>\textbf{x}_1^T \textbf{w} - y_1 \\<br>\textbf{x}_2^T \textbf{w} - y_2 \\<br>\cdot \cdot \cdot \\<br>\textbf{x}_N^T \textbf{w} - y_N \\<br>\end{matrix}<br>\Bigg\Vert^2 \\<br>&amp;= \frac{1}{N} \Vert X \textbf{w} - \textbf{y} \Vert^2<br>\end{split}<br>$$<br>其中<br>$$<br>X = \Bigg[<br>\begin{matrix}<br>x_1^T, 1 \\<br>x_2^T, 1 \\<br>\cdot \cdot \cdot \\<br>x_N^T, 1 \\<br>\end{matrix}<br>\Bigg]<br>\in \Bbb{R}^{N \times (d+1)}<br>$$$$\textbf{w} \in \Bbb{R}^{(d+1) \times 1}$$$$\textbf{y} \in \Bbb{R}^{N \times 1}$$<br>我们的目标是找到一个 $\textbf{w}$，使得 $E_{in}(\textbf{w})$ 尽可能小。因此，将 $E_{in}(\textbf{w})$ 对 $\textbf{w}$ 求导，得到：<br>$$\nabla E_{in} (\textbf{w}) = \frac{2}{N} X^T(X\textbf{w} - \textbf{y})<br>$$令$\nabla E_{in}(\textbf{w}) = 0$，得到 $\textbf{w}$ 的最优解 $$\textbf{w}_{\text{LIN}} = \big( X^TX\big)^{-1}X^T\textbf{y}=X^{\dagger}\textbf{y}<br>$$ 其中 $$X^{\dagger}=\big(X^TX\big)^{-1}X^T<br>$$ 称为矩阵 $X$ 的伪逆，于是 $$h(\textbf{x}) = \textbf{w}_{\text{LIN}}^T \textbf{x}$$</p>
+<p>将上面做一个小结，得到 Linear Regression 算法的流程如下：<br><img src="/20180317-NTU-ML-8/LinReg_Algo.png" alt=""></p>
+<h2 id="Generalization-Issue"><a href="#Generalization-Issue" class="headerlink" title="Generalization Issue"></a>Generalization Issue</h2><p>下面我们来分析一下 Linear Regression 的 $E_{in}$<br>$$\begin{aligned}<br>E_{in}({w_{LIN}})&amp;=\frac{1}{N}||{y-\hat{y}}||^2\\<br>&amp;=\frac{1}{N}||y-XX^{\dagger}y||^2 \\<br>&amp;=\frac{1}{N}||(I-H)y||^2 \\<br>\end{aligned}<br>$$ 其中 $H = XX^{\dagger}$ 是投影矩阵，把 $y$ 投影到 $X$ 的 $d+1$ 个向量构成的平面上，$H$ 有如下的性质：</p>
+<ul>
+<li>对称性 $H=H^T$</li>
+<li>幂等性 $H^2=H$</li>
+<li>半正定性 $\lambda_i \geq 0$</li>
+<li>$trace(I-{H}) = N-(d+1)$</li>
+</ul>
+<p><img src="/20180317-NTU-ML-8/illustrative_proof.png" alt=""><br>假设 $y = f(X) + \text{noise}, f(x) \in \text{span}$，那么如上图所示，有<br>$$\begin{aligned}<br>E_{in}({w_{LIN}})<br>&amp;=\frac{1}{N}||(I-{H})y||^2 \\<br>&amp;=\frac{1}{N}||(I-{H})noise||^2 \\<br>&amp;=\frac{1}{N}trace(I-{H})||noise||^2 \\<br>&amp;=\frac{1}{N}(N-(d+1))||noise||^2<br>\end{aligned}<br>$$ 得到：<br>$$E_{in}({w_{LIN}})=||noise||^2 \cdot \big( 1 - \frac{d+1}{N} \big)$$ $$E_{out}({w_{LIN}})=||noise||^2 \cdot \big( 1 + \frac{d+1}{N} \big)$$<br><img src="/20180317-NTU-ML-8/learning_curve.png" alt=""><br>两者最终都向 $\sigma^2$ (noise level)收敛，差距是 $\frac{2(d+1)}{N}$，因此说明算法是可行的。</p>
+<h2 id="Linear-Regression-for-Binary-Classification"><a href="#Linear-Regression-for-Binary-Classification" class="headerlink" title="Linear Regression for Binary Classification"></a>Linear Regression for Binary Classification</h2><p>对比一下 Linear Classification 与 Linear Regression：</p>
+<ul>
+<li>Linear Regression<ul>
+<li>用于分类问题</li>
+<li>$\mathcal{Y} = \{ +1, -1\}$</li>
+<li>$h(\textbf{x})=\text{sign}(\textbf{w}^T\textbf{x})$</li>
+<li>NP-hard，难于求解</li>
+</ul>
+</li>
+<li>Linear Regression<ul>
+<li>用于回归问题</li>
+<li>$\mathcal{Y} = \Bbb{R}$</li>
+<li>$h(\textbf{x})=\textbf{w}^T\textbf{x}$</li>
+<li>易于求解</li>
+</ul>
+</li>
+</ul>
+<p>因为 $$\text{err}_{0/1} = \big[\big[ \text{sign}(\textbf{w}^T\textbf{x}) \neq y\big]\big] \leq \text{err}_{\text{sqr}} = (\textbf{w}^T\textbf{x} - y)^2<br>$$ 所以可以将 Linear Regression 用于分类问题上：</p>
+<ol>
+<li>run Linear Regression on binary classification data $\mathcal{D}$</li>
+<li>return $g(\textbf{x}) = \text{sign}(\textbf{w}_{\text{LIN}}^T\textbf{x})$</li>
+</ol>
+<p>以上便是 Linear Regression 的内容。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180113-NTU-ML-0/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-《机器学习基石》笔记系列</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-13T11:09:12+08:00"
-              content="2018-01-13" >
-          01-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <div>
+        
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/20180317-NTU-ML-8/">线性回归算法</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
+  <p><span>发布时间:</span>2018年03月17日 - 11:03</p>
+  <p><span>最后更新:</span>2018年03月17日 - 11:03</p>
+  <p><span>原始链接:</span><a href="/20180317-NTU-ML-8/" title="线性回归算法">http://yoursite.com/20180317-NTU-ML-8/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180317-NTU-ML-8/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        
+      </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Eathen WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="Eathen Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Notes/" rel="tag"><i class="fa fa-tag"></i> Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180313-NTU-ML-7/" rel="next" title="错误与噪声">
+                <i class="fa fa-chevron-left"></i> 错误与噪声
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -481,6 +627,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -501,8 +658,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -579,6 +745,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Regression-Problem"><span class="nav-number">1.</span> <span class="nav-text">Linear Regression Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Regression-Algorithm"><span class="nav-number">2.</span> <span class="nav-text">Linear Regression Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generalization-Issue"><span class="nav-number">3.</span> <span class="nav-text">Generalization Issue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Regression-for-Binary-Classification"><span class="nav-number">4.</span> <span class="nav-text">Linear Regression for Binary Classification</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -712,6 +894,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -758,6 +944,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'eathen-zheng',
+            repo: 'eathen-zheng.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'c361223a2e95974b4bd609f5a9d1425697bc3bbb',
+            
+                client_id: 'bbcd092f12c76900097f'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 
