@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine Learning,Notes," />
 
 
 
@@ -94,13 +94,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eathen&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/03/index.html">
+<meta name="description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
+<meta name="keywords" content="Machine Learning,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NTU-ML-10-Logistic Regression">
+<meta property="og:url" content="http://yoursite.com/20180325-NTU-ML-10/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
+<meta property="og:description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/min_error.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/choice_of_eta.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/LR_Algo.png">
+<meta property="og:updated_time" content="2018-03-25T11:24:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eathen&#39;s Blog">
+<meta name="twitter:title" content="NTU-ML-10-Logistic Regression">
+<meta name="twitter:description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
+<meta name="twitter:image" content="http://yoursite.com/20180325-NTU-ML-10/min_error.png">
 
 
 
@@ -141,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/03/"/>
+  <link rel="canonical" href="http://yoursite.com/20180325-NTU-ML-10/"/>
 
 
 
 
 
-  <title>Archive | Eathen's Blog</title>
+  <title>NTU-ML-10-Logistic Regression | Eathen's Blog</title>
   
 
 
@@ -166,7 +175,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
   <a href="https://github.com/eathen-zheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -295,333 +304,314 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180325-NTU-ML-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eathen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/longmao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eathen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">NTU-ML-10-Logistic Regression</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T19:24:59+08:00">
+                2018-03-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-25T19:24:59+08:00">
+                2018-03-25
+              </time>
+            
+          </span>
+
           
-        
-        Um..! 12 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/20180325-NTU-ML-10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180325-NTU-ML-10/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/20180325-NTU-ML-10/" class="leancloud_visitors" data-flag-title="NTU-ML-10-Logistic Regression">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count">℃</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-6/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">NTU-ML-6-Theory of Generalization</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,308
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:47:04+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-11/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-11-Linear Models for Classification</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:38:37+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-10/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-10-Logistic Regression</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:24:59+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>这一节主要介绍 Logistic Regression 算法。</p>
+<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>Logistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。</p>
+<p>因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了 Logistic 函数<br>$$\theta(s) = \frac{1}{1+e^{-s}}$$ 于是 $$<br>h(\mathbf{x}) = \theta(\mathbf{w}^T\mathbf{x}) = \frac{1}{1+e^{-\mathbf{w}^T\mathbf{x}}}$$</p>
+<p>将取值范围为负无穷到正无穷的 $\mathbf{w}^T\mathbf{x}$ 映射到了 0 到 1。</p>
+<h2 id="Logistic-Regression-Error"><a href="#Logistic-Regression-Error" class="headerlink" title="Logistic Regression Error"></a>Logistic Regression Error</h2><p>有了 $h(\mathbf{x})$ 之后，我们还需要找出 $E_{\text{in}}(\mathbf{w})$ 的表达式，在 Logistic Regression 算法中，$E_{\text{in}}(\mathbf{w})$ 是通过最大似然准则得到的。</p>
+<p>首先介绍一下似然这个概念。假设我们有一笔数据 $$\mathcal{D}=\big\{ (\mathbf{x}_{1}, +1),\mathbf{x}_{2}, -1),\cdots,\mathbf{x}_{N}, -1), \big\}$$ 那么通过真实的函数 $f$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{probability}(f) = P(\mathbf{x}_1)f(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-f(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-f(\mathbf{x}_N))<br>$$ 同理，通过预测函数 $h$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{likelihood}(h) = P(\mathbf{x}_1)h(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-h(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-h(\mathbf{x}_N))<br>$$<br>我们的目标是要预测 $h$ 使它接近 $f$，而通常来说 $\text{probability}(f)$ 很大，所以我们可以最大化 $\text{likelihood}(h)$。这时意味着 $h$ 生成 $\mathcal{D}$ 的似然（或者说概率）很大，一定程度上可以说，$h \approx f$。</p>
+<p>接下来的工作就是要最大化 $\text{likelihood}(h)$<br>$$g = \underset{h}{\text{argmax}} \ \ \text{likelihood}(h)<br>$$ 将常量 $P(\mathbf{x})$ 去掉，同时注意到 $1-h(\mathbf{x}) = h(\mathbf{-x})$，有<br>$$\text{likelihood}(h)<br>\propto \prod \limits_{i=1}^n h(y_n\mathbf{x}_n) = \prod \limits_{i=1}^n \theta(y_n \mathbf{w}^T_n\mathbf{x}_n)<br>$$ 取对数，并做一下相关变换，得到<br>$$\min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} -\ln \theta(y_n \mathbf{w}^T \mathbf{x}_n)<br>$$ 即 $$ \min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 因此，这就是 Logistic Regression 的损失函数<br>$$\text{err}(\mathbf{w}, \mathbf{x}, y) = \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 称之为交叉熵损失函数。</p>
+<h2 id="Gradient-of-Logistic-Regression-Error"><a href="#Gradient-of-Logistic-Regression-Error" class="headerlink" title="Gradient of Logistic Regression Error"></a>Gradient of Logistic Regression Error</h2><p>为了最小化损失函数<br>$$E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 通常采取的方法是梯度下降法，如图所示：<br><img src="/20180325-NTU-ML-10/min_error.png" alt=""></p>
+<p>为方便表示，我们使用 $\Box$ 表示 $\left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$，使用 $\bigcirc$ 表示 $( -y_n \mathbf{w}^T \mathbf{x}_n )$。</p>
+<p>那么求导过程如下：<br>$$\begin{aligned}<br>\frac{\partial E_{\text{in}}(\mathbf{w})}{\partial w_i}<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{\partial \ln (\Box)} {\partial \Box}\Big)<br>\Big( \frac{\partial  (1 + \text{exp}(\bigcirc)) } {\partial \bigcirc} \Big)<br>\Big( \frac{\partial -y_n \mathbf{w}^T \mathbf{x}_n} {\partial w_i}\Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{1}{\Box} \Big)<br>\Big( \text{exp}(\bigcirc) \Big)<br>\Big( -y_n x_{n,i} \Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\frac{\text{exp}(\bigcirc)} {1 + \text{exp}(\bigcirc)}<br>\big( -y_n x_{n,i} \big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\theta(\bigcirc) \big( -y_n x_{n,i}\big)<br>\end{aligned}<br>$$ 于是<br>$$\nabla E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \theta \big( -y_n \mathbf{w}^T \mathbf{x}_n \big)<br>\big( -y_n \mathbf{x}_n\big)<br>$$ 我们的目标是使得 $\nabla E_{\text{in}}(\mathbf{w}) = 0$，这里可以分为两种情况</p>
+<ul>
+<li>所有 $\theta(\cdot)$ 都为 $0$，这时表示所有 $y_n \mathbf{w}^T \mathbf{x}_n \gg 0$，说明线性可分</li>
+<li>加权结果为 $0$，说明线性不可分</li>
+</ul>
+<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>下面来讲一下梯度下降法，这是一种迭代的方法，通过不断的迭代来更新参数的值：<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \mathbf{v}<br>$$ 其中 $\eta$ 表示的是步长，$\mathbf{v}$ 表示的是方向。<br>我们暂时假定步长是给定的，那么在每一次的迭代过程中，等价于求解下面的问题：<br>$$\underset{||\mathbf{v}=1||}{\text{min}} E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v})<br>$$ 当 $\eta$ 很小的时候，使用泰勒展开，有<br>$$E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v}) \approx E_{\text{in}}(\mathbf{w}_t) + \eta \mathbf{v}^T \nabla E_{\text{in}}(\mathbf{w}_t)<br>$$ 其中 $E_{\text{in}}(\mathbf{w}_t)$ 以及 $\nabla E_{\text{in}}(\mathbf{w}_t)$ 是已知的，$\eta$ 是正数，于是上式中最佳的 $\mathbf{v}$ 为：<br>$$\mathbf{v} = - \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 于是迭代过程为<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_1 \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 这就是负梯度方向，因此在负梯度方向上 $E_{\text{in}}$ 下降最快。</p>
+<h3 id="choice-of-eta"><a href="#choice-of-eta" class="headerlink" title="choice of $\eta$"></a>choice of $\eta$</h3><p>$\eta$ 的大小对 $E_{\text{in}}$ 优化的过程也有一定影响，如下图所示<br><img src="/20180325-NTU-ML-10/choice_of_eta.png" alt=""></p>
+<ul>
+<li>$\eta$ 太小：优化速度太慢</li>
+<li>$\eta$ 太大：优化过程不稳定</li>
+</ul>
+<p>因此比较合适的选择是，使 $\eta$ 随着 $||\nabla E_{\text{in}}(\mathbf{w}_t)||$ 变化，于是我们令 $$\eta_2 = \eta_1 \cdot ||\nabla E_{\text{in}}(\mathbf{w}_t)||<br>$$ 带入上面的式子，得到<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_2 ||\nabla E_{\text{in}}(\mathbf{w}_t)|| $$</p>
+<h3 id="Logistic-Regression-Algorithm"><a href="#Logistic-Regression-Algorithm" class="headerlink" title="Logistic Regression Algorithm"></a>Logistic Regression Algorithm</h3><p>综合上面的内容，我们得到了 Logistic Regression 算法，如图所示：<br><img src="/20180325-NTU-ML-10/LR_Algo.png" alt=""></p>
+<p>以上就是 Logistic Regression 算法的介绍。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180322-NTU-ML-9/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-9-Linear Regression</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-22T09:22:09+08:00"
-              content="2018-03-22" >
-          03-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180317-NTU-ML-8/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-8-Noise and Error</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-17T11:20:42+08:00"
-              content="2018-03-17" >
-          03-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180313-NTU-ML-7/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-7-The VC Dimension</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-13T09:16:57+08:00"
-              content="2018-03-13" >
-          03-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-5/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-5-Training versus Testing</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:57:18+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-4/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-4-Feasibility of Learning</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:40:14+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <div>
+        
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/20180325-NTU-ML-10/">NTU-ML-10-Logistic Regression</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
+  <p><span>发布时间:</span>2018年03月25日 - 19:03</p>
+  <p><span>最后更新:</span>2018年03月25日 - 19:03</p>
+  <p><span>原始链接:</span><a href="/20180325-NTU-ML-10/" title="NTU-ML-10-Logistic Regression">http://yoursite.com/20180325-NTU-ML-10/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180325-NTU-ML-10/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        
+      </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Eathen WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="Eathen Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Notes/" rel="tag"><i class="fa fa-tag"></i> Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180322-NTU-ML-9/" rel="next" title="NTU-ML-9-Linear Regression">
+                <i class="fa fa-chevron-left"></i> NTU-ML-9-Linear Regression
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/20180325-NTU-ML-11/" rel="prev" title="NTU-ML-11-Linear Models for Classification">
+                NTU-ML-11-Linear Models for Classification <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -629,6 +619,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -649,8 +650,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -727,6 +737,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">1.</span> <span class="nav-text">Logistic Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Logistic-Regression-Error"><span class="nav-number">2.</span> <span class="nav-text">Logistic Regression Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-of-Logistic-Regression-Error"><span class="nav-number">3.</span> <span class="nav-text">Gradient of Logistic Regression Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-Descent"><span class="nav-number">4.</span> <span class="nav-text">Gradient Descent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#choice-of-eta"><span class="nav-number">4.1.</span> <span class="nav-text">choice of $\eta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-Regression-Algorithm"><span class="nav-number">4.2.</span> <span class="nav-text">Logistic Regression Algorithm</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -860,6 +886,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -906,6 +936,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'eathen-zheng',
+            repo: 'eathen-zheng.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'c361223a2e95974b4bd609f5a9d1425697bc3bbb',
+            
+                client_id: 'bbcd092f12c76900097f'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 

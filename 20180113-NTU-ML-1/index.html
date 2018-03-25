@@ -97,15 +97,15 @@
 <meta name="description" content="IntrodctionWhat is Machine Learning 机器学习：计算机通过数据和计算获得一定技巧的过程。  技巧：指的是在某些事情上表现更加出色，比如预测、识别等等。   Why using Machine Learning 一些数据或者信息，人来无法获取，可能是一些人无法识别的事物，或是数据信息量特别大；  人的处理满足不了需求，比如：定义很多很多的规则满足物体识别或者其他需求">
 <meta name="keywords" content="Machine Learning,Notes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NTU-ML-机器学习问题">
+<meta property="og:title" content="NTU-ML-1-The Learning Problem">
 <meta property="og:url" content="http://yoursite.com/20180113-NTU-ML-1/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
 <meta property="og:description" content="IntrodctionWhat is Machine Learning 机器学习：计算机通过数据和计算获得一定技巧的过程。  技巧：指的是在某些事情上表现更加出色，比如预测、识别等等。   Why using Machine Learning 一些数据或者信息，人来无法获取，可能是一些人无法识别的事物，或是数据信息量特别大；  人的处理满足不了需求，比如：定义很多很多的规则满足物体识别或者其他需求">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/20180113-NTU-ML-1/what.png">
-<meta property="og:updated_time" content="2018-01-13T03:59:16.000Z">
+<meta property="og:updated_time" content="2018-03-24T23:35:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NTU-ML-机器学习问题">
+<meta name="twitter:title" content="NTU-ML-1-The Learning Problem">
 <meta name="twitter:description" content="IntrodctionWhat is Machine Learning 机器学习：计算机通过数据和计算获得一定技巧的过程。  技巧：指的是在某些事情上表现更加出色，比如预测、识别等等。   Why using Machine Learning 一些数据或者信息，人来无法获取，可能是一些人无法识别的事物，或是数据信息量特别大；  人的处理满足不了需求，比如：定义很多很多的规则满足物体识别或者其他需求">
 <meta name="twitter:image" content="http://yoursite.com/20180113-NTU-ML-1/what.png">
 
@@ -154,7 +154,7 @@
 
 
 
-  <title>NTU-ML-机器学习问题 | Eathen's Blog</title>
+  <title>NTU-ML-1-The Learning Problem | Eathen's Blog</title>
   
 
 
@@ -333,7 +333,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">NTU-ML-机器学习问题</h1>
+          <h1 class="post-title" itemprop="name headline">NTU-ML-1-The Learning Problem</h1>
         
 
         <div class="post-meta">
@@ -361,8 +361,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2018-01-13T11:59:16+08:00">
-                2018-01-13
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-25T07:35:16+08:00">
+                2018-03-25
               </time>
             
           </span>
@@ -385,7 +385,7 @@
 
           
           
-             <span id="/20180113-NTU-ML-1/" class="leancloud_visitors" data-flag-title="NTU-ML-机器学习问题">
+             <span id="/20180113-NTU-ML-1/" class="leancloud_visitors" data-flag-title="NTU-ML-1-The Learning Problem">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -410,7 +410,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  865
+                  777
                 </span>
               
 
@@ -485,31 +485,24 @@
 <li>我们所说的机器学习模型在这个流程图中也不仅仅是算法 $\mathcal{A}$，而且还包含了假设空间 $\mathcal{H}$。</li>
 </ul>
 <p>上图还是一个相对比较简单的机器学习流程图，在往后的文章中会不断的根据新学的知识继续扩展这幅图的元素。</p>
-<h2 id="Types-of-Learning"><a href="#Types-of-Learning" class="headerlink" title="Types of Learning"></a>Types of Learning</h2><h3 id="Learning-with-Different-Output-Space-mathcal-Y"><a href="#Learning-with-Different-Output-Space-mathcal-Y" class="headerlink" title="Learning with Different Output Space $\mathcal{Y}$"></a>Learning with Different Output Space $\mathcal{Y}$</h3><p>按照数据的输出，可以把 ML 分为以下几类：</p>
-<ul>
-<li>二类别分类问题：$\mathcal{Y} \in \{0, 1\}$</li>
-<li>多类别分类问题：$\mathcal{Y} \in \{0, 1, \cdots, K\}$</li>
-<li>回归问题：$\mathcal{Y} \in R$</li>
-<li>结构学习</li>
+<h2 id="Machine-Learning-and-Other-Fields"><a href="#Machine-Learning-and-Other-Fields" class="headerlink" title="Machine Learning and Other Fields"></a>Machine Learning and Other Fields</h2><ul>
+<li>ML VS DM<br>两者密不可分：</li>
 </ul>
-<h3 id="Learning-with-Different-Data-Label-y-n"><a href="#Learning-with-Different-Data-Label-y-n" class="headerlink" title="Learning with Different Data Label $y_n$"></a>Learning with Different Data Label $y_n$</h3><p>按照数据的标签，可以把 ML 分为以下几类：</p>
+<ol>
+<li>两者是一致的<br>能够找出的有用信息就是我们要求得的近似目标函数的假设。</li>
+<li>两者是互助的<br>能够找出的有用信息就能帮助我们找出近似的假设，反之也可行。</li>
+<li>两者的区别<br>传统的数据挖掘更关注与从大量的数据中的计算问题。</li>
+</ol>
 <ul>
-<li>supervised： 所有 $x_n$ 都具有 $y_n$</li>
-<li>unsupervised： 所有 $x_n$ 都没有 $y_n$</li>
-<li>semi-supervised： 一些 $x_n$ 具有 $y_n$</li>
+<li><p>ML VS AI<br>机器学习是实现人工智能的一种方式。</p>
+</li>
+<li><p>ML VS Statistic</p>
+</li>
 </ul>
-<h3 id="Learning-with-Different-Protocol-f"><a href="#Learning-with-Different-Protocol-f" class="headerlink" title="Learning with Different Protocol $f$"></a>Learning with Different Protocol $f$</h3><p>按照数据的传输方式，可以把 ML 分为以下几类：</p>
-<ul>
-<li>batch： 一次性把所有的数据给算法</li>
-<li>online： 连续的数据，一次处理一个数据</li>
-<li>active： 机器通过主动询问某些问题来学习</li>
-</ul>
-<h3 id="Learning-with-Different-Input-Space-mathcal-X"><a href="#Learning-with-Different-Input-Space-mathcal-X" class="headerlink" title="Learning with Different Input Space $\mathcal{X}$"></a>Learning with Different Input Space $\mathcal{X}$</h3><p>按照数据的输入，可以把 ML 分为以下几类：</p>
-<ul>
-<li>concrete： 精细的、复杂的、有序的，已经完成预处理的数据</li>
-<li>raw： 原始的，未经处理或者经过很少处理的数据</li>
-<li>abstract：抽象的，无法轻易表明含义的数据</li>
-</ul>
+<ol>
+<li>统计是一种实现机器学习的方法。</li>
+<li>传统的统计学习更关注与数学公式，而非计算本身。</li>
+</ol>
 
       
     </div>
@@ -536,11 +529,11 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/20180113-NTU-ML-1/">NTU-ML-机器学习问题</a></p>
+  <p><span>本文标题:</span><a href="/20180113-NTU-ML-1/">NTU-ML-1-The Learning Problem</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
   <p><span>发布时间:</span>2018年01月13日 - 11:01</p>
-  <p><span>最后更新:</span>2018年01月13日 - 11:01</p>
-  <p><span>原始链接:</span><a href="/20180113-NTU-ML-1/" title="NTU-ML-机器学习问题">http://yoursite.com/20180113-NTU-ML-1/</a>
+  <p><span>最后更新:</span>2018年03月25日 - 07:03</p>
+  <p><span>原始链接:</span><a href="/20180113-NTU-ML-1/" title="NTU-ML-1-The Learning Problem">http://yoursite.com/20180113-NTU-ML-1/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180113-NTU-ML-1/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
@@ -627,8 +620,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/20180115-NTU-ML-2/" rel="prev" title="NTU-ML-感知器算法">
-                NTU-ML-感知器算法 <i class="fa fa-chevron-right"></i>
+              <a href="/20180115-NTU-ML-2/" rel="prev" title="NTU-ML-2-Learning to Answer Yes/No">
+                NTU-ML-2-Learning to Answer Yes/No <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -717,7 +710,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -785,7 +778,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introdction"><span class="nav-number">1.</span> <span class="nav-text">Introdction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Machine-Learning"><span class="nav-number">1.0.1.</span> <span class="nav-text">What is Machine Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-using-Machine-Learning"><span class="nav-number">1.0.2.</span> <span class="nav-text">Why using Machine Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#When-to-use-Machine-Learning"><span class="nav-number">1.0.3.</span> <span class="nav-text">When to use Machine Learning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Components-of-Machine-Learning"><span class="nav-number">1.1.</span> <span class="nav-text">Components of Machine Learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Flow"><span class="nav-number">1.2.</span> <span class="nav-text">Learning Flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-Learning"><span class="nav-number">1.3.</span> <span class="nav-text">Types of Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-with-Different-Output-Space-mathcal-Y"><span class="nav-number">1.3.1.</span> <span class="nav-text">Learning with Different Output Space $\mathcal{Y}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-with-Different-Data-Label-y-n"><span class="nav-number">1.3.2.</span> <span class="nav-text">Learning with Different Data Label $y_n$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-with-Different-Protocol-f"><span class="nav-number">1.3.3.</span> <span class="nav-text">Learning with Different Protocol $f$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-with-Different-Input-Space-mathcal-X"><span class="nav-number">1.3.4.</span> <span class="nav-text">Learning with Different Input Space $\mathcal{X}$</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introdction"><span class="nav-number">1.</span> <span class="nav-text">Introdction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Machine-Learning"><span class="nav-number">1.0.1.</span> <span class="nav-text">What is Machine Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-using-Machine-Learning"><span class="nav-number">1.0.2.</span> <span class="nav-text">Why using Machine Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#When-to-use-Machine-Learning"><span class="nav-number">1.0.3.</span> <span class="nav-text">When to use Machine Learning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Components-of-Machine-Learning"><span class="nav-number">1.1.</span> <span class="nav-text">Components of Machine Learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Flow"><span class="nav-number">1.2.</span> <span class="nav-text">Learning Flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Machine-Learning-and-Other-Fields"><span class="nav-number">1.3.</span> <span class="nav-text">Machine Learning and Other Fields</span></a></li></ol></li></ol></div>
             
 
           </div>

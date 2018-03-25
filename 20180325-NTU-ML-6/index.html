@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine Learning,Notes," />
 
 
 
@@ -94,13 +94,26 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eathen&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/03/index.html">
+<meta name="description" content="Restriction of Break Point上次我们说到，需要探究 “break point” $k$ 与 $m_\mathcal{H}(N)$ 之间的关系。回顾一下，$m_\mathcal{H}(N)$ 表示假设空间在 $N$ 个样本点上能产生的最大二分数量，$k$ 表示不能满足完全分类情形的样本点数。 让我们来探讨一下，当 $k$ 确定时，$m_\mathcal{H}(N)$ 的最大可">
+<meta name="keywords" content="Machine Learning,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NTU-ML-6-Theory of Generalization">
+<meta property="og:url" content="http://yoursite.com/20180325-NTU-ML-6/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
+<meta property="og:description" content="Restriction of Break Point上次我们说到，需要探究 “break point” $k$ 与 $m_\mathcal{H}(N)$ 之间的关系。回顾一下，$m_\mathcal{H}(N)$ 表示假设空间在 $N$ 个样本点上能产生的最大二分数量，$k$ 表示不能满足完全分类情形的样本点数。 让我们来探讨一下，当 $k$ 确定时，$m_\mathcal{H}(N)$ 的最大可">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-6/m_2_3.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-6/m_4.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-6/m_5.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-6/m_concultion.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-6/B_4_3.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-6/B_4_3_1.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-6/B_4_3_2.png">
+<meta property="og:updated_time" content="2018-03-25T11:47:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eathen&#39;s Blog">
+<meta name="twitter:title" content="NTU-ML-6-Theory of Generalization">
+<meta name="twitter:description" content="Restriction of Break Point上次我们说到，需要探究 “break point” $k$ 与 $m_\mathcal{H}(N)$ 之间的关系。回顾一下，$m_\mathcal{H}(N)$ 表示假设空间在 $N$ 个样本点上能产生的最大二分数量，$k$ 表示不能满足完全分类情形的样本点数。 让我们来探讨一下，当 $k$ 确定时，$m_\mathcal{H}(N)$ 的最大可">
+<meta name="twitter:image" content="http://yoursite.com/20180325-NTU-ML-6/m_2_3.png">
 
 
 
@@ -141,13 +154,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/03/"/>
+  <link rel="canonical" href="http://yoursite.com/20180325-NTU-ML-6/"/>
 
 
 
 
 
-  <title>Archive | Eathen's Blog</title>
+  <title>NTU-ML-6-Theory of Generalization | Eathen's Blog</title>
   
 
 
@@ -166,7 +179,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
   <a href="https://github.com/eathen-zheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -295,333 +308,331 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180325-NTU-ML-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eathen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/longmao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eathen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">NTU-ML-6-Theory of Generalization</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T19:47:04+08:00">
+                2018-03-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-25T19:47:04+08:00">
+                2018-03-25
+              </time>
+            
+          </span>
+
           
-        
-        Um..! 12 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/20180325-NTU-ML-6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180325-NTU-ML-6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/20180325-NTU-ML-6/" class="leancloud_visitors" data-flag-title="NTU-ML-6-Theory of Generalization">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count">℃</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-6/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">NTU-ML-6-Theory of Generalization</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,525
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:47:04+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-11/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-11-Linear Models for Classification</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:38:37+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-10/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-10-Logistic Regression</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:24:59+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="Restriction-of-Break-Point"><a href="#Restriction-of-Break-Point" class="headerlink" title="Restriction of Break Point"></a>Restriction of Break Point</h2><p>上次我们说到，需要探究 “break point” $k$ 与 $m_\mathcal{H}(N)$ 之间的关系。回顾一下，$m_\mathcal{H}(N)$ 表示假设空间在 $N$ 个样本点上能产生的最大二分数量，$k$ 表示不能满足完全分类情形的样本点数。</p>
+<p>让我们来探讨一下，当 $k$ 确定时，$m_\mathcal{H}(N)$ 的最大可能取值，下面使用一个例子来进行探讨。</p>
+<h3 id="Example-Break-Point-k-2"><a href="#Example-Break-Point-k-2" class="headerlink" title="Example: Break Point $k=2$"></a>Example: Break Point $k=2$</h3><p>根据 break point 的定义</p>
+<ul>
+<li>当样本数为 $N=1$ 时，需要满足样本完全二分的情况，因此 $m_\mathcal{H}(1) = 2^1 = 2$</li>
+<li>当样本数为 $N=2$ 时，不可满足样本完全二分的情况，因此 $m_\mathcal{H}(2) &lt; 2^2 = 4$，最多为 $m_\mathcal{H}(2)=3$</li>
+<li>当样本数为 $N=3$ 时，同样不可满足样本完全二分的情况，因此 $m_\mathcal{H}(3) &lt; 2^3 = 8$，但是由于 $m_\mathcal{H}(2)$ 已经存在上限 $m_\mathcal{H}(2)&lt;4$，因此 $m_\mathcal{H}(3)$ 的值会有更严格的上限。根据实验可以得到 $m_\mathcal{H}(3) &lt; 5$。</li>
+</ul>
+<p>$k=2$ 时 $m_\mathcal{H}(3) &lt; 5$ 的含义是：当样本数为 $N=3$ 时，假设空间最多有 $4$ 种分类结果，使得对任意 $k=2$ 个样本，不能满足完全分类的情形。</p>
+<p>以上的分析比较晦涩难懂，我们使用图片重新说明一下。可以看到当只有 $1,2,3$ 种分类结果的时候，任意两个样本都不会出现完全分类的情形。当有 $4$ 种分类结果的时候，可能会出现有两个样本完全分类的情况，也可能不出现这种情况。而有 $5$ 种分类结果的时候，始终会出现有两个样本完全分类的情况。因此，二分类结果最多只能有 $4$ 种。</p>
+<p><img src="/20180325-NTU-ML-6/m_2_3.png" alt=""><br><img src="/20180325-NTU-ML-6/m_4.png" alt=""><br><img src="/20180325-NTU-ML-6/m_5.png" alt=""><br><img src="/20180325-NTU-ML-6/m_concultion.png" alt=""></p>
+<h2 id="Bounding-Function-Basic-Cases"><a href="#Bounding-Function-Basic-Cases" class="headerlink" title="Bounding Function: Basic Cases"></a>Bounding Function: Basic Cases</h2><p>我们将刚才讨论的东西起一个名字，叫做 bounding function $B(N,k)$，表示当 break point 为 $k$ 的时候，$m_\mathcal{H}(N)$ 的最大可能的值。</p>
+<p>那么经过前面的例子，我们可以得到一些结论：</p>
+<ul>
+<li>$k=1$ 时，$B(N,k)=1$（任意一个点都不能被完全分类，因此只能有一种分类结果）</li>
+<li>$k&gt;N$ 时，$B(N,k)=2^N$（总共就 $N$ 个点，最多就 $2^N$ 种分类结果）；</li>
+<li>$k=N$ 时，$B(N,k)=2^N-1$（减去一种分类结果，则任意 $N$ 个点不会被完全分类）；</li>
+<li>$B(3,2)=4$（刚才的例子）；</li>
+</ul>
+<p>于是我们得到了下面这个表格：<br>$$<br>\begin{array}{c|lcr}&amp;&amp;&amp;&amp;k\\<br>B(N,k)&amp;1&amp;2&amp;3&amp;4&amp;5&amp;6&amp;\cdots \\<br>\hline<br>1&amp;1&amp;2&amp;2&amp;2&amp;2&amp;2&amp;\cdots\\<br>2&amp;1&amp;3&amp;4&amp;4&amp;4&amp;4&amp;\cdots\\<br>3&amp;1&amp;4&amp;7&amp;8&amp;8&amp;8&amp;\cdots\\<br>4&amp;1&amp;&amp;&amp;15&amp;16&amp;16&amp;\cdots\\<br>5&amp;1&amp;&amp;&amp;&amp;31&amp;32&amp;\cdots\\<br>6&amp;1&amp;&amp;&amp;&amp;&amp;63&amp;\cdots\\<br>\vdots&amp;\vdots&amp;&amp;&amp;&amp;&amp;&amp;\ddots<br>\end{array}<br>$$</p>
+<h2 id="Bounding-Function-Inductive-Cases"><a href="#Bounding-Function-Inductive-Cases" class="headerlink" title="Bounding Function: Inductive Cases"></a>Bounding Function: Inductive Cases</h2><p>至此，我们已经解决了一半的问题。不过，表格里打问号的才是我们要讨论的重点，我们试着通过递推的方法得到这些值。</p>
+<h3 id="Dichotomies-of-B-4-3"><a href="#Dichotomies-of-B-4-3" class="headerlink" title="Dichotomies of $B(4,3)$"></a>Dichotomies of $B(4,3)$</h3><p>我们用计算机列举出 $B(4,3)$ 的所有可能，同时将这些结果重新排列，如下图所示：<br><img src="/20180325-NTU-ML-6/B_4_3.png" alt=""></p>
+<p>其中橙色的表示前 $3$ 个样本点成对出现，数量记为 $2\alpha$，绿色的表示前 $3$ 个样本点单独出现，数量记为 $\beta$，那么有 $B(4,3) = 2 \alpha + \beta$。</p>
+<p>$B(4,3)$ 表示所有 $4$ 个样本点中，任意 $3$ 个都不会被完全分类。那么去掉第 $4$ 个样本，可以得到：</p>
+<ul>
+<li>$\alpha+\beta$ 中，前 $3$ 个样本点中的任意 $3$ 个不会被完全分类，$\alpha + \beta \le B(3,3)$；</li>
+<li>$\alpha$ 中，前 $3$ 个样本点中的任意 $2$ 个不会被完全分类，$\alpha \le B(3,2)$（因此第 $4$ 个点会被完全分类）；<br><img src="/20180325-NTU-ML-6/B_4_3_1.png" alt=""><br><img src="/20180325-NTU-ML-6/B_4_3_2.png" alt=""></li>
+</ul>
+<p>因此：<br>$$B(4,3) = 2\alpha+\beta=(\alpha+\beta)+\alpha\le B(3,3)+B(3,2)$$</p>
+<p>推广到其他：<br>$$B(N,k)\le B(N-1,k)+B(N-1,k-1)$$</p>
+<p>数学归纳法可以证明：<br>$$B(N,k) \leq \sum_{i=0}^{k-1} {N \choose i}$$</p>
+<p>因此可以得到，当 break point $k$ 存在时</p>
+<p>$$m_\mathcal{H}(N) \le B(N,k) \leq \sum_{i=0}^{k-1} {N \choose i}$$ $m_\mathcal{H}(N)$ 是 $N$ 的多项式函数。</p>
+<h3 id="Mathematical-Induction"><a href="#Mathematical-Induction" class="headerlink" title="Mathematical Induction"></a>Mathematical Induction</h3><p>下面使用数学归纳法证明 $B(N,k) \le\sum_{i=0}^{k-1}{N \choose i}$</p>
+<ul>
+<li>$k=1$ 时，不等式恒成立，因此只讨论 $k \ge 2$ 的情形；</li>
+<li>$N=1$ 时，不等式成立；</li>
+<li>假设 $N=No$ 时，不等式成立，下面证明 $N=No+1$ 时，不等式成立。</li>
+</ul>
+<p>$$<br>\begin{aligned}<br>B(N_{o}+1,k) &amp;\leq B(N_{o},k) + B(N_{o},k-1) \\\<br>&amp;\leq \sum_{i=0}^{k-1}\binom{N_{o}}{i}+\sum_{i=0}^{k-2}\binom{N_{o}}{i} \\\<br>&amp;=1+\sum_{i=1}^{k-1}\binom{N_{o}}{i}+\sum_{i=1}^{k-1}\binom{N_{o}}{i-1} \\\<br>&amp;=1+\sum_{i=1}^{k-1}[\binom{N_{o}}{i}+\binom{N_{o}}{i-1}] \\\<br>&amp;=1+\sum_{i=1}^{k-1}\binom{N_{o}+1}{i}=\sum_{i=0}^{k-1}\binom{N_{o}+1}{i}<br>\end{aligned}<br>$$</p>
+<h2 id="A-Pictorial-Proof"><a href="#A-Pictorial-Proof" class="headerlink" title="A Pictorial Proof"></a>A Pictorial Proof</h2><p>于是利用有限的 $m_{\mathcal{H}}(N)$ 来替换无限的 $M$，得到 $\mathcal{H}$ 遇到Bad Sample的概率上界：<br>$$\mathbb{P}_\mathcal{D}[BAD\ D]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)$$</p>
+<p>用更加精准的数学符号来表示上面的不等式：<br>$$\mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)$$</p>
+<p>但事实上上面的不等式是不严谨的，因为 $m_{\mathcal{H}}(N)$ 描述的是 $\mathcal{H}$ 作用于数据量为 $N$ 的资料 $\mathcal{D}$ 有效的方程数，因此 $\mathcal{H}$ 当中每一个 $h$ 作用于 $\mathcal{D}$ 都能算出一个 $E_{in}$ 来，一共能有 $m_{\mathcal{H}}(N)$ 个不同的 $E_{in}$，是一个有限的数。但在out of sample的世界里(总体)，往往存在无限多个点，平面中任意一条直线，随便转一转动一动，就能产生一个不同的 $E_{out}$ 来。$E_{in}$ 的可能取值是有限个的，而 $E_{out}$ 的可能取值是无限的，无法直接套用union bound，我们得先把上面那个无限多种可能的 $E_{out}$ 换掉。</p>
+<p>下面涉及到许多数学公式，先挖个坑，有时间补上。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180322-NTU-ML-9/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-9-Linear Regression</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-22T09:22:09+08:00"
-              content="2018-03-22" >
-          03-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180317-NTU-ML-8/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-8-Noise and Error</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-17T11:20:42+08:00"
-              content="2018-03-17" >
-          03-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180313-NTU-ML-7/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-7-The VC Dimension</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-13T09:16:57+08:00"
-              content="2018-03-13" >
-          03-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-5/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-5-Training versus Testing</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:57:18+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-4/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-4-Feasibility of Learning</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:40:14+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <div>
+        
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/20180325-NTU-ML-6/">NTU-ML-6-Theory of Generalization</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
+  <p><span>发布时间:</span>2018年03月25日 - 19:03</p>
+  <p><span>最后更新:</span>2018年03月25日 - 19:03</p>
+  <p><span>原始链接:</span><a href="/20180325-NTU-ML-6/" title="NTU-ML-6-Theory of Generalization">http://yoursite.com/20180325-NTU-ML-6/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180325-NTU-ML-6/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        
+      </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Eathen WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="Eathen Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Notes/" rel="tag"><i class="fa fa-tag"></i> Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180325-NTU-ML-11/" rel="next" title="NTU-ML-11-Linear Models for Classification">
+                <i class="fa fa-chevron-left"></i> NTU-ML-11-Linear Models for Classification
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -629,6 +640,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -649,8 +671,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -727,6 +758,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Restriction-of-Break-Point"><span class="nav-number">1.</span> <span class="nav-text">Restriction of Break Point</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Break-Point-k-2"><span class="nav-number">1.1.</span> <span class="nav-text">Example: Break Point $k=2$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bounding-Function-Basic-Cases"><span class="nav-number">2.</span> <span class="nav-text">Bounding Function: Basic Cases</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bounding-Function-Inductive-Cases"><span class="nav-number">3.</span> <span class="nav-text">Bounding Function: Inductive Cases</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dichotomies-of-B-4-3"><span class="nav-number">3.1.</span> <span class="nav-text">Dichotomies of $B(4,3)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mathematical-Induction"><span class="nav-number">3.2.</span> <span class="nav-text">Mathematical Induction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Pictorial-Proof"><span class="nav-number">4.</span> <span class="nav-text">A Pictorial Proof</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -860,6 +907,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -906,6 +957,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'eathen-zheng',
+            repo: 'eathen-zheng.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'c361223a2e95974b4bd609f5a9d1425697bc3bbb',
+            
+                client_id: 'bbcd092f12c76900097f'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 

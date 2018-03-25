@@ -83,7 +83,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Machine Learning,Notes," />
 
 
 
@@ -94,13 +94,27 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Eathen&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/03/index.html">
+<meta name="description" content="这节课主要介绍使用线性模型来解决分类问题。 Linear Models for Binary ClassificationLinear Models Revisited之前我们介绍了三种线性模型，分别是 Linear Classification，Linear Regression 以及 Logistic Regression。 这几个模型，都是对样本特征进行加权，得到一个分数 $$s = \ma">
+<meta name="keywords" content="Machine Learning,Notes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NTU-ML-11-Linear Models for Classification">
+<meta property="og:url" content="http://yoursite.com/20180325-NTU-ML-11/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
+<meta property="og:description" content="这节课主要介绍使用线性模型来解决分类问题。 Linear Models for Binary ClassificationLinear Models Revisited之前我们介绍了三种线性模型，分别是 Linear Classification，Linear Regression 以及 Logistic Regression。 这几个模型，都是对样本特征进行加权，得到一个分数 $$s = \ma">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/linear_models.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/error_function.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/multiclass.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/ova_res_1.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/ova_res_2.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/ova.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/ovo_res.png">
+<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-11/ovo.png">
+<meta property="og:updated_time" content="2018-03-25T11:38:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eathen&#39;s Blog">
+<meta name="twitter:title" content="NTU-ML-11-Linear Models for Classification">
+<meta name="twitter:description" content="这节课主要介绍使用线性模型来解决分类问题。 Linear Models for Binary ClassificationLinear Models Revisited之前我们介绍了三种线性模型，分别是 Linear Classification，Linear Regression 以及 Logistic Regression。 这几个模型，都是对样本特征进行加权，得到一个分数 $$s = \ma">
+<meta name="twitter:image" content="http://yoursite.com/20180325-NTU-ML-11/linear_models.png">
 
 
 
@@ -141,13 +155,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/03/"/>
+  <link rel="canonical" href="http://yoursite.com/20180325-NTU-ML-11/"/>
 
 
 
 
 
-  <title>Archive | Eathen's Blog</title>
+  <title>NTU-ML-11-Linear Models for Classification | Eathen's Blog</title>
   
 
 
@@ -166,7 +180,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
   <a href="https://github.com/eathen-zheng"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -295,333 +309,347 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180325-NTU-ML-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Eathen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/longmao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eathen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">NTU-ML-11-Linear Models for Classification</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T19:38:37+08:00">
+                2018-03-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-25T19:38:37+08:00">
+                2018-03-25
+              </time>
+            
+          </span>
+
           
-        
-        Um..! 12 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/20180325-NTU-ML-11/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180325-NTU-ML-11/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/20180325-NTU-ML-11/" class="leancloud_visitors" data-flag-title="NTU-ML-11-Linear Models for Classification">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count">℃</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-6/" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">NTU-ML-6-Theory of Generalization</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,602
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:47:04+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-11/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-11-Linear Models for Classification</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:38:37+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180325-NTU-ML-10/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-10-Logistic Regression</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-25T19:24:59+08:00"
-              content="2018-03-25" >
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>这节课主要介绍使用线性模型来解决分类问题。</p>
+<h2 id="Linear-Models-for-Binary-Classification"><a href="#Linear-Models-for-Binary-Classification" class="headerlink" title="Linear Models for Binary Classification"></a>Linear Models for Binary Classification</h2><h3 id="Linear-Models-Revisited"><a href="#Linear-Models-Revisited" class="headerlink" title="Linear Models Revisited"></a>Linear Models Revisited</h3><p>之前我们介绍了三种线性模型，分别是 Linear Classification，Linear Regression 以及 Logistic Regression。</p>
+<p>这几个模型，都是对样本特征进行加权，得到一个分数 $$s = \mathbf{w}^T \mathbf{x} $$ 再通过 $s$ 构成预测函数 $h(\mathbf{x})$ 以及误差函数 $\text{err}(s,y)$。</p>
+<ul>
+<li>Linear Classification<br>$$ \begin{aligned}<br>&amp;h(\mathbf{x}) = \text{sign}(s)\\<br>&amp;\text{err}(h,\mathbf{x},y) = \big[\big[ h(\mathbf{x}) \neq y \big]\big]\\<br>&amp;\text{err}(s,y) = \big[\big[ \text{sign}(s) \neq y \big]\big] = \big[\big[ \text{sign}(sy) \neq 1 \big]\big]\\<br>\end{aligned} $$</li>
+<li>Linear Regression<br>$$ \begin{aligned}<br>&amp;h(\mathbf{x}) = s\\<br>&amp;\text{err}(h,\mathbf{x},y) = \big( h(\mathbf{x}) - y \big)^2 \\<br>&amp;\text{err}(s,y) = (s-y)^2 = (ys - 1)^2<br>\end{aligned} $$</li>
+<li>Logistic Regression<br>$$ \begin{aligned}<br>&amp;h(\mathbf{x}) = \theta (s)\\<br>&amp;\text{err}(h,\mathbf{x},y) = - \text{ln} h(y \mathbf{x})\\<br>&amp;\text{err}(s,y) = \text{ln} \big( 1+\text{exp}(-ys) \big)\\<br>\end{aligned} $$</li>
+</ul>
+<p><img src="/20180325-NTU-ML-11/linear_models.png" alt=""></p>
+<p>这三种模型的 error function 都引入了 $ys$，我们可以理解成，$ys$ 是表示分类准确率的一个分数，$ys$ 越大，分类准确率越高。</p>
+<h3 id="Visualizing-Error-Functions"><a href="#Visualizing-Error-Functions" class="headerlink" title="Visualizing Error Functions"></a>Visualizing Error Functions</h3><p>图形化表示这三者的 error function，如下<br><img src="/20180325-NTU-ML-11/error_function.png" alt=""><br>其中我们将 Logistic Regression 的 error function 进行了一个缩放。</p>
+<h3 id="Theoretical-Implication-of-Upper-Bound"><a href="#Theoretical-Implication-of-Upper-Bound" class="headerlink" title="Theoretical Implication of Upper Bound"></a>Theoretical Implication of Upper Bound</h3><p>可以看出，$\text{err}_{\text{sqr}}$ 与 $\text{err}_{\text{scaled ce}}$ 都是 $\text{err}_{\text{0/1}}$ 的 upper bound 函数。</p>
+<p>$$ \text{err}_{\text{0/1}}(s,y) \leq \text{err}_{\text{SCE}}(s,y) = \frac{1}{\text{ln}2} \text{err}_{\text{CE}}(s,y)<br>$$ 可以推出 $$<br>\begin{aligned}<br>&amp;E_{\text{in}}^{\text{0/1}}(\mathbf{w}) \leq  E_{\text{in}}^{\text{SCE}}(\mathbf{w}) = \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w})\\<br>&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq  E_{\text{out}}^{\text{SCE}}(\mathbf{w}) = \frac{1}{\text{ln}2} E_{\text{out}}^{\text{CE}}(\mathbf{w})\\<br>\end{aligned}<br>$$ 根据 VC 理论可以得到 $$<br>\begin{aligned}<br>&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq E_{\text{in}}^{\text{0/1}}(\mathbf{w}) + \Omega ^ {\text{0/1}}<br>\leq \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w}) + \Omega ^ {\text{0/1}}\\<br>&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq \frac{1}{\text{ln}2} E_{\text{out}}^{\text{CE}}(\mathbf{w}) \leq \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w}) + \Omega ^ {\text{0/1}}\\<br>\end{aligned}<br>$$</p>
+<p>说明 $\text{err}_{\text{sqr}}$ 或者 $\text{err}_{\text{scaled ce}}$ 很小的时候，意味着 $\text{err}_{\text{0/1}}$ 也很小。因此，Linear Regression 和 Logistic Regression 都可以用来解决 Linear Classification 的问题。通常，我们使用 Linear Regression 得到 $\mathbf{w}_{0}$，再用 Logistic Regression 进行求解。</p>
+<h3 id="Regression-for-Classification"><a href="#Regression-for-Classification" class="headerlink" title="Regression for Classification"></a>Regression for Classification</h3><p>PLA，Linear Regression 以及 Logistic Regression 处理分类问题时，优缺点总结如下</p>
+<ul>
+<li>PLA:<br>优点：数据线性可分时，$\text{err}_{\text{0/1}}$ 可以降到最低；<br>缺点：数据非线性可分时，需要使用 Pocket 算法，较难最优化；</li>
+<li>Linear Regression:<br>优点：最容易做最优化；<br>缺点：在 $ys$ 很大或很小时，Bound 是很宽松的；</li>
+<li>Logistic Regression:<br>优点：较容易最优化；<br>缺点：在 $ys$ 是很小的负数时，Bound 是宽松的；</li>
+</ul>
+<h2 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h2><h3 id="Two-Iterative-Optimization-Schemes"><a href="#Two-Iterative-Optimization-Schemes" class="headerlink" title="Two Iterative Optimization Schemes"></a>Two Iterative Optimization Schemes</h3><p>之前我们介绍过 PLA 以及 Logistic Regression，这两种算法都使用迭代的方法来更新参数的值<br>$$ \mathbf{w}_{t+1} = \mathbf{w}_{t} + \eta \ \mathbf{v}$$ </p>
+<ul>
+<li>PLA 每次迭代只计算一个点，时间复杂度 $O(1)$</li>
+<li>Logistic Regression 每次迭代要对所有点都进行计算，时间复杂度 $O(N)$</li>
+</ul>
+<p>下面介绍一种算法：随机梯度下降算法 (Stochastic Gradient Descent，SGD)，可以提高更新参数的速度。</p>
+<h3 id="Stochastic-Gradient-Descent-SGD"><a href="#Stochastic-Gradient-Descent-SGD" class="headerlink" title="Stochastic Gradient Descent (SGD)"></a>Stochastic Gradient Descent (SGD)</h3><p>SGD 算法每次迭代只找到一个点，计算该点的梯度，作为我们下一步更新参数的依据。这样就保证了每次迭代的计算量大大减小，我们可以把整体的梯度看成这个随机过程的一个期望值。</p>
+<ul>
+<li>Stochastic Gradient<br>$\nabla_{\text{w}} \ \text{err}(\mathbf{w}, \mathbf{x}_n, y_n)$ with random $n$</li>
+<li>True Gradient<br>$\nabla_{\text{w}} \ E_{\text{in}}(\mathbf{w}) = {\underset{\text{random}\ n}{\epsilon}} \nabla_{\text{w}} \ \text{err}(\mathbf{w}, \mathbf{x}_n, y_n)$</li>
+</ul>
+<p>于是，可以将 SGD 中梯度下降的方向理解成真实的梯度方向加上均值为零的随机噪声方向：<br>$${\text{stochastic gradient}} = {\text{true gradient}} + {\text{zero-mean noise directions}}<br>$$ 在运行足够多轮后，SGD 的效果与 GD 的效果是大致一样的。</p>
+<p>下面对 SGD 做一个小结：</p>
+<ul>
+<li>优点：计算量低，适用于大数据或者在线学习</li>
+<li>缺点：每次迭代并不能保证按照正确的方向前进，不够稳定</li>
+</ul>
+<h3 id="PLA-amp-SGD-Logistic-Regression"><a href="#PLA-amp-SGD-Logistic-Regression" class="headerlink" title="PLA &amp; SGD Logistic Regression"></a>PLA &amp; SGD Logistic Regression</h3><p>PLA 与 SGD Logistic Regression 这两种算法在参数更新上有相似之处</p>
+<ul>
+<li>SGD Logistic Regression<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \cdot \theta(-y_n \mathbf{w}_t^T \mathbf{x}_n) (y_n \mathbf{x}_n)$$</li>
+<li>PLA<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + 1 \cdot \big[\big[ y_n \neq \text{sign}(\mathbf{w}_t^T \mathbf{x}_n) \big]\big] (y_n \mathbf{x}_n)$$</li>
+</ul>
+<p>可以把 SGD Logistic Regression 看成是 soft PLA：</p>
+<ul>
+<li>PLA：每次迭代只对分错的样本进行修正</li>
+<li>SGD Logistic Regression：每次迭代都会进行修正（不管分对分错）</li>
+<li>当 $\eta = 1$ 且 $\mathbf{w}_t^T \mathbf{x}_n$ 时，PLA 相当于 SGD Logistic Regression </li>
+</ul>
+<h2 id="Multiclass-via-Logistic-Regression"><a href="#Multiclass-via-Logistic-Regression" class="headerlink" title="Multiclass via Logistic Regression"></a>Multiclass via Logistic Regression</h2><p>之前我们讨论的都是使用分类器解决二类别分类问题，接下来我们准备讨论使用分类器解决多类别分类问题。</p>
+<p>我们举一个例子来进行讲解，需要将下图的图形分为正方形、菱形、三角形、星形四类：<br><img src="/20180325-NTU-ML-11/multiclass.png" alt=""></p>
+<p>一种策略是将 $k$ 分类问题转化为 $k$ 个二分类问题：是不是第 $i( i =1,2 \cdots k)$ 类，然后再根据这些问题的答案决定每个样本的类别，如下图所示。<br><img src="/20180325-NTU-ML-11/ova_res_1.png" alt=""></p>
+<p>这种策略存在的问题是，可能出现分不了的情况，如某些区域同时被多个类判断为正（负）类。为了解决这个问题，可以改用软性分类器，即让上述的二分类问题输出概率而不是类别信息。<br><img src="/20180325-NTU-ML-11/ova_res_2.png" alt=""></p>
+<p>这种策略称为 One-Versus-All（OVA），是一种常用的多类别分类策略。<br><img src="/20180325-NTU-ML-11/ova.png" alt=""></p>
+<h2 id="Multiclass-via-Binary-Classification"><a href="#Multiclass-via-Binary-Classification" class="headerlink" title="Multiclass via Binary Classification"></a>Multiclass via Binary Classification</h2><p>上面介绍的 OVA 策略存在一个问题，当正负样本数不平衡的时候，会影响分类的性能，因此提出了另外一种策略。</p>
+<p>在 OVO 策略下，每 2 个类别之间形成一个二分类问题，于是将 $k$ 分类问题转化为 $C_{k}^{2}$ 个二分类问题，然后再根据这些问题的答案决定每个样本的类别，如下图所示。<br><img src="/20180325-NTU-ML-11/ovo_res.png" alt=""></p>
+<p>这种策略称为 One-versus-One（OVO），是一种常用的多类别分类策略。<br><img src="/20180325-NTU-ML-11/ovo.png" alt=""></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180322-NTU-ML-9/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-9-Linear Regression</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-22T09:22:09+08:00"
-              content="2018-03-22" >
-          03-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180317-NTU-ML-8/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-8-Noise and Error</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-17T11:20:42+08:00"
-              content="2018-03-17" >
-          03-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180313-NTU-ML-7/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-7-The VC Dimension</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-13T09:16:57+08:00"
-              content="2018-03-13" >
-          03-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-5/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-5-Training versus Testing</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:57:18+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/20180311-NTU-ML-4/" itemprop="url">
-              
-                <span itemprop="name">NTU-ML-4-Feasibility of Learning</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-11T21:40:14+08:00"
-              content="2018-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+    
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;">-------------本文结束 感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <div>
+        
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/20180325-NTU-ML-11/">NTU-ML-11-Linear Models for Classification</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
+  <p><span>发布时间:</span>2018年03月25日 - 19:03</p>
+  <p><span>最后更新:</span>2018年03月25日 - 19:03</p>
+  <p><span>原始链接:</span><a href="/20180325-NTU-ML-11/" title="NTU-ML-11-Linear Models for Classification">http://yoursite.com/20180325-NTU-ML-11/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180325-NTU-ML-11/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        
+      </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="Eathen WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="Eathen Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+          
+            <a href="/tags/Notes/" rel="tag"><i class="fa fa-tag"></i> Notes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/20180325-NTU-ML-10/" rel="next" title="NTU-ML-10-Logistic Regression">
+                <i class="fa fa-chevron-left"></i> NTU-ML-10-Logistic Regression
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/20180325-NTU-ML-6/" rel="prev" title="NTU-ML-6-Theory of Generalization">
+                NTU-ML-6-Theory of Generalization <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -629,6 +657,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -649,8 +688,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -727,6 +775,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Models-for-Binary-Classification"><span class="nav-number">1.</span> <span class="nav-text">Linear Models for Binary Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear-Models-Revisited"><span class="nav-number">1.1.</span> <span class="nav-text">Linear Models Revisited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visualizing-Error-Functions"><span class="nav-number">1.2.</span> <span class="nav-text">Visualizing Error Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Theoretical-Implication-of-Upper-Bound"><span class="nav-number">1.3.</span> <span class="nav-text">Theoretical Implication of Upper Bound</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regression-for-Classification"><span class="nav-number">1.4.</span> <span class="nav-text">Regression for Classification</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stochastic-Gradient-Descent"><span class="nav-number">2.</span> <span class="nav-text">Stochastic Gradient Descent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Two-Iterative-Optimization-Schemes"><span class="nav-number">2.1.</span> <span class="nav-text">Two Iterative Optimization Schemes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stochastic-Gradient-Descent-SGD"><span class="nav-number">2.2.</span> <span class="nav-text">Stochastic Gradient Descent (SGD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PLA-amp-SGD-Logistic-Regression"><span class="nav-number">2.3.</span> <span class="nav-text">PLA &amp; SGD Logistic Regression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiclass-via-Logistic-Regression"><span class="nav-number">3.</span> <span class="nav-text">Multiclass via Logistic Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiclass-via-Binary-Classification"><span class="nav-number">4.</span> <span class="nav-text">Multiclass via Binary Classification</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -860,6 +924,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -906,6 +974,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'eathen-zheng',
+            repo: 'eathen-zheng.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'c361223a2e95974b4bd609f5a9d1425697bc3bbb',
+            
+                client_id: 'bbcd092f12c76900097f'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 
