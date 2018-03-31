@@ -94,22 +94,25 @@
 
 
 
-<meta name="description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
+<meta name="description" content="上一篇文章，我们总结了三种线性模型，并使用它们解决了二分类以及多分类问题。这篇文章主要介绍怎样解决非线性问题。 Quadratic Hypothesis当数据非线性可分的时候，我们需要使用特征转换，将原来非线性空间上的特征转换到新的线性空间，然后再使用之前学过的线性模型进行分类。 特征转换如下：$$\mathbf{x} \in \mathcal{X} \mathop{\rightarrow}^{\">
 <meta name="keywords" content="Machine Learning,Notes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NTU-ML-10-Logistic Regression">
-<meta property="og:url" content="http://yoursite.com/20180325-NTU-ML-10/index.html">
+<meta property="og:title" content="NTU-ML-12-Nonlinear Transformation">
+<meta property="og:url" content="http://yoursite.com/20180331-NTU-ML-12/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
-<meta property="og:description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
+<meta property="og:description" content="上一篇文章，我们总结了三种线性模型，并使用它们解决了二分类以及多分类问题。这篇文章主要介绍怎样解决非线性问题。 Quadratic Hypothesis当数据非线性可分的时候，我们需要使用特征转换，将原来非线性空间上的特征转换到新的线性空间，然后再使用之前学过的线性模型进行分类。 特征转换如下：$$\mathbf{x} \in \mathcal{X} \mathop{\rightarrow}^{\">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/min_error.png">
-<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/choice_of_eta.png">
-<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/LR_Algo.png">
-<meta property="og:updated_time" content="2018-03-25T11:24:59.000Z">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-12/example.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-12/good_quadratic_hypothesis.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-12/qth_transform.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-12/danger_of_visual_choices.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-12/structured_hypothesis_sets.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-12/learning_curve.png">
+<meta property="og:updated_time" content="2018-03-31T03:13:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NTU-ML-10-Logistic Regression">
-<meta name="twitter:description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
-<meta name="twitter:image" content="http://yoursite.com/20180325-NTU-ML-10/min_error.png">
+<meta name="twitter:title" content="NTU-ML-12-Nonlinear Transformation">
+<meta name="twitter:description" content="上一篇文章，我们总结了三种线性模型，并使用它们解决了二分类以及多分类问题。这篇文章主要介绍怎样解决非线性问题。 Quadratic Hypothesis当数据非线性可分的时候，我们需要使用特征转换，将原来非线性空间上的特征转换到新的线性空间，然后再使用之前学过的线性模型进行分类。 特征转换如下：$$\mathbf{x} \in \mathcal{X} \mathop{\rightarrow}^{\">
+<meta name="twitter:image" content="http://yoursite.com/20180331-NTU-ML-12/example.png">
 
 
 
@@ -150,13 +153,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/20180325-NTU-ML-10/"/>
+  <link rel="canonical" href="http://yoursite.com/20180331-NTU-ML-12/"/>
 
 
 
 
 
-  <title>NTU-ML-10-Logistic Regression | Eathen's Blog</title>
+  <title>NTU-ML-12-Nonlinear Transformation | Eathen's Blog</title>
   
 
 
@@ -318,7 +321,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180325-NTU-ML-10/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180331-NTU-ML-12/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eathen">
@@ -335,7 +338,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">NTU-ML-10-Logistic Regression</h1>
+          <h1 class="post-title" itemprop="name headline">NTU-ML-12-Nonlinear Transformation</h1>
         
 
         <div class="post-meta">
@@ -347,8 +350,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T19:24:59+08:00">
-                2018-03-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-31T11:13:20+08:00">
+                2018-03-31
               </time>
             
 
@@ -363,8 +366,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2018-03-25T19:24:59+08:00">
-                2018-03-25
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-31T11:13:20+08:00">
+                2018-03-31
               </time>
             
           </span>
@@ -378,8 +381,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/20180325-NTU-ML-10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/20180325-NTU-ML-10/" itemprop="commentsCount"></span>
+                <a href="/20180331-NTU-ML-12/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180331-NTU-ML-12/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -387,7 +390,7 @@
 
           
           
-             <span id="/20180325-NTU-ML-10/" class="leancloud_visitors" data-flag-title="NTU-ML-10-Logistic Regression">
+             <span id="/20180331-NTU-ML-12/" class="leancloud_visitors" data-flag-title="NTU-ML-12-Nonlinear Transformation">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -412,7 +415,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1,308
+                  921
                 </span>
               
 
@@ -428,7 +431,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  6
+                  4
                 </span>
               
             </div>
@@ -449,29 +452,34 @@
       
 
       
-        <p>这一节主要介绍 Logistic Regression 算法。</p>
-<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>Logistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。</p>
-<p>因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了 Logistic 函数<br>$$\theta(s) = \frac{1}{1+e^{-s}}$$ 于是 $$<br>h(\mathbf{x}) = \theta(\mathbf{w}^T\mathbf{x}) = \frac{1}{1+e^{-\mathbf{w}^T\mathbf{x}}}$$</p>
-<p>将取值范围为负无穷到正无穷的 $\mathbf{w}^T\mathbf{x}$ 映射到了 0 到 1。</p>
-<h2 id="Logistic-Regression-Error"><a href="#Logistic-Regression-Error" class="headerlink" title="Logistic Regression Error"></a>Logistic Regression Error</h2><p>有了 $h(\mathbf{x})$ 之后，我们还需要找出 $E_{\text{in}}(\mathbf{w})$ 的表达式，在 Logistic Regression 算法中，$E_{\text{in}}(\mathbf{w})$ 是通过最大似然准则得到的。</p>
-<p>首先介绍一下似然这个概念。假设我们有一笔数据 $$\mathcal{D}=\big\{ (\mathbf{x}_{1}, +1),\mathbf{x}_{2}, -1),\cdots,\mathbf{x}_{N}, -1), \big\}$$ 那么通过真实的函数 $f$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{probability}(f) = P(\mathbf{x}_1)f(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-f(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-f(\mathbf{x}_N))<br>$$ 同理，通过预测函数 $h$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{likelihood}(h) = P(\mathbf{x}_1)h(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-h(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-h(\mathbf{x}_N))<br>$$<br>我们的目标是要预测 $h$ 使它接近 $f$，而通常来说 $\text{probability}(f)$ 很大，所以我们可以最大化 $\text{likelihood}(h)$。这时意味着 $h$ 生成 $\mathcal{D}$ 的似然（或者说概率）很大，一定程度上可以说，$h \approx f$。</p>
-<p>接下来的工作就是要最大化 $\text{likelihood}(h)$<br>$$g = \underset{h}{\text{argmax}} \ \ \text{likelihood}(h)<br>$$ 将常量 $P(\mathbf{x})$ 去掉，同时注意到 $1-h(\mathbf{x}) = h(\mathbf{-x})$，有<br>$$\text{likelihood}(h)<br>\propto \prod \limits_{i=1}^n h(y_n\mathbf{x}_n) = \prod \limits_{i=1}^n \theta(y_n \mathbf{w}^T_n\mathbf{x}_n)<br>$$ 取对数，并做一下相关变换，得到<br>$$\min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} -\ln \theta(y_n \mathbf{w}^T \mathbf{x}_n)<br>$$ 即 $$ \min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 因此，这就是 Logistic Regression 的损失函数<br>$$\text{err}(\mathbf{w}, \mathbf{x}, y) = \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 称之为交叉熵损失函数。</p>
-<h2 id="Gradient-of-Logistic-Regression-Error"><a href="#Gradient-of-Logistic-Regression-Error" class="headerlink" title="Gradient of Logistic Regression Error"></a>Gradient of Logistic Regression Error</h2><p>为了最小化损失函数<br>$$E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 通常采取的方法是梯度下降法，如图所示：<br><img src="/20180325-NTU-ML-10/min_error.png" alt=""></p>
-<p>为方便表示，我们使用 $\Box$ 表示 $\left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$，使用 $\bigcirc$ 表示 $( -y_n \mathbf{w}^T \mathbf{x}_n )$。</p>
-<p>那么求导过程如下：<br>$$\begin{aligned}<br>\frac{\partial E_{\text{in}}(\mathbf{w})}{\partial w_i}<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{\partial \ln (\Box)} {\partial \Box}\Big)<br>\Big( \frac{\partial  (1 + \text{exp}(\bigcirc)) } {\partial \bigcirc} \Big)<br>\Big( \frac{\partial -y_n \mathbf{w}^T \mathbf{x}_n} {\partial w_i}\Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{1}{\Box} \Big)<br>\Big( \text{exp}(\bigcirc) \Big)<br>\Big( -y_n x_{n,i} \Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\frac{\text{exp}(\bigcirc)} {1 + \text{exp}(\bigcirc)}<br>\big( -y_n x_{n,i} \big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\theta(\bigcirc) \big( -y_n x_{n,i}\big)<br>\end{aligned}<br>$$ 于是<br>$$\nabla E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \theta \big( -y_n \mathbf{w}^T \mathbf{x}_n \big)<br>\big( -y_n \mathbf{x}_n\big)<br>$$ 我们的目标是使得 $\nabla E_{\text{in}}(\mathbf{w}) = 0$，这里可以分为两种情况</p>
-<ul>
-<li>所有 $\theta(\cdot)$ 都为 $0$，这时表示所有 $y_n \mathbf{w}^T \mathbf{x}_n \gg 0$，说明线性可分</li>
-<li>加权结果为 $0$，说明线性不可分</li>
-</ul>
-<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>下面来讲一下梯度下降法，这是一种迭代的方法，通过不断的迭代来更新参数的值：<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \mathbf{v}<br>$$ 其中 $\eta$ 表示的是步长，$\mathbf{v}$ 表示的是方向。<br>我们暂时假定步长是给定的，那么在每一次的迭代过程中，等价于求解下面的问题：<br>$$\underset{||\mathbf{v}=1||}{\text{min}} E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v})<br>$$ 当 $\eta$ 很小的时候，使用泰勒展开，有<br>$$E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v}) \approx E_{\text{in}}(\mathbf{w}_t) + \eta \mathbf{v}^T \nabla E_{\text{in}}(\mathbf{w}_t)<br>$$ 其中 $E_{\text{in}}(\mathbf{w}_t)$ 以及 $\nabla E_{\text{in}}(\mathbf{w}_t)$ 是已知的，$\eta$ 是正数，于是上式中最佳的 $\mathbf{v}$ 为：<br>$$\mathbf{v} = - \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 于是迭代过程为<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_1 \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 这就是负梯度方向，因此在负梯度方向上 $E_{\text{in}}$ 下降最快。</p>
-<h3 id="choice-of-eta"><a href="#choice-of-eta" class="headerlink" title="choice of $\eta$"></a>choice of $\eta$</h3><p>$\eta$ 的大小对 $E_{\text{in}}$ 优化的过程也有一定影响，如下图所示<br><img src="/20180325-NTU-ML-10/choice_of_eta.png" alt=""></p>
-<ul>
-<li>$\eta$ 太小：优化速度太慢</li>
-<li>$\eta$ 太大：优化过程不稳定</li>
-</ul>
-<p>因此比较合适的选择是，使 $\eta$ 随着 $||\nabla E_{\text{in}}(\mathbf{w}_t)||$ 变化，于是我们令 $$\eta_2 = \eta_1 \cdot ||\nabla E_{\text{in}}(\mathbf{w}_t)||<br>$$ 带入上面的式子，得到<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_2 ||\nabla E_{\text{in}}(\mathbf{w}_t)|| $$</p>
-<h3 id="Logistic-Regression-Algorithm"><a href="#Logistic-Regression-Algorithm" class="headerlink" title="Logistic Regression Algorithm"></a>Logistic Regression Algorithm</h3><p>综合上面的内容，我们得到了 Logistic Regression 算法，如图所示：<br><img src="/20180325-NTU-ML-10/LR_Algo.png" alt=""></p>
-<p>以上就是 Logistic Regression 算法的介绍。</p>
+        <p>上一篇文章，我们总结了三种线性模型，并使用它们解决了二分类以及多分类问题。这篇文章主要介绍怎样解决非线性问题。</p>
+<h2 id="Quadratic-Hypothesis"><a href="#Quadratic-Hypothesis" class="headerlink" title="Quadratic Hypothesis"></a>Quadratic Hypothesis</h2><p>当数据非线性可分的时候，我们需要使用特征转换，将原来非线性空间上的特征转换到新的线性空间，然后再使用之前学过的线性模型进行分类。</p>
+<p>特征转换如下：<br>$$\mathbf{x} \in \mathcal{X} \mathop{\rightarrow}^{\Phi} \mathbf{z} \in \mathcal{Z}<br>$$ 于是将非线性可分的样本 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} $ 转换为线性可分的样本 $\big\{ \big( \mathbf{z}_n,y_n \big) \big\} $</p>
+<p>举一个例子说明：</p>
+<p>下图中的样本 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} $ 是非线性可分的，但是可以使用圆将其分类。在使用特征变换 $$<br>\mathbf{z} = \Phi(\mathbf{x}) = (1, x_1^2, x_2^2)<br>$$ 之后，预测函数为 $$<br>h(\mathbf{x}) = \tilde{h}(\mathbf{z}) = \text{sign} \big( \tilde{\mathbf{w}}^T \Phi(\mathbf{x}) \big) = \text{sign} \big(<br>\tilde{w}_0 + \tilde{w}_1 x_{1}^{2} + \tilde{w}_2 x_{2}^{2} \big)<br>$$ 于是选择合适的参数，便可以使用直线将 $\mathbf{z}_n$ 进行分类，也就是使用圆将 $\mathbf{x}_n$ 进行分类。在这个例子中<br>$$<br>h(\mathbf{x}) = \tilde{h}(\mathbf{z}) = \text{sign} \big( \tilde{\mathbf{w}}^T \mathbf{z} \big) = \text{sign} \big(<br>0.6 + (-1) \cdot x_{1}^{2} + (-1) \cdot x_{2}^{2} \big) $$</p>
+<p><img src="/20180331-NTU-ML-12/example.png" alt=""></p>
+<p>当参数 $\tilde{\mathbf{w}}$ 取不同值的时候，在 $\mathbf{z}$ 域上看都是直线，但是在 $\mathbf{x}$ 域上看可以是圆、椭圆、双曲线等等不同的二次曲线。</p>
+<h2 id="Nonlinear-Transform"><a href="#Nonlinear-Transform" class="headerlink" title="Nonlinear Transform"></a>Nonlinear Transform</h2><p>可见，找到一个好的 Transform 方法，可以使得原始数据（不管是不是线性可分）分类的结果好。</p>
+<p><img src="/20180331-NTU-ML-12/good_quadratic_hypothesis.png" alt=""></p>
+<p>因此，在遇到非线性可分的样本的时候，通常的做法是：</p>
+<ol>
+<li>将原始数据进行转换 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} \mathop{\rightarrow}^{\Phi} \big\{ \big( \mathbf{z}_n,y_n \big) \big\}$</li>
+<li>使用线性分类算法对转换后的数据 $\big\{ \big( \mathbf{z}_n,y_n \big) \big\}$ 进行分类</li>
+<li>返回 $g(\mathbf{x}) = \text{sign} \big( \tilde{\mathbf{w}}^T \Phi(\mathbf{x}) \big)$</li>
+</ol>
+<h2 id="Price-of-Nonlinear-Transform"><a href="#Price-of-Nonlinear-Transform" class="headerlink" title="Price of Nonlinear Transform"></a>Price of Nonlinear Transform</h2><p>当然，这样的做法也是有缺点的。</p>
+<h3 id="Computation-Storage-Price"><a href="#Computation-Storage-Price" class="headerlink" title="Computation/Storage Price"></a>Computation/Storage Price</h3><p>考虑 $Q$ 次多项式的特征转换<br><img src="/20180331-NTU-ML-12/qth_transform.png" alt=""></p>
+<p>可见，参数的个数是 $1 + \tilde{d} = O(Q^d)$，当 $Q$ 比较大时，时间复杂度以及空间复杂度都很大。</p>
+<h3 id="Model-Complexity-Price"><a href="#Model-Complexity-Price" class="headerlink" title="Model Complexity Price"></a>Model Complexity Price</h3><p>模型的 VC dimension 是 $d_{\text{VC}} (mathcal{H}_{\Phi_Q}) \le 1 + \tilde{d}$ 可见当 $Q$ 比较大时，模型的 VC dimension 也很大。由此带来的问题是，可能会</p>
+<h3 id="Danger-of-Visual-Choices"><a href="#Danger-of-Visual-Choices" class="headerlink" title="Danger of Visual Choices"></a>Danger of Visual Choices</h3><p>还有一个问题是，在选择转化函数 $\Phi$ 的时候，可能加入了自己的脑力计算成果，这是不好的。</p>
+<p><img src="/20180331-NTU-ML-12/danger_of_visual_choices.png" alt=""></p>
+<h2 id="Structured-Hypothesis-Sets"><a href="#Structured-Hypothesis-Sets" class="headerlink" title="Structured Hypothesis Sets"></a>Structured Hypothesis Sets</h2><h3 id="Structured-Hypothesis-Sets-1"><a href="#Structured-Hypothesis-Sets-1" class="headerlink" title="Structured Hypothesis Sets"></a>Structured Hypothesis Sets</h3><p>下面，我们讨论一下从 $\mathbf{x}$ 域到 $\mathbf{z}$ 域的多项式变换。</p>
+<p><img src="/20180331-NTU-ML-12/structured_hypothesis_sets.png" alt=""></p>
+<p>可见不同阶次构成的 hypothesis 有如下关系<br>$$ \mathcal{H}_0 \subset \mathcal{H}_1 \subset \mathcal{H}_2 \subset \cdots \subset \mathcal{H}_Q<br>$$ 对于 VC dimension 有<br>$$<br>d_{\text{VC}}(\mathcal{H}_0) \leq d_{\text{VC}}(\mathcal{H}_1) \leq d_{\text{VC}}(\mathcal{H}_2) \leq \cdots \leq d_{\text{VC}}(\mathcal{H}_Q)<br>$$ 对于 $E_{\text{in}}$ 有<br>$$ E_{\text{in}}(g_0) \geq E_{\text{in}}(g_1) \geq E_{\text{in}}(g_2) \geq \cdots \geq E_{\text{in}}(g_Q)$$</p>
+<p>我们把这种结构叫做 Structured Hypothesis Sets。</p>
+<h3 id="Linear-Model-First"><a href="#Linear-Model-First" class="headerlink" title="Linear Model First"></a>Linear Model First</h3><p>根据以前介绍过的学习曲线<br><img src="/20180331-NTU-ML-12/learning_curve.png" alt=""></p>
+<p>可以看出，当多项式的阶数增大时，$d_{\text{VC}}$ 变大，$E_{\text{in}}$ 变小，但是 model complexity 会变大。因此，需要选取合适的阶数使得 $E_{\text{out}}$ 较小。</p>
+<p>一般的做法是，从一阶的 hypothesis 开始，如果 $E_{\text{in}}$  足够小，就选择一阶，否则逐渐增加阶数，直到满足要求为止。</p>
 
       
     </div>
@@ -498,12 +506,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/20180325-NTU-ML-10/">NTU-ML-10-Logistic Regression</a></p>
+  <p><span>本文标题:</span><a href="/20180331-NTU-ML-12/">NTU-ML-12-Nonlinear Transformation</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
-  <p><span>发布时间:</span>2018年03月25日 - 19:03</p>
-  <p><span>最后更新:</span>2018年03月25日 - 19:03</p>
-  <p><span>原始链接:</span><a href="/20180325-NTU-ML-10/" title="NTU-ML-10-Logistic Regression">http://yoursite.com/20180325-NTU-ML-10/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180325-NTU-ML-10/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年03月31日 - 11:03</p>
+  <p><span>最后更新:</span>2018年03月31日 - 11:03</p>
+  <p><span>原始链接:</span><a href="/20180331-NTU-ML-12/" title="NTU-ML-12-Nonlinear Transformation">http://yoursite.com/20180331-NTU-ML-12/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180331-NTU-ML-12/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -579,8 +587,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/20180322-NTU-ML-9/" rel="next" title="NTU-ML-9-Linear Regression">
-                <i class="fa fa-chevron-left"></i> NTU-ML-9-Linear Regression
+              <a href="/20180325-NTU-ML-6/" rel="next" title="NTU-ML-6-Theory of Generalization">
+                <i class="fa fa-chevron-left"></i> NTU-ML-6-Theory of Generalization
               </a>
             
           </div>
@@ -589,8 +597,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/20180325-NTU-ML-11/" rel="prev" title="NTU-ML-11-Linear Models for Classification">
-                NTU-ML-11-Linear Models for Classification <i class="fa fa-chevron-right"></i>
+              <a href="/20180331-NTU-ML-13/" rel="prev" title="NTU-ML-13-Hazard of Overfitting">
+                NTU-ML-13-Hazard of Overfitting <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -747,7 +755,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">1.</span> <span class="nav-text">Logistic Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Logistic-Regression-Error"><span class="nav-number">2.</span> <span class="nav-text">Logistic Regression Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-of-Logistic-Regression-Error"><span class="nav-number">3.</span> <span class="nav-text">Gradient of Logistic Regression Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-Descent"><span class="nav-number">4.</span> <span class="nav-text">Gradient Descent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#choice-of-eta"><span class="nav-number">4.1.</span> <span class="nav-text">choice of $\eta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-Regression-Algorithm"><span class="nav-number">4.2.</span> <span class="nav-text">Logistic Regression Algorithm</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quadratic-Hypothesis"><span class="nav-number">1.</span> <span class="nav-text">Quadratic Hypothesis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nonlinear-Transform"><span class="nav-number">2.</span> <span class="nav-text">Nonlinear Transform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Price-of-Nonlinear-Transform"><span class="nav-number">3.</span> <span class="nav-text">Price of Nonlinear Transform</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Computation-Storage-Price"><span class="nav-number">3.1.</span> <span class="nav-text">Computation/Storage Price</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-Complexity-Price"><span class="nav-number">3.2.</span> <span class="nav-text">Model Complexity Price</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Danger-of-Visual-Choices"><span class="nav-number">3.3.</span> <span class="nav-text">Danger of Visual Choices</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structured-Hypothesis-Sets"><span class="nav-number">4.</span> <span class="nav-text">Structured Hypothesis Sets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Structured-Hypothesis-Sets-1"><span class="nav-number">4.1.</span> <span class="nav-text">Structured Hypothesis Sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear-Model-First"><span class="nav-number">4.2.</span> <span class="nav-text">Linear Model First</span></a></li></ol></li></ol></div>
             
 
           </div>

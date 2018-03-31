@@ -94,22 +94,23 @@
 
 
 
-<meta name="description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
+<meta name="description" content="这节课主要讨论一下机器学习中过拟合的问题。 What is Overfitting?Overfitting什么是过拟合？首先来看一下之前介绍过的 VC 曲线 随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 先变小再变大。我们把 $E_{\text{out}}$ 最小位置所对应的 $d_{\text{VC}}$ 称为 $d">
 <meta name="keywords" content="Machine Learning,Notes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NTU-ML-10-Logistic Regression">
-<meta property="og:url" content="http://yoursite.com/20180325-NTU-ML-10/index.html">
+<meta property="og:title" content="NTU-ML-13-Hazard of Overfitting">
+<meta property="og:url" content="http://yoursite.com/20180331-NTU-ML-13/index.html">
 <meta property="og:site_name" content="Eathen&#39;s Blog">
-<meta property="og:description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
+<meta property="og:description" content="这节课主要讨论一下机器学习中过拟合的问题。 What is Overfitting?Overfitting什么是过拟合？首先来看一下之前介绍过的 VC 曲线 随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 先变小再变大。我们把 $E_{\text{out}}$ 最小位置所对应的 $d_{\text{VC}}$ 称为 $d">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/min_error.png">
-<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/choice_of_eta.png">
-<meta property="og:image" content="http://yoursite.com/20180325-NTU-ML-10/LR_Algo.png">
-<meta property="og:updated_time" content="2018-03-25T11:24:59.000Z">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-13/learning_curve.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-13/case_res.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-13/learning_curve_2.png">
+<meta property="og:image" content="http://yoursite.com/20180331-NTU-ML-13/impact.png">
+<meta property="og:updated_time" content="2018-03-31T03:14:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NTU-ML-10-Logistic Regression">
-<meta name="twitter:description" content="这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了">
-<meta name="twitter:image" content="http://yoursite.com/20180325-NTU-ML-10/min_error.png">
+<meta name="twitter:title" content="NTU-ML-13-Hazard of Overfitting">
+<meta name="twitter:description" content="这节课主要讨论一下机器学习中过拟合的问题。 What is Overfitting?Overfitting什么是过拟合？首先来看一下之前介绍过的 VC 曲线 随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 先变小再变大。我们把 $E_{\text{out}}$ 最小位置所对应的 $d_{\text{VC}}$ 称为 $d">
+<meta name="twitter:image" content="http://yoursite.com/20180331-NTU-ML-13/learning_curve.png">
 
 
 
@@ -150,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/20180325-NTU-ML-10/"/>
+  <link rel="canonical" href="http://yoursite.com/20180331-NTU-ML-13/"/>
 
 
 
 
 
-  <title>NTU-ML-10-Logistic Regression | Eathen's Blog</title>
+  <title>NTU-ML-13-Hazard of Overfitting | Eathen's Blog</title>
   
 
 
@@ -318,7 +319,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180325-NTU-ML-10/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20180331-NTU-ML-13/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Eathen">
@@ -335,7 +336,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">NTU-ML-10-Logistic Regression</h1>
+          <h1 class="post-title" itemprop="name headline">NTU-ML-13-Hazard of Overfitting</h1>
         
 
         <div class="post-meta">
@@ -347,8 +348,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T19:24:59+08:00">
-                2018-03-25
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-31T11:14:42+08:00">
+                2018-03-31
               </time>
             
 
@@ -363,8 +364,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2018-03-25T19:24:59+08:00">
-                2018-03-25
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-31T11:14:42+08:00">
+                2018-03-31
               </time>
             
           </span>
@@ -378,8 +379,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/20180325-NTU-ML-10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/20180325-NTU-ML-10/" itemprop="commentsCount"></span>
+                <a href="/20180331-NTU-ML-13/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/20180331-NTU-ML-13/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -387,7 +388,7 @@
 
           
           
-             <span id="/20180325-NTU-ML-10/" class="leancloud_visitors" data-flag-title="NTU-ML-10-Logistic Regression">
+             <span id="/20180331-NTU-ML-13/" class="leancloud_visitors" data-flag-title="NTU-ML-13-Hazard of Overfitting">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -412,7 +413,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  1,308
+                  1,008
                 </span>
               
 
@@ -428,7 +429,7 @@
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
                 <span title="Reading time">
-                  6
+                  4
                 </span>
               
             </div>
@@ -449,29 +450,39 @@
       
 
       
-        <p>这一节主要介绍 Logistic Regression 算法。</p>
-<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>Logistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。</p>
-<p>因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了 Logistic 函数<br>$$\theta(s) = \frac{1}{1+e^{-s}}$$ 于是 $$<br>h(\mathbf{x}) = \theta(\mathbf{w}^T\mathbf{x}) = \frac{1}{1+e^{-\mathbf{w}^T\mathbf{x}}}$$</p>
-<p>将取值范围为负无穷到正无穷的 $\mathbf{w}^T\mathbf{x}$ 映射到了 0 到 1。</p>
-<h2 id="Logistic-Regression-Error"><a href="#Logistic-Regression-Error" class="headerlink" title="Logistic Regression Error"></a>Logistic Regression Error</h2><p>有了 $h(\mathbf{x})$ 之后，我们还需要找出 $E_{\text{in}}(\mathbf{w})$ 的表达式，在 Logistic Regression 算法中，$E_{\text{in}}(\mathbf{w})$ 是通过最大似然准则得到的。</p>
-<p>首先介绍一下似然这个概念。假设我们有一笔数据 $$\mathcal{D}=\big\{ (\mathbf{x}_{1}, +1),\mathbf{x}_{2}, -1),\cdots,\mathbf{x}_{N}, -1), \big\}$$ 那么通过真实的函数 $f$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{probability}(f) = P(\mathbf{x}_1)f(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-f(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-f(\mathbf{x}_N))<br>$$ 同理，通过预测函数 $h$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{likelihood}(h) = P(\mathbf{x}_1)h(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-h(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-h(\mathbf{x}_N))<br>$$<br>我们的目标是要预测 $h$ 使它接近 $f$，而通常来说 $\text{probability}(f)$ 很大，所以我们可以最大化 $\text{likelihood}(h)$。这时意味着 $h$ 生成 $\mathcal{D}$ 的似然（或者说概率）很大，一定程度上可以说，$h \approx f$。</p>
-<p>接下来的工作就是要最大化 $\text{likelihood}(h)$<br>$$g = \underset{h}{\text{argmax}} \ \ \text{likelihood}(h)<br>$$ 将常量 $P(\mathbf{x})$ 去掉，同时注意到 $1-h(\mathbf{x}) = h(\mathbf{-x})$，有<br>$$\text{likelihood}(h)<br>\propto \prod \limits_{i=1}^n h(y_n\mathbf{x}_n) = \prod \limits_{i=1}^n \theta(y_n \mathbf{w}^T_n\mathbf{x}_n)<br>$$ 取对数，并做一下相关变换，得到<br>$$\min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} -\ln \theta(y_n \mathbf{w}^T \mathbf{x}_n)<br>$$ 即 $$ \min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 因此，这就是 Logistic Regression 的损失函数<br>$$\text{err}(\mathbf{w}, \mathbf{x}, y) = \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 称之为交叉熵损失函数。</p>
-<h2 id="Gradient-of-Logistic-Regression-Error"><a href="#Gradient-of-Logistic-Regression-Error" class="headerlink" title="Gradient of Logistic Regression Error"></a>Gradient of Logistic Regression Error</h2><p>为了最小化损失函数<br>$$E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 通常采取的方法是梯度下降法，如图所示：<br><img src="/20180325-NTU-ML-10/min_error.png" alt=""></p>
-<p>为方便表示，我们使用 $\Box$ 表示 $\left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$，使用 $\bigcirc$ 表示 $( -y_n \mathbf{w}^T \mathbf{x}_n )$。</p>
-<p>那么求导过程如下：<br>$$\begin{aligned}<br>\frac{\partial E_{\text{in}}(\mathbf{w})}{\partial w_i}<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{\partial \ln (\Box)} {\partial \Box}\Big)<br>\Big( \frac{\partial  (1 + \text{exp}(\bigcirc)) } {\partial \bigcirc} \Big)<br>\Big( \frac{\partial -y_n \mathbf{w}^T \mathbf{x}_n} {\partial w_i}\Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{1}{\Box} \Big)<br>\Big( \text{exp}(\bigcirc) \Big)<br>\Big( -y_n x_{n,i} \Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\frac{\text{exp}(\bigcirc)} {1 + \text{exp}(\bigcirc)}<br>\big( -y_n x_{n,i} \big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\theta(\bigcirc) \big( -y_n x_{n,i}\big)<br>\end{aligned}<br>$$ 于是<br>$$\nabla E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \theta \big( -y_n \mathbf{w}^T \mathbf{x}_n \big)<br>\big( -y_n \mathbf{x}_n\big)<br>$$ 我们的目标是使得 $\nabla E_{\text{in}}(\mathbf{w}) = 0$，这里可以分为两种情况</p>
+        <p>这节课主要讨论一下机器学习中过拟合的问题。</p>
+<h2 id="What-is-Overfitting"><a href="#What-is-Overfitting" class="headerlink" title="What is Overfitting?"></a>What is Overfitting?</h2><h3 id="Overfitting"><a href="#Overfitting" class="headerlink" title="Overfitting"></a>Overfitting</h3><p>什么是过拟合？首先来看一下之前介绍过的 VC 曲线<br><img src="/20180331-NTU-ML-13/learning_curve.png" alt=""></p>
+<p>随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 先变小再变大。我们把 $E_{\text{out}}$ 最小位置所对应的 $d_{\text{VC}}$ 称为 $d_{\text{VC}}^{*}$，于是把曲线分成了两部分。</p>
 <ul>
-<li>所有 $\theta(\cdot)$ 都为 $0$，这时表示所有 $y_n \mathbf{w}^T \mathbf{x}_n \gg 0$，说明线性可分</li>
-<li>加权结果为 $0$，说明线性不可分</li>
+<li>在 $d_{\text{VC}}^{*}$ 左边部分，$E_{\text{in}}$ 与 $E_{\text{out}}$ 都比较大，说明模型对样本的拟合较差，这种情况称为欠拟合。</li>
+<li>在 $d_{\text{VC}}^{*}$ 右边部分，随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 却逐渐变大，说明模型对训练样本拟合得很好，但是泛化能力较差，这种情况称为过拟合。</li>
 </ul>
-<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>下面来讲一下梯度下降法，这是一种迭代的方法，通过不断的迭代来更新参数的值：<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \mathbf{v}<br>$$ 其中 $\eta$ 表示的是步长，$\mathbf{v}$ 表示的是方向。<br>我们暂时假定步长是给定的，那么在每一次的迭代过程中，等价于求解下面的问题：<br>$$\underset{||\mathbf{v}=1||}{\text{min}} E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v})<br>$$ 当 $\eta$ 很小的时候，使用泰勒展开，有<br>$$E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v}) \approx E_{\text{in}}(\mathbf{w}_t) + \eta \mathbf{v}^T \nabla E_{\text{in}}(\mathbf{w}_t)<br>$$ 其中 $E_{\text{in}}(\mathbf{w}_t)$ 以及 $\nabla E_{\text{in}}(\mathbf{w}_t)$ 是已知的，$\eta$ 是正数，于是上式中最佳的 $\mathbf{v}$ 为：<br>$$\mathbf{v} = - \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 于是迭代过程为<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_1 \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 这就是负梯度方向，因此在负梯度方向上 $E_{\text{in}}$ 下降最快。</p>
-<h3 id="choice-of-eta"><a href="#choice-of-eta" class="headerlink" title="choice of $\eta$"></a>choice of $\eta$</h3><p>$\eta$ 的大小对 $E_{\text{in}}$ 优化的过程也有一定影响，如下图所示<br><img src="/20180325-NTU-ML-10/choice_of_eta.png" alt=""></p>
+<h3 id="Cause-of-Overfitting"><a href="#Cause-of-Overfitting" class="headerlink" title="Cause of Overfitting"></a>Cause of Overfitting</h3><p>发生过拟合的原因主要有：</p>
+<ol>
+<li>使用过于复杂的模型，$d_{\text{VC}}$ 过大；</li>
+<li>数据存在噪声；</li>
+<li>训练样本数过少。</li>
+</ol>
+<h2 id="The-Role-of-Noise-and-Data-Size"><a href="#The-Role-of-Noise-and-Data-Size" class="headerlink" title="The Role of Noise and Data Size"></a>The Role of Noise and Data Size</h2><h3 id="Case-Study"><a href="#Case-Study" class="headerlink" title="Case Study"></a>Case Study</h3><p>现在假设我们有两组数据，第一组数据由一个 10 阶的目标函数加噪声生成，第二组数据由一个 50 阶的目标函数生成。分别使用 2 阶以及 10 阶的多项式模型来学习这两组数据。</p>
+<p><img src="/20180331-NTU-ML-13/case_res.png" alt=""></p>
+<p>从上图可以看出，无论学习哪组数据，$E_{\text{in}}(g_2)$ 大于 $E_{\text{in}}(g_{10})$，而 $E_{\text{out}}(g_2)$ 小于 $E_{\text{out}}(g_{10})$。因此，对于这两组学习，可以说 $g_{10}$ 发生了过拟合。</p>
+<h3 id="Learning-Curves-Revisited"><a href="#Learning-Curves-Revisited" class="headerlink" title="Learning Curves Revisited"></a>Learning Curves Revisited</h3><p>从学习曲线来看，两个模型的学习曲线如下：<br><img src="/20180331-NTU-ML-13/learning_curve_2.png" alt=""></p>
+<p>可见，当样本数目 $N$ 足够大时，两个模型会收敛，这时右边模型的 $E_{in}$ 与 $E_{out}$ 都会比左边的小。但是当样本数 $N$ 不够时，对右边模型来说，尽管 $E_{in}$ 很小，但是 $E_{out}$ 会特别大，这就是发生了过拟合。可以说是 $N$ 过小造成的，也可以说是 $d_{\text{VC}}$ 过大造成的。</p>
+<h3 id="The-No-Noise-Case"><a href="#The-No-Noise-Case" class="headerlink" title="The No Noise Case"></a>The No Noise Case</h3><p>第二组数据是由一个 50 阶的目标函数生成，没有加噪声。但是两个模型学习的结果仍然是，$\mathcal{H}_{10}$ 过拟合。这种情况可以这样解释：目标函数本身就很复杂，这本质上来讲也是一种噪声，我们称之为确定性噪声（Deterministic Noise），我们将在下面进行进一步解释。</p>
+<h2 id="Deterministic-Noise"><a href="#Deterministic-Noise" class="headerlink" title="Deterministic Noise"></a>Deterministic Noise</h2><p>我们来探讨一下影响过拟合的一些因素。</p>
+<h3 id="Impact-of-Noise-and-Data-Size"><a href="#Impact-of-Noise-and-Data-Size" class="headerlink" title="Impact of Noise and Data Size"></a>Impact of Noise and Data Size</h3><p>假设我们产生的数据分布由两部分组成：第一部分是目标函数 $f(\mathbf{x})$ 是一个 $Q_f$ 阶多项式，第二部分是服从高斯分布的随机噪声 $\epsilon$，其中方差是 $\sigma^2$。此外，数据样本数是 $N$。</p>
+<p>$(N,\sigma^2)$ 与 $(N,Q_f)$ 对过拟合的影响可以表示成下图。其中，红色越深，代表过拟合程度越高，蓝色越深，代表过拟合程度越低。可以看出，$N$ 越小，$\sigma^2$ 越大，$Q_f$ 越大，越容易过拟合。我们把 $\sigma^2$ 成为随机噪声，$Q_f$ 称为确定性噪声。<br><img src="/20180331-NTU-ML-13/impact.png" alt=""></p>
+<h3 id="Deterministic-Noise-1"><a href="#Deterministic-Noise-1" class="headerlink" title="Deterministic Noise"></a>Deterministic Noise</h3><p>确定性噪声可以这样来分析，当目标函数 $f$ 不在 $\mathcal{H}$ 的范围里的时候，我们无法从 $\mathcal{H}$ 中选到 $f$，（比如上面的例子，我们无法在 $\mathcal{H}_{10}$ 中选择出阶数为 50 的目标函数 $f$）。这种情况下，$\mathcal{H}$ 中的最优解 $h$ 与 $f$ 是存在一定差距中，这个差距就叫做确定性噪声。</p>
+<p>确定性噪声对过拟合的影响与随机噪声大致一样。与随机噪声不同的是，确定性噪声取决于 $\mathcal{H}$，并且当给定 $\mathbf{x}$ 的时候，确定性噪声就确定下来了。</p>
+<h2 id="Dealing-with-Overfitting"><a href="#Dealing-with-Overfitting" class="headerlink" title="Dealing with Overfitting"></a>Dealing with Overfitting</h2><p>有许多手段可以解决过拟合问题：</p>
 <ul>
-<li>$\eta$ 太小：优化速度太慢</li>
-<li>$\eta$ 太大：优化过程不稳定</li>
+<li>start from simple model</li>
+<li>data cleaning/pruning</li>
+<li>data hinting</li>
+<li>regularization</li>
+<li>validation</li>
 </ul>
-<p>因此比较合适的选择是，使 $\eta$ 随着 $||\nabla E_{\text{in}}(\mathbf{w}_t)||$ 变化，于是我们令 $$\eta_2 = \eta_1 \cdot ||\nabla E_{\text{in}}(\mathbf{w}_t)||<br>$$ 带入上面的式子，得到<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_2 ||\nabla E_{\text{in}}(\mathbf{w}_t)|| $$</p>
-<h3 id="Logistic-Regression-Algorithm"><a href="#Logistic-Regression-Algorithm" class="headerlink" title="Logistic Regression Algorithm"></a>Logistic Regression Algorithm</h3><p>综合上面的内容，我们得到了 Logistic Regression 算法，如图所示：<br><img src="/20180325-NTU-ML-10/LR_Algo.png" alt=""></p>
-<p>以上就是 Logistic Regression 算法的介绍。</p>
+<p>下一讲将介绍其中的 regularization，尽情期待。</p>
 
       
     </div>
@@ -498,12 +509,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/20180325-NTU-ML-10/">NTU-ML-10-Logistic Regression</a></p>
+  <p><span>本文标题:</span><a href="/20180331-NTU-ML-13/">NTU-ML-13-Hazard of Overfitting</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Eathen 的个人博客">Eathen</a></p>
-  <p><span>发布时间:</span>2018年03月25日 - 19:03</p>
-  <p><span>最后更新:</span>2018年03月25日 - 19:03</p>
-  <p><span>原始链接:</span><a href="/20180325-NTU-ML-10/" title="NTU-ML-10-Logistic Regression">http://yoursite.com/20180325-NTU-ML-10/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180325-NTU-ML-10/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年03月31日 - 11:03</p>
+  <p><span>最后更新:</span>2018年03月31日 - 11:03</p>
+  <p><span>原始链接:</span><a href="/20180331-NTU-ML-13/" title="NTU-ML-13-Hazard of Overfitting">http://yoursite.com/20180331-NTU-ML-13/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/20180331-NTU-ML-13/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -579,8 +590,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/20180322-NTU-ML-9/" rel="next" title="NTU-ML-9-Linear Regression">
-                <i class="fa fa-chevron-left"></i> NTU-ML-9-Linear Regression
+              <a href="/20180331-NTU-ML-12/" rel="next" title="NTU-ML-12-Nonlinear Transformation">
+                <i class="fa fa-chevron-left"></i> NTU-ML-12-Nonlinear Transformation
               </a>
             
           </div>
@@ -588,10 +599,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/20180325-NTU-ML-11/" rel="prev" title="NTU-ML-11-Linear Models for Classification">
-                NTU-ML-11-Linear Models for Classification <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -747,7 +754,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">1.</span> <span class="nav-text">Logistic Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Logistic-Regression-Error"><span class="nav-number">2.</span> <span class="nav-text">Logistic Regression Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-of-Logistic-Regression-Error"><span class="nav-number">3.</span> <span class="nav-text">Gradient of Logistic Regression Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-Descent"><span class="nav-number">4.</span> <span class="nav-text">Gradient Descent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#choice-of-eta"><span class="nav-number">4.1.</span> <span class="nav-text">choice of $\eta$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-Regression-Algorithm"><span class="nav-number">4.2.</span> <span class="nav-text">Logistic Regression Algorithm</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Overfitting"><span class="nav-number">1.</span> <span class="nav-text">What is Overfitting?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overfitting"><span class="nav-number">1.1.</span> <span class="nav-text">Overfitting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cause-of-Overfitting"><span class="nav-number">1.2.</span> <span class="nav-text">Cause of Overfitting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Role-of-Noise-and-Data-Size"><span class="nav-number">2.</span> <span class="nav-text">The Role of Noise and Data Size</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Case-Study"><span class="nav-number">2.1.</span> <span class="nav-text">Case Study</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-Curves-Revisited"><span class="nav-number">2.2.</span> <span class="nav-text">Learning Curves Revisited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-No-Noise-Case"><span class="nav-number">2.3.</span> <span class="nav-text">The No Noise Case</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deterministic-Noise"><span class="nav-number">3.</span> <span class="nav-text">Deterministic Noise</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Impact-of-Noise-and-Data-Size"><span class="nav-number">3.1.</span> <span class="nav-text">Impact of Noise and Data Size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deterministic-Noise-1"><span class="nav-number">3.2.</span> <span class="nav-text">Deterministic Noise</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dealing-with-Overfitting"><span class="nav-number">4.</span> <span class="nav-text">Dealing with Overfitting</span></a></li></ol></div>
             
 
           </div>
