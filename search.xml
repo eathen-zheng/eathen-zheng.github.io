@@ -1,129 +1,798 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[NTU-ML-13-Hazard of Overfitting]]></title>
-    <url>%2F20180331-NTU-ML-13%2F</url>
-    <content type="text"><![CDATA[这节课主要讨论一下机器学习中过拟合的问题。 What is Overfitting?Overfitting什么是过拟合？首先来看一下之前介绍过的 VC 曲线 随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 先变小再变大。我们把 $E_{\text{out}}$ 最小位置所对应的 $d_{\text{VC}}$ 称为 $d_{\text{VC}}^{*}$，于是把曲线分成了两部分。 在 $d_{\text{VC}}^{*}$ 左边部分，$E_{\text{in}}$ 与 $E_{\text{out}}$ 都比较大，说明模型对样本的拟合较差，这种情况称为欠拟合。 在 $d_{\text{VC}}^{*}$ 右边部分，随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 却逐渐变大，说明模型对训练样本拟合得很好，但是泛化能力较差，这种情况称为过拟合。 Cause of Overfitting发生过拟合的原因主要有： 使用过于复杂的模型，$d_{\text{VC}}$ 过大； 数据存在噪声； 训练样本数过少。 The Role of Noise and Data SizeCase Study现在假设我们有两组数据，第一组数据由一个 10 阶的目标函数加噪声生成，第二组数据由一个 50 阶的目标函数生成。分别使用 2 阶以及 10 阶的多项式模型来学习这两组数据。 从上图可以看出，无论学习哪组数据，$E_{\text{in}}(g_2)$ 大于 $E_{\text{in}}(g_{10})$，而 $E_{\text{out}}(g_2)$ 小于 $E_{\text{out}}(g_{10})$。因此，对于这两组学习，可以说 $g_{10}$ 发生了过拟合。 Learning Curves Revisited从学习曲线来看，两个模型的学习曲线如下： 可见，当样本数目 $N$ 足够大时，两个模型会收敛，这时右边模型的 $E_{in}$ 与 $E_{out}$ 都会比左边的小。但是当样本数 $N$ 不够时，对右边模型来说，尽管 $E_{in}$ 很小，但是 $E_{out}$ 会特别大，这就是发生了过拟合。可以说是 $N$ 过小造成的，也可以说是 $d_{\text{VC}}$ 过大造成的。 The No Noise Case第二组数据是由一个 50 阶的目标函数生成，没有加噪声。但是两个模型学习的结果仍然是，$\mathcal{H}_{10}$ 过拟合。这种情况可以这样解释：目标函数本身就很复杂，这本质上来讲也是一种噪声，我们称之为确定性噪声（Deterministic Noise），我们将在下面进行进一步解释。 Deterministic Noise我们来探讨一下影响过拟合的一些因素。 Impact of Noise and Data Size假设我们产生的数据分布由两部分组成：第一部分是目标函数 $f(\mathbf{x})$ 是一个 $Q_f$ 阶多项式，第二部分是服从高斯分布的随机噪声 $\epsilon$，其中方差是 $\sigma^2$。此外，数据样本数是 $N$。 $(N,\sigma^2)$ 与 $(N,Q_f)$ 对过拟合的影响可以表示成下图。其中，红色越深，代表过拟合程度越高，蓝色越深，代表过拟合程度越低。可以看出，$N$ 越小，$\sigma^2$ 越大，$Q_f$ 越大，越容易过拟合。我们把 $\sigma^2$ 成为随机噪声，$Q_f$ 称为确定性噪声。 Deterministic Noise确定性噪声可以这样来分析，当目标函数 $f$ 不在 $\mathcal{H}$ 的范围里的时候，我们无法从 $\mathcal{H}$ 中选到 $f$，（比如上面的例子，我们无法在 $\mathcal{H}_{10}$ 中选择出阶数为 50 的目标函数 $f$）。这种情况下，$\mathcal{H}$ 中的最优解 $h$ 与 $f$ 是存在一定差距中，这个差距就叫做确定性噪声。 确定性噪声对过拟合的影响与随机噪声大致一样。与随机噪声不同的是，确定性噪声取决于 $\mathcal{H}$，并且当给定 $\mathbf{x}$ 的时候，确定性噪声就确定下来了。 Dealing with Overfitting有许多手段可以解决过拟合问题： start from simple model data cleaning/pruning data hinting regularization validation 下一讲将介绍其中的 regularization，尽情期待。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-12-Nonlinear Transformation]]></title>
-    <url>%2F20180331-NTU-ML-12%2F</url>
-    <content type="text"><![CDATA[上一篇文章，我们总结了三种线性模型，并使用它们解决了二分类以及多分类问题。这篇文章主要介绍怎样解决非线性问题。 Quadratic Hypothesis当数据非线性可分的时候，我们需要使用特征转换，将原来非线性空间上的特征转换到新的线性空间，然后再使用之前学过的线性模型进行分类。 特征转换如下：$$\mathbf{x} \in \mathcal{X} \mathop{\rightarrow}^{\Phi} \mathbf{z} \in \mathcal{Z}$$ 于是将非线性可分的样本 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} $ 转换为线性可分的样本 $\big\{ \big( \mathbf{z}_n,y_n \big) \big\} $ 举一个例子说明： 下图中的样本 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} $ 是非线性可分的，但是可以使用圆将其分类。在使用特征变换 $$\mathbf{z} = \Phi(\mathbf{x}) = (1, x_1^2, x_2^2)$$ 之后，预测函数为 $$h(\mathbf{x}) = \tilde{h}(\mathbf{z}) = \text{sign} \big( \tilde{\mathbf{w}}^T \Phi(\mathbf{x}) \big) = \text{sign} \big(\tilde{w}_0 + \tilde{w}_1 x_{1}^{2} + \tilde{w}_2 x_{2}^{2} \big)$$ 于是选择合适的参数，便可以使用直线将 $\mathbf{z}_n$ 进行分类，也就是使用圆将 $\mathbf{x}_n$ 进行分类。在这个例子中$$h(\mathbf{x}) = \tilde{h}(\mathbf{z}) = \text{sign} \big( \tilde{\mathbf{w}}^T \mathbf{z} \big) = \text{sign} \big(0.6 + (-1) \cdot x_{1}^{2} + (-1) \cdot x_{2}^{2} \big) $$ 当参数 $\tilde{\mathbf{w}}$ 取不同值的时候，在 $\mathbf{z}$ 域上看都是直线，但是在 $\mathbf{x}$ 域上看可以是圆、椭圆、双曲线等等不同的二次曲线。 Nonlinear Transform可见，找到一个好的 Transform 方法，可以使得原始数据（不管是不是线性可分）分类的结果好。 因此，在遇到非线性可分的样本的时候，通常的做法是： 将原始数据进行转换 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} \mathop{\rightarrow}^{\Phi} \big\{ \big( \mathbf{z}_n,y_n \big) \big\}$ 使用线性分类算法对转换后的数据 $\big\{ \big( \mathbf{z}_n,y_n \big) \big\}$ 进行分类 返回 $g(\mathbf{x}) = \text{sign} \big( \tilde{\mathbf{w}}^T \Phi(\mathbf{x}) \big)$ Price of Nonlinear Transform当然，这样的做法也是有缺点的。 Computation/Storage Price考虑 $Q$ 次多项式的特征转换 可见，参数的个数是 $1 + \tilde{d} = O(Q^d)$，当 $Q$ 比较大时，时间复杂度以及空间复杂度都很大。 Model Complexity Price模型的 VC dimension 是 $d_{\text{VC}} (mathcal{H}_{\Phi_Q}) \le 1 + \tilde{d}$ 可见当 $Q$ 比较大时，模型的 VC dimension 也很大。由此带来的问题是，可能会 Danger of Visual Choices还有一个问题是，在选择转化函数 $\Phi$ 的时候，可能加入了自己的脑力计算成果，这是不好的。 Structured Hypothesis SetsStructured Hypothesis Sets下面，我们讨论一下从 $\mathbf{x}$ 域到 $\mathbf{z}$ 域的多项式变换。 可见不同阶次构成的 hypothesis 有如下关系$$ \mathcal{H}_0 \subset \mathcal{H}_1 \subset \mathcal{H}_2 \subset \cdots \subset \mathcal{H}_Q$$ 对于 VC dimension 有$$d_{\text{VC}}(\mathcal{H}_0) \leq d_{\text{VC}}(\mathcal{H}_1) \leq d_{\text{VC}}(\mathcal{H}_2) \leq \cdots \leq d_{\text{VC}}(\mathcal{H}_Q)$$ 对于 $E_{\text{in}}$ 有$$ E_{\text{in}}(g_0) \geq E_{\text{in}}(g_1) \geq E_{\text{in}}(g_2) \geq \cdots \geq E_{\text{in}}(g_Q)$$ 我们把这种结构叫做 Structured Hypothesis Sets。 Linear Model First根据以前介绍过的学习曲线 可以看出，当多项式的阶数增大时，$d_{\text{VC}}$ 变大，$E_{\text{in}}$ 变小，但是 model complexity 会变大。因此，需要选取合适的阶数使得 $E_{\text{out}}$ 较小。 一般的做法是，从一阶的 hypothesis 开始，如果 $E_{\text{in}}$ 足够小，就选择一阶，否则逐渐增加阶数，直到满足要求为止。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-6-Theory of Generalization]]></title>
-    <url>%2F20180325-NTU-ML-6%2F</url>
-    <content type="text"><![CDATA[Restriction of Break Point上次我们说到，需要探究 “break point” $k$ 与 $m_\mathcal{H}(N)$ 之间的关系。回顾一下，$m_\mathcal{H}(N)$ 表示假设空间在 $N$ 个样本点上能产生的最大二分数量，$k$ 表示不能满足完全分类情形的样本点数。 让我们来探讨一下，当 $k$ 确定时，$m_\mathcal{H}(N)$ 的最大可能取值，下面使用一个例子来进行探讨。 Example: Break Point $k=2$根据 break point 的定义 当样本数为 $N=1$ 时，需要满足样本完全二分的情况，因此 $m_\mathcal{H}(1) = 2^1 = 2$ 当样本数为 $N=2$ 时，不可满足样本完全二分的情况，因此 $m_\mathcal{H}(2) &lt; 2^2 = 4$，最多为 $m_\mathcal{H}(2)=3$ 当样本数为 $N=3$ 时，同样不可满足样本完全二分的情况，因此 $m_\mathcal{H}(3) &lt; 2^3 = 8$，但是由于 $m_\mathcal{H}(2)$ 已经存在上限 $m_\mathcal{H}(2)&lt;4$，因此 $m_\mathcal{H}(3)$ 的值会有更严格的上限。根据实验可以得到 $m_\mathcal{H}(3) &lt; 5$。 $k=2$ 时 $m_\mathcal{H}(3) &lt; 5$ 的含义是：当样本数为 $N=3$ 时，假设空间最多有 $4$ 种分类结果，使得对任意 $k=2$ 个样本，不能满足完全分类的情形。 以上的分析比较晦涩难懂，我们使用图片重新说明一下。可以看到当只有 $1,2,3$ 种分类结果的时候，任意两个样本都不会出现完全分类的情形。当有 $4$ 种分类结果的时候，可能会出现有两个样本完全分类的情况，也可能不出现这种情况。而有 $5$ 种分类结果的时候，始终会出现有两个样本完全分类的情况。因此，二分类结果最多只能有 $4$ 种。 Bounding Function: Basic Cases我们将刚才讨论的东西起一个名字，叫做 bounding function $B(N,k)$，表示当 break point 为 $k$ 的时候，$m_\mathcal{H}(N)$ 的最大可能的值。 那么经过前面的例子，我们可以得到一些结论： $k=1$ 时，$B(N,k)=1$（任意一个点都不能被完全分类，因此只能有一种分类结果） $k&gt;N$ 时，$B(N,k)=2^N$（总共就 $N$ 个点，最多就 $2^N$ 种分类结果）； $k=N$ 时，$B(N,k)=2^N-1$（减去一种分类结果，则任意 $N$ 个点不会被完全分类）； $B(3,2)=4$（刚才的例子）； 于是我们得到了下面这个表格：$$\begin{array}{c|lcr}&amp;&amp;&amp;&amp;k\\B(N,k)&amp;1&amp;2&amp;3&amp;4&amp;5&amp;6&amp;\cdots \\\hline1&amp;1&amp;2&amp;2&amp;2&amp;2&amp;2&amp;\cdots\\2&amp;1&amp;3&amp;4&amp;4&amp;4&amp;4&amp;\cdots\\3&amp;1&amp;4&amp;7&amp;8&amp;8&amp;8&amp;\cdots\\4&amp;1&amp;&amp;&amp;15&amp;16&amp;16&amp;\cdots\\5&amp;1&amp;&amp;&amp;&amp;31&amp;32&amp;\cdots\\6&amp;1&amp;&amp;&amp;&amp;&amp;63&amp;\cdots\\\vdots&amp;\vdots&amp;&amp;&amp;&amp;&amp;&amp;\ddots\end{array}$$ Bounding Function: Inductive Cases至此，我们已经解决了一半的问题。不过，表格里打问号的才是我们要讨论的重点，我们试着通过递推的方法得到这些值。 Dichotomies of $B(4,3)$我们用计算机列举出 $B(4,3)$ 的所有可能，同时将这些结果重新排列，如下图所示： 其中橙色的表示前 $3$ 个样本点成对出现，数量记为 $2\alpha$，绿色的表示前 $3$ 个样本点单独出现，数量记为 $\beta$，那么有 $B(4,3) = 2 \alpha + \beta$。 $B(4,3)$ 表示所有 $4$ 个样本点中，任意 $3$ 个都不会被完全分类。那么去掉第 $4$ 个样本，可以得到： $\alpha+\beta$ 中，前 $3$ 个样本点中的任意 $3$ 个不会被完全分类，$\alpha + \beta \le B(3,3)$； $\alpha$ 中，前 $3$ 个样本点中的任意 $2$ 个不会被完全分类，$\alpha \le B(3,2)$（因此第 $4$ 个点会被完全分类）； 因此：$$B(4,3) = 2\alpha+\beta=(\alpha+\beta)+\alpha\le B(3,3)+B(3,2)$$ 推广到其他：$$B(N,k)\le B(N-1,k)+B(N-1,k-1)$$ 数学归纳法可以证明：$$B(N,k) \leq \sum_{i=0}^{k-1} {N \choose i}$$ 因此可以得到，当 break point $k$ 存在时 $$m_\mathcal{H}(N) \le B(N,k) \leq \sum_{i=0}^{k-1} {N \choose i}$$ $m_\mathcal{H}(N)$ 是 $N$ 的多项式函数。 Mathematical Induction下面使用数学归纳法证明 $B(N,k) \le\sum_{i=0}^{k-1}{N \choose i}$ $k=1$ 时，不等式恒成立，因此只讨论 $k \ge 2$ 的情形； $N=1$ 时，不等式成立； 假设 $N=No$ 时，不等式成立，下面证明 $N=No+1$ 时，不等式成立。 $$\begin{aligned}B(N_{o}+1,k) &amp;\leq B(N_{o},k) + B(N_{o},k-1) \\\&amp;\leq \sum_{i=0}^{k-1}\binom{N_{o}}{i}+\sum_{i=0}^{k-2}\binom{N_{o}}{i} \\\&amp;=1+\sum_{i=1}^{k-1}\binom{N_{o}}{i}+\sum_{i=1}^{k-1}\binom{N_{o}}{i-1} \\\&amp;=1+\sum_{i=1}^{k-1}[\binom{N_{o}}{i}+\binom{N_{o}}{i-1}] \\\&amp;=1+\sum_{i=1}^{k-1}\binom{N_{o}+1}{i}=\sum_{i=0}^{k-1}\binom{N_{o}+1}{i}\end{aligned}$$ A Pictorial Proof于是利用有限的 $m_{\mathcal{H}}(N)$ 来替换无限的 $M$，得到 $\mathcal{H}$ 遇到Bad Sample的概率上界：$$\mathbb{P}_\mathcal{D}[BAD\ D]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)$$ 用更加精准的数学符号来表示上面的不等式：$$\mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)$$ 但事实上上面的不等式是不严谨的，因为 $m_{\mathcal{H}}(N)$ 描述的是 $\mathcal{H}$ 作用于数据量为 $N$ 的资料 $\mathcal{D}$ 有效的方程数，因此 $\mathcal{H}$ 当中每一个 $h$ 作用于 $\mathcal{D}$ 都能算出一个 $E_{in}$ 来，一共能有 $m_{\mathcal{H}}(N)$ 个不同的 $E_{in}$，是一个有限的数。但在out of sample的世界里(总体)，往往存在无限多个点，平面中任意一条直线，随便转一转动一动，就能产生一个不同的 $E_{out}$ 来。$E_{in}$ 的可能取值是有限个的，而 $E_{out}$ 的可能取值是无限的，无法直接套用union bound，我们得先把上面那个无限多种可能的 $E_{out}$ 换掉。 下面涉及到许多数学公式，先挖个坑，有时间补上。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-11-Linear Models for Classification]]></title>
-    <url>%2F20180325-NTU-ML-11%2F</url>
-    <content type="text"><![CDATA[这节课主要介绍使用线性模型来解决分类问题。 Linear Models for Binary ClassificationLinear Models Revisited之前我们介绍了三种线性模型，分别是 Linear Classification，Linear Regression 以及 Logistic Regression。 这几个模型，都是对样本特征进行加权，得到一个分数 $$s = \mathbf{w}^T \mathbf{x} $$ 再通过 $s$ 构成预测函数 $h(\mathbf{x})$ 以及误差函数 $\text{err}(s,y)$。 Linear Classification$$ \begin{aligned}&amp;h(\mathbf{x}) = \text{sign}(s)\\&amp;\text{err}(h,\mathbf{x},y) = \big[\big[ h(\mathbf{x}) \neq y \big]\big]\\&amp;\text{err}(s,y) = \big[\big[ \text{sign}(s) \neq y \big]\big] = \big[\big[ \text{sign}(sy) \neq 1 \big]\big]\\\end{aligned} $$ Linear Regression$$ \begin{aligned}&amp;h(\mathbf{x}) = s\\&amp;\text{err}(h,\mathbf{x},y) = \big( h(\mathbf{x}) - y \big)^2 \\&amp;\text{err}(s,y) = (s-y)^2 = (ys - 1)^2\end{aligned} $$ Logistic Regression$$ \begin{aligned}&amp;h(\mathbf{x}) = \theta (s)\\&amp;\text{err}(h,\mathbf{x},y) = - \text{ln} h(y \mathbf{x})\\&amp;\text{err}(s,y) = \text{ln} \big( 1+\text{exp}(-ys) \big)\\\end{aligned} $$ 这三种模型的 error function 都引入了 $ys$，我们可以理解成，$ys$ 是表示分类准确率的一个分数，$ys$ 越大，分类准确率越高。 Visualizing Error Functions图形化表示这三者的 error function，如下其中我们将 Logistic Regression 的 error function 进行了一个缩放。 Theoretical Implication of Upper Bound可以看出，$\text{err}_{\text{sqr}}$ 与 $\text{err}_{\text{scaled ce}}$ 都是 $\text{err}_{\text{0/1}}$ 的 upper bound 函数。 $$ \text{err}_{\text{0/1}}(s,y) \leq \text{err}_{\text{SCE}}(s,y) = \frac{1}{\text{ln}2} \text{err}_{\text{CE}}(s,y)$$ 可以推出 $$\begin{aligned}&amp;E_{\text{in}}^{\text{0/1}}(\mathbf{w}) \leq E_{\text{in}}^{\text{SCE}}(\mathbf{w}) = \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w})\\&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq E_{\text{out}}^{\text{SCE}}(\mathbf{w}) = \frac{1}{\text{ln}2} E_{\text{out}}^{\text{CE}}(\mathbf{w})\\\end{aligned}$$ 根据 VC 理论可以得到 $$\begin{aligned}&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq E_{\text{in}}^{\text{0/1}}(\mathbf{w}) + \Omega ^ {\text{0/1}}\leq \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w}) + \Omega ^ {\text{0/1}}\\&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq \frac{1}{\text{ln}2} E_{\text{out}}^{\text{CE}}(\mathbf{w}) \leq \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w}) + \Omega ^ {\text{0/1}}\\\end{aligned}$$ 说明 $\text{err}_{\text{sqr}}$ 或者 $\text{err}_{\text{scaled ce}}$ 很小的时候，意味着 $\text{err}_{\text{0/1}}$ 也很小。因此，Linear Regression 和 Logistic Regression 都可以用来解决 Linear Classification 的问题。通常，我们使用 Linear Regression 得到 $\mathbf{w}_{0}$，再用 Logistic Regression 进行求解。 Regression for ClassificationPLA，Linear Regression 以及 Logistic Regression 处理分类问题时，优缺点总结如下 PLA:优点：数据线性可分时，$\text{err}_{\text{0/1}}$ 可以降到最低；缺点：数据非线性可分时，需要使用 Pocket 算法，较难最优化； Linear Regression:优点：最容易做最优化；缺点：在 $ys$ 很大或很小时，Bound 是很宽松的； Logistic Regression:优点：较容易最优化；缺点：在 $ys$ 是很小的负数时，Bound 是宽松的； Stochastic Gradient DescentTwo Iterative Optimization Schemes之前我们介绍过 PLA 以及 Logistic Regression，这两种算法都使用迭代的方法来更新参数的值$$ \mathbf{w}_{t+1} = \mathbf{w}_{t} + \eta \ \mathbf{v}$$ PLA 每次迭代只计算一个点，时间复杂度 $O(1)$ Logistic Regression 每次迭代要对所有点都进行计算，时间复杂度 $O(N)$ 下面介绍一种算法：随机梯度下降算法 (Stochastic Gradient Descent，SGD)，可以提高更新参数的速度。 Stochastic Gradient Descent (SGD)SGD 算法每次迭代只找到一个点，计算该点的梯度，作为我们下一步更新参数的依据。这样就保证了每次迭代的计算量大大减小，我们可以把整体的梯度看成这个随机过程的一个期望值。 Stochastic Gradient$\nabla_{\text{w}} \ \text{err}(\mathbf{w}, \mathbf{x}_n, y_n)$ with random $n$ True Gradient$\nabla_{\text{w}} \ E_{\text{in}}(\mathbf{w}) = {\underset{\text{random}\ n}{\epsilon}} \nabla_{\text{w}} \ \text{err}(\mathbf{w}, \mathbf{x}_n, y_n)$ 于是，可以将 SGD 中梯度下降的方向理解成真实的梯度方向加上均值为零的随机噪声方向：$${\text{stochastic gradient}} = {\text{true gradient}} + {\text{zero-mean noise directions}}$$ 在运行足够多轮后，SGD 的效果与 GD 的效果是大致一样的。 下面对 SGD 做一个小结： 优点：计算量低，适用于大数据或者在线学习 缺点：每次迭代并不能保证按照正确的方向前进，不够稳定 PLA &amp; SGD Logistic RegressionPLA 与 SGD Logistic Regression 这两种算法在参数更新上有相似之处 SGD Logistic Regression$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \cdot \theta(-y_n \mathbf{w}_t^T \mathbf{x}_n) (y_n \mathbf{x}_n)$$ PLA$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + 1 \cdot \big[\big[ y_n \neq \text{sign}(\mathbf{w}_t^T \mathbf{x}_n) \big]\big] (y_n \mathbf{x}_n)$$ 可以把 SGD Logistic Regression 看成是 soft PLA： PLA：每次迭代只对分错的样本进行修正 SGD Logistic Regression：每次迭代都会进行修正（不管分对分错） 当 $\eta = 1$ 且 $\mathbf{w}_t^T \mathbf{x}_n$ 时，PLA 相当于 SGD Logistic Regression Multiclass via Logistic Regression之前我们讨论的都是使用分类器解决二类别分类问题，接下来我们准备讨论使用分类器解决多类别分类问题。 我们举一个例子来进行讲解，需要将下图的图形分为正方形、菱形、三角形、星形四类： 一种策略是将 $k$ 分类问题转化为 $k$ 个二分类问题：是不是第 $i( i =1,2 \cdots k)$ 类，然后再根据这些问题的答案决定每个样本的类别，如下图所示。 这种策略存在的问题是，可能出现分不了的情况，如某些区域同时被多个类判断为正（负）类。为了解决这个问题，可以改用软性分类器，即让上述的二分类问题输出概率而不是类别信息。 这种策略称为 One-Versus-All（OVA），是一种常用的多类别分类策略。 Multiclass via Binary Classification上面介绍的 OVA 策略存在一个问题，当正负样本数不平衡的时候，会影响分类的性能，因此提出了另外一种策略。 在 OVO 策略下，每 2 个类别之间形成一个二分类问题，于是将 $k$ 分类问题转化为 $C_{k}^{2}$ 个二分类问题，然后再根据这些问题的答案决定每个样本的类别，如下图所示。 这种策略称为 One-versus-One（OVO），是一种常用的多类别分类策略。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-10-Logistic Regression]]></title>
-    <url>%2F20180325-NTU-ML-10%2F</url>
-    <content type="text"><![CDATA[这一节主要介绍 Logistic Regression 算法。 Logistic RegressionLogistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。 因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了 Logistic 函数$$\theta(s) = \frac{1}{1+e^{-s}}$$ 于是 $$h(\mathbf{x}) = \theta(\mathbf{w}^T\mathbf{x}) = \frac{1}{1+e^{-\mathbf{w}^T\mathbf{x}}}$$ 将取值范围为负无穷到正无穷的 $\mathbf{w}^T\mathbf{x}$ 映射到了 0 到 1。 Logistic Regression Error有了 $h(\mathbf{x})$ 之后，我们还需要找出 $E_{\text{in}}(\mathbf{w})$ 的表达式，在 Logistic Regression 算法中，$E_{\text{in}}(\mathbf{w})$ 是通过最大似然准则得到的。 首先介绍一下似然这个概念。假设我们有一笔数据 $$\mathcal{D}=\big\{ (\mathbf{x}_{1}, +1),\mathbf{x}_{2}, -1),\cdots,\mathbf{x}_{N}, -1), \big\}$$ 那么通过真实的函数 $f$ 得到这批数据的概率可以写成下面的表达式：$$\text{probability}(f) = P(\mathbf{x}_1)f(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-f(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-f(\mathbf{x}_N))$$ 同理，通过预测函数 $h$ 得到这批数据的概率可以写成下面的表达式：$$\text{likelihood}(h) = P(\mathbf{x}_1)h(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-h(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-h(\mathbf{x}_N))$$我们的目标是要预测 $h$ 使它接近 $f$，而通常来说 $\text{probability}(f)$ 很大，所以我们可以最大化 $\text{likelihood}(h)$。这时意味着 $h$ 生成 $\mathcal{D}$ 的似然（或者说概率）很大，一定程度上可以说，$h \approx f$。 接下来的工作就是要最大化 $\text{likelihood}(h)$$$g = \underset{h}{\text{argmax}} \ \ \text{likelihood}(h)$$ 将常量 $P(\mathbf{x})$ 去掉，同时注意到 $1-h(\mathbf{x}) = h(\mathbf{-x})$，有$$\text{likelihood}(h)\propto \prod \limits_{i=1}^n h(y_n\mathbf{x}_n) = \prod \limits_{i=1}^n \theta(y_n \mathbf{w}^T_n\mathbf{x}_n)$$ 取对数，并做一下相关变换，得到$$\min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} -\ln \theta(y_n \mathbf{w}^T \mathbf{x}_n)$$ 即 $$ \min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$$ 因此，这就是 Logistic Regression 的损失函数$$\text{err}(\mathbf{w}, \mathbf{x}, y) = \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$$ 称之为交叉熵损失函数。 Gradient of Logistic Regression Error为了最小化损失函数$$E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$$ 通常采取的方法是梯度下降法，如图所示： 为方便表示，我们使用 $\Box$ 表示 $\left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$，使用 $\bigcirc$ 表示 $( -y_n \mathbf{w}^T \mathbf{x}_n )$。 那么求导过程如下：$$\begin{aligned}\frac{\partial E_{\text{in}}(\mathbf{w})}{\partial w_i}&amp;=\frac{1}{N} \sum_{n=1}^{N} \\Big( \frac{\partial \ln (\Box)} {\partial \Box}\Big)\Big( \frac{\partial (1 + \text{exp}(\bigcirc)) } {\partial \bigcirc} \Big)\Big( \frac{\partial -y_n \mathbf{w}^T \mathbf{x}_n} {\partial w_i}\Big)\\&amp;=\frac{1}{N} \sum_{n=1}^{N} \\Big( \frac{1}{\Box} \Big)\Big( \text{exp}(\bigcirc) \Big)\Big( -y_n x_{n,i} \Big)\\&amp;=\frac{1}{N} \sum_{n=1}^{N} \\frac{\text{exp}(\bigcirc)} {1 + \text{exp}(\bigcirc)}\big( -y_n x_{n,i} \big)\\&amp;=\frac{1}{N} \sum_{n=1}^{N} \\theta(\bigcirc) \big( -y_n x_{n,i}\big)\end{aligned}$$ 于是$$\nabla E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \theta \big( -y_n \mathbf{w}^T \mathbf{x}_n \big)\big( -y_n \mathbf{x}_n\big)$$ 我们的目标是使得 $\nabla E_{\text{in}}(\mathbf{w}) = 0$，这里可以分为两种情况 所有 $\theta(\cdot)$ 都为 $0$，这时表示所有 $y_n \mathbf{w}^T \mathbf{x}_n \gg 0$，说明线性可分 加权结果为 $0$，说明线性不可分 Gradient Descent下面来讲一下梯度下降法，这是一种迭代的方法，通过不断的迭代来更新参数的值：$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \mathbf{v}$$ 其中 $\eta$ 表示的是步长，$\mathbf{v}$ 表示的是方向。我们暂时假定步长是给定的，那么在每一次的迭代过程中，等价于求解下面的问题：$$\underset{||\mathbf{v}=1||}{\text{min}} E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v})$$ 当 $\eta$ 很小的时候，使用泰勒展开，有$$E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v}) \approx E_{\text{in}}(\mathbf{w}_t) + \eta \mathbf{v}^T \nabla E_{\text{in}}(\mathbf{w}_t)$$ 其中 $E_{\text{in}}(\mathbf{w}_t)$ 以及 $\nabla E_{\text{in}}(\mathbf{w}_t)$ 是已知的，$\eta$ 是正数，于是上式中最佳的 $\mathbf{v}$ 为：$$\mathbf{v} = - \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}$$ 于是迭代过程为$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_1 \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}$$ 这就是负梯度方向，因此在负梯度方向上 $E_{\text{in}}$ 下降最快。 choice of $\eta$$\eta$ 的大小对 $E_{\text{in}}$ 优化的过程也有一定影响，如下图所示 $\eta$ 太小：优化速度太慢 $\eta$ 太大：优化过程不稳定 因此比较合适的选择是，使 $\eta$ 随着 $||\nabla E_{\text{in}}(\mathbf{w}_t)||$ 变化，于是我们令 $$\eta_2 = \eta_1 \cdot ||\nabla E_{\text{in}}(\mathbf{w}_t)||$$ 带入上面的式子，得到$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_2 ||\nabla E_{\text{in}}(\mathbf{w}_t)|| $$ Logistic Regression Algorithm综合上面的内容，我们得到了 Logistic Regression 算法，如图所示： 以上就是 Logistic Regression 算法的介绍。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-9-Linear Regression]]></title>
-    <url>%2F20180322-NTU-ML-9%2F</url>
-    <content type="text"><![CDATA[这一节主要介绍线性回归算法。 Linear Regression Problem对于输出空间 $\mathcal{Y} = \Bbb{R}$ 的一类问题，一个比较简单的想法就是：将 Linear Classification 的决策函数中的 sign 函数去掉，使用各种特征的加权结果来表示 $y$$$y \approx \sum_{i = 0}^{d} w_i x_i = \textbf{w}^T \textbf{x}$$ 这就是线性回归算法，它的假设空间为 $$h(\textbf{x}) = \textbf{w}^T \textbf{x}$$ 线性回归的目标是寻找一条直线 （$\Bbb{R}^2$） 或者一个平面 （$\Bbb{R}^3$）或者超平面（$\Bbb{R}^n$），使得误差最小，常用的误差函数是平方误差 $$E_{in}(\textbf{w}) = \frac{1}{N} \sum_{n = 1}^{N} \left( h(\textbf{x}_n) - y_n \right)^2$$$$E_{out}(\textbf{w}) = \underset{(x,y) \sim P}{\epsilon} \Big( \textbf{w}^T \textbf{x} - y \Big)$$ Linear Regression Algorithm将 $E_{in}$ 写成矩阵形式$$\begin{split}E_{in}(\textbf{w}) &amp;= \frac{1}{N} \sum_{n = 1}^{N} \left(h(\textbf{x}_n) - y_n\right)^2 \\&amp;= \frac{1}{N} \Bigg\Vert\begin{matrix}\textbf{x}_1^T \textbf{w} - y_1 \\\textbf{x}_2^T \textbf{w} - y_2 \\\cdot \cdot \cdot \\\textbf{x}_N^T \textbf{w} - y_N \\\end{matrix}\Bigg\Vert^2 \\&amp;= \frac{1}{N} \Vert X \textbf{w} - \textbf{y} \Vert^2\end{split}$$其中$$X = \Bigg[\begin{matrix}x_1^T, 1 \\x_2^T, 1 \\\cdot \cdot \cdot \\x_N^T, 1 \\\end{matrix}\Bigg]\in \Bbb{R}^{N \times (d+1)}$$$$\textbf{w} \in \Bbb{R}^{(d+1) \times 1}$$$$\textbf{y} \in \Bbb{R}^{N \times 1}$$我们的目标是找到一个 $\textbf{w}$，使得 $E_{in}(\textbf{w})$ 尽可能小。因此，将 $E_{in}(\textbf{w})$ 对 $\textbf{w}$ 求导，得到：$$\nabla E_{in} (\textbf{w}) = \frac{2}{N} X^T(X\textbf{w} - \textbf{y})$$令$\nabla E_{in}(\textbf{w}) = 0$，得到 $\textbf{w}$ 的最优解 $$\textbf{w}_{\text{LIN}} = \big( X^TX\big)^{-1}X^T\textbf{y}=X^{\dagger}\textbf{y}$$ 其中 $$X^{\dagger}=\big(X^TX\big)^{-1}X^T$$ 称为矩阵 $X$ 的伪逆，于是 $$h(\textbf{x}) = \textbf{w}_{\text{LIN}}^T \textbf{x}$$ 将上面做一个小结，得到 Linear Regression 算法的流程如下： Generalization Issue下面我们来分析一下 Linear Regression 的 $E_{in}$$$\begin{aligned}E_{in}({w_{LIN}})&amp;=\frac{1}{N}||{y-\hat{y}}||^2\\&amp;=\frac{1}{N}||y-XX^{\dagger}y||^2 \\&amp;=\frac{1}{N}||(I-H)y||^2 \\\end{aligned}$$ 其中 $H = XX^{\dagger}$ 是投影矩阵，把 $y$ 投影到 $X$ 的 $d+1$ 个向量构成的平面上，$H$ 有如下的性质： 对称性 $H=H^T$ 幂等性 $H^2=H$ 半正定性 $\lambda_i \geq 0$ $trace(I-{H}) = N-(d+1)$ 假设 $y = f(X) + \text{noise}, f(x) \in \text{span}$，那么如上图所示，有$$\begin{aligned}E_{in}({w_{LIN}})&amp;=\frac{1}{N}||(I-{H})y||^2 \\&amp;=\frac{1}{N}||(I-{H})noise||^2 \\&amp;=\frac{1}{N}trace(I-{H})||noise||^2 \\&amp;=\frac{1}{N}(N-(d+1))||noise||^2\end{aligned}$$ 得到：$$E_{in}({w_{LIN}})=||noise||^2 \cdot \big( 1 - \frac{d+1}{N} \big)$$ $$E_{out}({w_{LIN}})=||noise||^2 \cdot \big( 1 + \frac{d+1}{N} \big)$$两者最终都向 $\sigma^2$ (noise level)收敛，差距是 $\frac{2(d+1)}{N}$，因此说明算法是可行的。 Linear Regression for Binary Classification对比一下 Linear Classification 与 Linear Regression： Linear Regression 用于分类问题 $\mathcal{Y} = \{ +1, -1\}$ $h(\textbf{x})=\text{sign}(\textbf{w}^T\textbf{x})$ NP-hard，难于求解 Linear Regression 用于回归问题 $\mathcal{Y} = \Bbb{R}$ $h(\textbf{x})=\textbf{w}^T\textbf{x}$ 易于求解 因为 $$\text{err}_{0/1} = \big[\big[ \text{sign}(\textbf{w}^T\textbf{x}) \neq y\big]\big] \leq \text{err}_{\text{sqr}} = (\textbf{w}^T\textbf{x} - y)^2$$ 所以可以将 Linear Regression 用于分类问题上： run Linear Regression on binary classification data $\mathcal{D}$ return $g(\textbf{x}) = \text{sign}(\textbf{w}_{\text{LIN}}^T\textbf{x})$ 以上便是 Linear Regression 的内容。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-8-Noise and Error]]></title>
-    <url>%2F20180317-NTU-ML-8%2F</url>
-    <content type="text"><![CDATA[这一节主要讨论在有噪声的情况下，VC维理论是否仍适用。 Noise and Probabilistic Target回顾之前提到的机器学习的流程图，学习的目的，就是找到一个函数 $g$，使得它与目标函数 $f$ 差不多。 然而在现实生活中，往往伴随着噪声： 这些噪声的类别是多种多样的 noise in $y$：如标签标错了 noise in $x$：如原本的数据就存在噪声 没有噪音时，$x$ 服从同一个概率分布 $P$，$y=f(x)$ 是一个固定的值；有噪声时，$x$ 仍然服从同一个概率分布 $P$，$y \sim P(y|x)$ 不再是一个固定的值。 以之前提到的珠子为例子，珠子的两种颜色分别表示了 $h(x)$ 与 $f(x)$ 相等或者不等的情况。我们通过抽样，利用珠子属于某种颜色的频率来估计 $h(x) = f(x)$ 的概率。 在没有噪声的情况下，$y$ 是固定的，因此珠子的颜色是确定的。在有噪声的情况下，$y$ 不是固定的，因此珠子的颜色是变化的，此时我们仍然可以进行抽样的实验，只不过在进行统计的时候，我们记录的是珠子在抽出来那一刻的颜色。这样，我们就可以跟以前一样，通过频率来估计概率。 因此，只要 $x \sim P$ 并且 $y \sim P(y|x)$，也就是说 $(x,y) \sim P(x,y)$，VC维理论仍然适用。于是，学习的目的，从预测 $f$ 变成了预测 $p(y|x)$，其中 $p(y|x)$ 由 $f(x)$ 以及噪声构成。 对于 $f$，我们可以将其想象为分布 $P(y|x)$ 的一种特殊形式。 $y = f(x)$时，$P(y|x) = 1$ $y \neq f(x)$时，$P(y|x) = 0$ 这样就可以将无噪声以及有噪声的情况统一起来，学习的流程图更新成以下形式： Error Measure我们需要有一个准则来衡量所选择的假设函数 $g$ 与目标函数 $f$ 相似程度，通常的方法是定义一个错误函数（也叫做代价函数） $E(g,f)$。 这个错误函数描述的是在整个样本空间（不只是训练样本）中，$g$ 与 $f$ 的相似程度，并且通常来讲，是 $g$ 与 $f$ 在每个样本点上的错误的平均。$$E_{in}(g) = \frac{1}{N} \sum_{n=1}^{N} err \Big( g(x_n), f(x_n) \Big)$$$$E_{out}(g) = \underset{x \sim P}{\epsilon} err \Big( g(x_n), f(x_n) \Big)$$ 常用的两种错误衡量方式 $err \big( g(x), f(x) \big) = err \big( \tilde{y}, y \big)$： 0/1 error for classification：$err \big( \tilde{y}, y \big) = \big[ \tilde{y} \neq y \big] $ squared error for regression：$err \big( \tilde{y}, y \big) = \big( \tilde{y} - y \big) ^ 2 $ 错误衡量准则会对学习过程起到指导作用，因此对于同一个问题，使用不同的错误衡量准则，得到的结果可能不一样。 对机器学习流程图进一步修改，加入了错误衡量的模块，该模块对算法和最终的假设选择都起着很大影响。 Algorithmic Error Measure在现实中，要设计出真正的错误衡量有时候会很困难，在设计错误衡量方式时，常常使用替代的方式 $\hat{err}$： 有意义的错误衡量例如 0/1 error，表示的是 flipping 的噪声，如果 0/1 error 很小，说明出错的样本数很少；例如 squared error，表示的是噪声是高斯的分布，如果 squared error 很小，说明高斯噪声很少； 对设计算法容易的错误衡量例如有闭式解的算法对应的错误衡量方式；例如具有凸函数性质的错误衡量方式。 于是，学习的流程图改为下面的形式，其中 $err$ 表示的是真正的错误衡量方式，而$\hat{err}$ 表示的是我们用在算法中的错误衡量方式，我们使用 $\hat{err}$ 来替代 $err$ 进行算法中的优化以及假设函数的选择。 Weighted Classification我们可以使用 cost matrix 表示 0/1 error 其中 false reject 表示的是把 $y=+1$ 预测为 $y=-1$，false accept 表示的是把 $y=-1$ 预测为 $y=+1$。 当这两类错误的 cost 相等时，表示这两类错误的重要性一致，当这两类错误的 cost 不相等时，表示其中一种错误更加严重，代价更高。 于是我们可以根据实际的需要，赋予两种错误不同的代价，这叫做 weighted classification。 下面是一个 cost matrix 的例子，在这个例子中，把 $y=+1$ 预测为 $y=-1$ 的代价是 $1$，而把 $y=-1$ 预测为 $y=+1$ 的代价是 $1000$，因此算法会惩罚后一种错误分类的情况。 通过改变样本的数目，可以将 weighted classification 转化为一般的 classification。用上一个例子来说明，我们可以将数据集中 $y=-1$ 的样本复制 1000 份，这样就相当于在没有加权的 0/1 error 下进行实验。于是可以使用之前用于 0/1 error 的算法，比如 pocket 算法。 将上面 cost matrix 的转化嵌入到算法中，便得到了 weighted pocket 算法]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-7-The VC Dimension]]></title>
-    <url>%2F20180313-NTU-ML-7%2F</url>
-    <content type="text"><![CDATA[todo]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-5-Training versus Testing]]></title>
-    <url>%2F20180311-NTU-ML-5%2F</url>
-    <content type="text"><![CDATA[接着上一篇所讨论的问题，继续讨论。 Recap and Preview回顾一下机器学习的流程图： 机器学习可以理解为寻找到 $g$，使得 $g \approx f$，也就是 $E_{out}(g) \approx 0$ 的过程。为了完成这件事情，有两个关键的步骤： 保证 $E_{out}(g) \approx E_{in}(g)$，由 “训练” 过程来完成 保证 $E_{in}(g) \approx 0$，由 “验证” 过程来完成 当这两件事情都得到保证之后，我们就可以得到 $E_{out}(g) \approx 0$，于是完成了学习。 $M$ 的取值（hypothesis 的数目）会影响上面说的两个步骤： $M$ 太小，能保证 $E_{out}(g) \approx E_{in}(g)$，但是不能保证 $E_{in}(g) \approx 0$（因为可选择的 hypothesis 的数目太少）； $M$ 太大，能保证 $E_{in}(g) \approx 0$，但是不能保证 $E_{out}(g) \approx E_{in}(g)$$\big(\begin{split}\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}]\le2M\exp(-2\epsilon^2N)\end{split}\big)$。 因此需要想办法解决 $M$ 较大时，$E_{out}(g) \approx E_{in}(g)$ 的问题。 Effective Number of Lines由上一篇文章我们知道：$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \le 2M \exp(-2 \epsilon^2 N)$$ 对于这个式子，$M = \infty$ 时，右侧的值很大，$E_{out}(g) \approx E_{in}(g)$ 不能保证。我们的想法是：尝试用一个合适的数 $m_H$ 代替式子中的 $M$，使无穷变成有限，如下式：$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \stackrel{?}{\le} 2 \cdot m_{\mathcal{H}} \cdot \exp(-2 \epsilon^2 N)$$ 第一个式子中的 $M$ 来源于 “Union Bound”$$\Bbb{P} [ \mathcal{B}_{1} \hphantom{1} or \hphantom{1} \mathcal{B}_{2} \hphantom{1} or \dots \mathcal{B}_{M} ] \le \Bbb{P} [ \mathcal{B}_{1}] + \Bbb{P} [ \mathcal{B}_{2}] + \dots + \Bbb{P} [ \mathcal{B}_{M}]$$ 其中 $\Bbb{P}[\mathcal{B}_{M}]$ 表示的是第 $M$ 个假设函数 $h_M$ 在数据集上发生坏事情（即存在 BAD DATA，$E_{out}(h_M) \neq E_{in}(h_M)$）的概率。 然而当 $M$ 很大时，假设集中存在许多相似的假设函数 $h$，它们发生坏事情的概率和情形都很接近，这样使用 “Union Bound” 来计算整个假设集发生坏事情的概率，便存在许多重复的地方，于是算出来的概率会比实际的高很多（over-estimating）。 我们换一种思路，从数据点的分类结果来对假设集进行分类，这样就避免了假设之间相互重合的问题。以二元分类来阐述怎么解决这个问题：我们根据分类结果，对 $h$ 进行分类。 样本点大小 $N$ 假设集 $H$ 等价类（考虑最多的情况） 1 2 类：$\{o\}$、$\{x\}$ 2 4 类：$\{oo\}$、$\{ox\}$、$\{xo\}$、$\{xx\}$ … … N $2^{N} 类$ 对于一个大小为 $N$ 的数据集，任意一个假设函数 $h$ 都属于上述 $2^N$ 个等价类之间的一个，因此我们可以用 $2^N$ 来代替原不等式中的 $M$。 Effective Number of Hypotheses我们把上面提到的等价类的概念起一个名字叫做 Dichotomy。 具体的 Dichotomy 的 size 与这 $N$ 个数据的具体取值有关（但是不会大于 $2^N$），为方便讨论我们取最大那个 size 来分析，取名为 growth function，记作 $m_\mathcal{H}(N)$，意思是假设空间在 $N$ 个样本点上能产生的最大二分数量。$$m_\mathcal{H}(N) = \max \limits_{\textbf{x}_1,\textbf{x}_2,…,\textbf{x}_N \in \mathcal{X}} \big| \mathcal{H}(\textbf{x}_1,\textbf{x}_2,…,\textbf{x}_N) \big|$$接下来我们需要计算 $m_\mathcal{H}(N)$，首先考虑几种不同的模型的 $m_\mathcal{H}(N)$ Positive Rays确定一个点，规定在这个点的正方向为正，即 $h(x)=+1$，反方向为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = N + 1$，如下图所示。 Positive Intervals确定两个点，规定在这两个点之间为正，即 $h(x)=+1$，两个点之外为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = {N+1 \choose 2} + 1$，如下图所示。 Convex Sets顶点在同一个圆上的凸多边形，规定圆上与多边形相交的点为正，即 $h(x)=+1$，没有与多边形相交的点为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = 2^N$，如下图所示。 2D perceptrons就是前面举的平面上的点分类的例子，某些情况下 $m_\mathcal{H}(N) &lt; 2^N$。 将上面几种情况总结如下： model $m_\mathcal{H}(N)$ Positive Rays $m_\mathcal{H}(N) = N + 1$ Positive Intervals $m_\mathcal{H}(N) = {N+1 \choose 2} + 1$ Convex Sets $m_\mathcal{H}(N) = 2^N$ 2D perceptrons $m_\mathcal{H}(N) &lt; 2^N$ in some case Break Point我们希望 $m_H(N)$ 是多项式形式而不是指数形式的，这样当 $N$ 很大的时候，不等式右边趋近于0，才能保证 $E_{out}(g) \approx E_{in}(g)$：$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \stackrel{?}{\le} 2 \cdot m_{\mathcal{H}} \cdot \exp(-2 \epsilon^2 N)$$ 因此，将 $m_{\mathcal{H}}$ 替换为 $2^N$ 还不够，为此我们引入一个概念叫 break point，定义如下 if no $k$ inputs can be shattered by $\mathcal{H}$, call $k$ a break point for $\mathcal{H}$ $m_{\mathcal{H}}(k) &lt; 2^{k}$ $k+1$, $k+2$, $k+3$, $…$ also break points will study minimum break point $k$ 对应的，上面所提到的四种模型的 break point 如下： model $m_\mathcal{H}(N)$ break point Positive Rays $m_\mathcal{H}(N) = N + 1$ break point at 2 Positive Intervals $m_\mathcal{H}(N) = {N+1 \choose 2} + 1$ break point at 3 Convex Sets $m_\mathcal{H}(N) = 2^N$ no break point 2D perceptrons $m_\mathcal{H}(N) &lt; 2^N$ in some case break point at 4 我们猜测 $m_\mathcal{H}(N)$ 与 break point 有下面的关系： no break point：$m_\mathcal{H}(N) = 2^N$ break point $k$：$m_\mathcal{H}(N) = O(N^{k-1})$ 如果猜测成立，那么在有 break point 的情况下，$m_H(N)$ 便是一个多项式形式，这样就能保证 $E_{out}(g) \approx E_{in}(g)$ 了。 因此，接下来我们需要探讨，break point 与 $m_\mathcal{H}(N)$ 之间的关系，我们将在下几篇文章中对此进行讨论。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-4-Feasibility of Learning]]></title>
-    <url>%2F20180311-NTU-ML-4%2F</url>
-    <content type="text"><![CDATA[在这篇文章中，我们主要探讨，机器到底能不能进行学习这个问题。 Learning is Impossible?从前面的文章中，我们已经知道，机器学习的过程，就是通过现有的训练集 $D$ 学习，得到预测函数 $h$，并且使得它接近于目标函数 $f$。 我们必须思考的问题是：这种预测是可能的么？也就是说，机器能通过学习得到 $h$，使得 $h \approx f$ 吗？ No free lunch机器学习领域有一个著名的理论，叫做 “没有免费的午餐” 定理（No Free Lunch Theorem, 简称 NFL 定理）。用比较通俗易懂的话来讲，意思就是说：“学习” 可能是做不到的。 在训练样本集（in-sample）中，可以求得一个最佳的假设 $g$，该假设最大可能的接近目标函数 $f$，但是在训练样本集之外的其他样本（out-of-sample）中，假设 $g$ 和目标函数 $f$ 可能差别很远。 Example我们举一个例子来说明上面这段话的意思。现在假设有这样一个数据集 $X=\{000,001,…,111\}$ 总共8个数据，使用函数 $f$ 对数据集中的每一个数据分类（圈或叉）。现在我们手头有5个训练样本，我们想让机器使用这些训练样本学习到函数$f$。 由于机器只能看到训练集的样本（5个），因此它能学习得到函数 $g$，使得在这些训练样本上，$g$ 与 $f$ 的预测结果一样。 但是，因为机器看不见训练集外的样本（剩下的3个），对于这些样本，机器只能自己猜测$g(x)$的值。而无论机器预测的结果是怎么样的，我们总能够找到$f$，使得在这些训练集外的样本上，$g \neq f$。 Summary从上面的例子我们可以看出，机器能学习的，只是它看得见的样本（in-sample），而对于它看不见的样本（out-of-sample），学习效果就很难保证了。 如果是这样子的话，机器学习的作用的很有限了，毕竟我们更需要的，是机器机帮我们处理没见过的数据。 嗯，事情一定没这么简单。 Probability to the Rescue我们想象这样一个场景：有一个罐子，这个罐子里装有橙色和绿色两种颜色的珠子，我们如何在不查遍所有珠子的情况下，得知罐子中橙子珠子所占的比例呢？一个想法就是使用抽样的方法，通过频率来预测概率。 假设罐子中橙色珠子的概率为 $\mu$（未知），则绿色珠子的概率为 $1-\mu$；假设通过抽样查出的橙色珠子比例为 $v$（已知），则绿色珠子的比例为 $1-v$。那么我们可不可以通过 $v$ 来预测 $\mu$ 呢？ Hoeffding’s inequality数学上有个霍夫丁不等式，专门回答了这个问题。这个不等式是这样子的： 当样本数量 $N$ 足够大时，$v$ 和 $\mu$ 有如下关系：$$\Bbb{P}[\left|\nu-\mu\right|\gt\epsilon]\le2\exp\big(-2\epsilon^2N\big)$$ 从上面的式子可以看出，随着样本数量 $N$ 的逐渐增大，$v$ 与 $\mu$ 接近的概率也逐渐增大，因此可以说 $v$ 与 $\mu$ 大概近似相等（probably approximately correct，PAC），因此，选择合适的 $N$ 以及 $\epsilon$，就可以通过 $v$ 预测 $\mu$。 Connection to Learning我们可以将以上的情景与机器学习问题对应起来，如下图所示： 相对应的概念如下所示： 罐子：数据集，包括 in-sample 以及 out-of-sample 橙色珠子：数据 $x_n$, 其中 $h(x_n) \neq f(x_n)$ 绿色珠子：数据 $x_n$, 其中 $h(x_n) = f(x_n)$ 橙色珠子概率 $\mu$：$h(x) \neq f(x)$ 的概率 抽到的珠子：训练样本（我们看得到的那些） 抽到橙色珠子：在某个样本点 $x_n$ 上，$h(x_n) \neq f(x_n) = y_n$ 抽到绿色珠子：在某个样本点 $x_n$ 上，$h(x_n) = f(x_n) = y_n$ 橙色珠子频率 $v$：$h(x) \neq f(x)$ 的频率 抽样动作：判断 $h(x_n)$ 与 $f(x_n)=y_n$ 是否相等 于是在样本数足够多的情况下，我们可以通过测试 $h(x_n) \neq y_n$ 的频率来推断 $h(x) \neq f(x)$ 的概率。这里需要注意的是，$x_n$ 需要是独立同分布的，但是我们并不需要知道具体的分布函数是什么。 Learning Flow我们对学习流程图进行完善，如下图所示： 我们在流程图中增加了一个数据的分布函数 $P$，我们并不知道这个分布具体的样子（但是没关系），我们利用这个分布进行抽样，产生训练样本，同时利用这些训练样本，计算 $h(x) \neq f(x)$ 的频率 $E_{in}(h)$，并且使用这个频率来估计 $h(x) \neq f(x)$ 的概率 $E_{out}(h)$。这里所说的 $h$，是我们从假设集 (hypothesis set) 中选择的一个特定的 $h$。 The Formal Guarantee将霍夫丁不等式中的 $\mu$ 换成 $E_{out}(h)$，$v$ 换成 $E_{in}(h)$，就可以得到下面的式子： $$\Bbb{P}\left[\left|E_{in}(h)-E_{out}(h)\right|\gt\epsilon\right]\le2\exp\big(-2\epsilon^2N\big)$$ 上面的公式保证了在一定条件下，$E_{in}(h)$ 与 $E_{out}(h)$ 不会相差太远，那么只要我们能选择合适的 $h$ 使得 $E_{in}(h)$ 比较小，那么 $E_{out}(h)$ 也会比较小。 Verification of One $h$整理一下，对于一个固定的 $h$，霍夫丁不等式告诉我们，在样本数足够多的情况下，如果 $E_{in}(h)$ 很小，那么 $E_{out}(h)$ 也会大概率比较小。 机器学习要做的事，是通过算法 $\mathcal{A}$ 从假设集 $H$ 中选择 $g$，使得 $g$ 尽可能接近 $f$。换句话来讲，需要在假设集 $H$ 中找到一个 $h$，使得 $E_{in}(h)$ 很小，然后把 $h$ 当成最终的预测函数 $g$。 我们现在做的事情，因为只涉及了一个 $h$，准确来讲不是 “学习”，而是 “验证”，即对于一个 $h$，通过 $E_{in}(h)$ 估计 $E_{out}(h)$。 我们还需要探讨，如果算法是在多个 $h$ 中进行选择（而不是只有一个 $h$，不需要选择），那么情况有什么变化。也就是从探讨 $E_{in}(h)$ 与 $E_{out}(h)$ 的关系，变成探讨 $E_{in}(g)$ 与 $E_{out}(g)$ 的关系。 Connection to Real Learning首先我们考虑假设集中的假设是有限多个的情况。 来看一下下面这个表格，表格中的每一行表示一个固定的 $h$ 的情况，表格中的每一列表示一笔数据集，表格里的 “BAD” 表示，在这笔数据集上，对于某个特定的 $h$，$E_{in}(h)$ 与 $E_{out}(h)$ 相差很大，我们把这样的数据叫做是这个 $h$ 上的 BAD data。 霍夫丁不等式告诉我们，对于一个固定的$h$，出现 $E_{in}(h)$ 与 $E_{out}(h)$ 相差很大的概率很小，也就是说，对于表格中的每一行， BAD data 出现的概率很小，在这样的情况下，我们才能通过 $E_{in}$ 来预测 $E_{out}$。$$\Bbb{P}\big[ \big| E_{in}(h) - E_{out}(h) \big| &gt; \epsilon \big] \le 2 \exp \big( -2 \epsilon^2 N \big)$$同样的，当有多个 $h$ 可选择时，我们也希望 BAD data 出现的概率小，这样才能让算法在假设集中自由选择 $h$，保证能通过$E_{in}$ 来预测 $E_{out}$。 这种情况下，只要数据对于某个 $h$ 而言是 BAD data，它在这个假设集中就是 BAD data，其出现的概率为：$$\begin{split}\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}]&amp;=\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_1\ or\ BAD\ \mathcal{D}\ for\ h_2\ or\ …\ or\ BAD\ \mathcal{D}\ for\ h_M]\\&amp;\le\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_1]+ \Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_2]+ …+\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_M]\\&amp;\le2\exp\big(-2\epsilon^2N\big)+\exp\big(-2\epsilon^2N\big)+\exp\big(-2\epsilon^2N\big)+…+\exp\big(-2\epsilon^2N\big)\\&amp;=2M\exp\big(-2\epsilon^2N\big)\end{split}$$其中 $M$ 表示的是假设集中 $h$ 的个数。 因此得到结论：如果 $M$ 的值是有限的，在 $N$ 足够大的情况下，BAD data 出现的概率很小，即无论哪个 $h$，都有 $E_{in}(h) \approx E_{out}(h)$ （PAC），那么我们通过合适的算法选择一个 $E_{in}$ 小的 $h$，就能保证 $E_{out}$ 小（PAC），于是学习成功了。 最后完善学习流程图： 以上，我们讨论了假设集中的假设是有限多个的情况下，$E_{in}(g)$ 与 $E_{out}(g)$ 的关系。关于假设集中的假设是无限多个的情况，将在接下来的文章中讨论。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-3-Types of Learning]]></title>
-    <url>%2F20180118-NTU-ML-3%2F</url>
-    <content type="text"><![CDATA[这节课主要介绍机器学习问题的一些分类。 Learning with Different Output Space $\mathcal{Y}$按照数据的输出，可以把 ML 分为以下几类： 二类别分类问题：$\mathcal{Y} \in \{0, 1\}$ 多类别分类问题：$\mathcal{Y} \in \{0, 1, \cdots, K\}$ 回归问题：$\mathcal{Y} \in R$ 结构学习 Learning with Different Data Label $y_n$按照数据的标签，可以把 ML 分为以下几类： supervised： 所有 $x_n$ 都具有 $y_n$ unsupervised： 所有 $x_n$ 都没有 $y_n$ semi-supervised： 一些 $x_n$ 具有 $y_n$ Learning with Different Protocol $f$按照数据的传输方式，可以把 ML 分为以下几类： batch： 一次性把所有的数据给算法 online： 连续的数据，一次处理一个数据 active： 机器通过主动询问某些问题来学习 Learning with Different Input Space $\mathcal{X}$按照数据的输入，可以把 ML 分为以下几类： concrete： 精细的、复杂的、有序的，已经完成预处理的数据 raw： 原始的，未经处理或者经过很少处理的数据 abstract：抽象的，无法轻易表明含义的数据]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-2-Learning to Answer Yes/No]]></title>
-    <url>%2F20180115-NTU-ML-2%2F</url>
-    <content type="text"><![CDATA[这节课主要介绍感知器算法（Perceptron Learning Algorithm）。 Perceptron Hypothesis Set对于一个线性可分的二分类问题，我们可以采用感知器 （Perceptron）这种假设集。 采用这种假设集进行分类的思想是这样的：我们假设样本的类别是由样本每一个特征 $\textbf{x}_i$ 共同决定，其中不同的特征的重要程度不一样。于是我们通过对所有的特征进行加权 $\sum_{i=1}^d \textbf{w}_i \textbf{x}_i$，得到一个“分数”，将这个“分数”与一个阈值 $threshold$ 进行比较，如果“分数”大于阈值，那么这个样本属于一个类别（类别“+1”），如果“分数”小于阈值，那么这个样本属于另一个类别（类别“-1”）。 这种模型可以用下面的表达式表示出来：$$\begin{split}h(\textbf{x})&amp;= sign \Bigg( \Big( \sum_{i=1}^d \textbf{w}_i \textbf{x}_i \Big) - threshold \Bigg) \ \ \ \ h\in \mathcal{H} \\&amp;= sign \Bigg( \Big( \sum_{i=1}^d \textbf{w}_i \textbf{x}_i \Big) + \Big(- threshold \Big) \cdot \Big( +1 \Big) \Bigg) \\&amp;= sign \Big( \sum_{i=0}^d \textbf{w}_i \textbf{x}_i \Big) \\&amp;= sign \Big( \textbf{w}^T \textbf{x} \Big)\end{split}$$ 其中不同的向量 $\textbf{w}$ 代表了不同的假设函数 $h(\textbf{x})$，我们的目标是使用一些算法调整 $w$ 的值，使得假设函数 $h(\textbf{x})$ 与我们要预测的函数 $f(\textbf{x})$ 尽可能的接近。 我们的想法是：如果 $h(\textbf{x})$ 与 $f(\textbf{x})$ 足够接近，那么它们作用在训练集 $D$ 上的结果会是一样的，即对训练集中的 $\textbf{x}$，有 $f(\textbf{x}) = h(\textbf{x})$。反过来说，如果对所有训练集中的 $\textbf{x}$，有 $f(\textbf{x}) = h(\textbf{x})$，那么在一定程度上，我们可以认为 $h(\textbf{x})$ 与 $f(\textbf{x})$ 是接近的。 Perceptron Learning Algorithm (PLA)这个模型中训练 $\textbf{w}$ 的算法称为感知器算法（Perceptron Learning Algorithm），算法的思想是（尽可能地）对预测错误的样本进行修正，使得分类器的预测结果越来越好。预测错误的样本可以分为以下两种类型： 当 $f(\textbf{x})=y=+1$ 而预测结果 $h(\textbf{x})=sign(\textbf{w}^T\textbf{x})=-1$ 时，说明此时 $\textbf{w}$ 与 $\textbf{x}$ 的内积过小，夹角过大，需要让 $\textbf{w}$ 靠近 $\textbf{x}$，因此将 $\textbf{w}$ 改为 $\textbf{w}+\textbf{x}=\textbf{w}+y\textbf{x}$; 当 $f(\textbf{x})=y=-1$ 而预测结果 $h(\textbf{x})=sign(\textbf{w}^T\textbf{x})=+1$ 时，说明此时 $\textbf{w}$ 与 $\textbf{x}$ 的内积过大，夹角过小，需要让 $\textbf{w}$ 远离 $\textbf{x}$，因此将 $\textbf{w}$ 改为 $\textbf{w}-\textbf{x}=\textbf{w}+y\textbf{x}$; 反复修正预测错误的样本点直到所有训练样本都预测正确，选择预测错误的样本的顺序没有限制，可以按自然顺序，也可以随机选择。 算法描述如下图： 例子我们举一个例子来说明 PLA 算法的过程。 Guarantee of PLA目前我们还有一些问题没有讨论，其中比较重要的一个问题是，PLA是不是收敛的，即算法最终能不能停止下来。 首先我们讨论线性可分的情况，线性不可分的情况在下一节中讨论。当数据集是线性可分时，表示存在 $\textbf{w}_f$ 使得 $y_n = sign(\textbf{w}_f^T \textbf{x}_n)$，下面证明PLA是收敛的，即 $\textbf{w}$ 能收敛到 $\textbf{w}_f$，即算法能停止下来。 $\textbf{w}_f$ 与 $\textbf{w}_t$ 的内积会单调递增 $\textbf{w}_t$ 的长度有限制 以上两点可以推出：当算法从 $\textbf{w}_0 = 0$ 开始时，算法更新次数 $T \leq \frac{R^2}{\rho^2}$其中 $$R^2 = \max \limits_{n}\{f(\textbf{x})\}$$$$ \quad \rho = \min \limits_{n} y_n \frac{\textbf{w}_f^T}{||\textbf{w}_f^T||} \textbf{x}_n$$因此说明了算法最终会收敛。 总结我们对PLA进行一下总结： 收敛性在数据是线性可分的条件下，算法能收敛。 算法的优点算法容易简单、实现；算法速度快；在任意维度下都能工作。 算法的缺点需要数据是线性可分的条件；不知道算法什么时候收敛。 Non-Separable Data当数据集是线性不可分时，表示数据中有噪声（这里的噪声是相对于感知器这个假设集而言的）。在这种情况下，学习的过程发生了一点改变： 对感知器模型来说，此时可能无法使所有样本都正确分类，此时我们应该退而求其次，找尽可能犯错少的分界面，我们的学习的目标从$$ \arg \limits_{ \textbf{w} } y_n = sign( \textbf{w}^T \textbf{x}_n) $$ 变成了$$ \arg \min \limits_{w} \sum {[[y_n \neq sign(w^Tx_n)]]}$$不幸的是，这是一个 NP-hard 问题。 此时的一种思路是使用贪心算法，于是PLA可以改进成Pocket算法：]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-1-The Learning Problem]]></title>
-    <url>%2F20180113-NTU-ML-1%2F</url>
-    <content type="text"><![CDATA[IntrodctionWhat is Machine Learning 机器学习：计算机通过数据和计算获得一定技巧的过程。 技巧：指的是在某些事情上表现更加出色，比如预测、识别等等。 Why using Machine Learning 一些数据或者信息，人来无法获取，可能是一些人无法识别的事物，或是数据信息量特别大； 人的处理满足不了需求，比如：定义很多很多的规则满足物体识别或者其他需求；在短时间内通过大量信息做出判断等等。 When to use Machine Learning 存在一个模式或者说表现可以让我们对它进行改进提高； 规则并不容易那么定义； 需要有数据。 Components of Machine Learning一个机器学习问题，主要由以下几部分构成： 输入： $\textbf{x} \in \mathcal{X}$ 输出： $\textbf{y} \in \mathcal{Y}$ 目标函数：$f: \mathcal{X} \rightarrow \mathcal{Y}$ 数据：$\mathcal{D} = \{ (\textbf{x}_1, \textbf{y}_1), (\textbf{x}_2, \textbf{y}_2) \ldots (\textbf{x}_N, \textbf{y}_N),\}$ 假设：$g: \mathcal{X} \rightarrow \mathcal{Y}$ 目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，我们手头有一组由 $f$ 生成的数据 $\mathcal{D}$，目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。 Learning Flow以一个更加详细的流程图来说明这一过程： 目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，$\mathcal{X}$ 与 $\mathcal{Y}$ 在一起构成了数据 $\mathcal{D}$，我们的目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。为此，我们必须选定一个假设空间 $\mathcal{H}$，然后使用算法 $\mathcal{A}$，选择 $\mathcal{H}$ 里的一个假设作为 $g$。 在这里有几个需要注意的地方： 机器学习的输入在这个流程图中就变成了两个部分，一个是训练样本集，而另一个就是假设空间 $\mathcal{H}$。 我们所说的机器学习模型在这个流程图中也不仅仅是算法 $\mathcal{A}$，而且还包含了假设空间 $\mathcal{H}$。 上图还是一个相对比较简单的机器学习流程图，在往后的文章中会不断的根据新学的知识继续扩展这幅图的元素。 Machine Learning and Other Fields ML VS DM两者密不可分： 两者是一致的能够找出的有用信息就是我们要求得的近似目标函数的假设。 两者是互助的能够找出的有用信息就能帮助我们找出近似的假设，反之也可行。 两者的区别传统的数据挖掘更关注与从大量的数据中的计算问题。 ML VS AI机器学习是实现人工智能的一种方式。 ML VS Statistic 统计是一种实现机器学习的方法。 传统的统计学习更关注与数学公式，而非计算本身。]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NTU-ML-《机器学习基石》笔记系列]]></title>
-    <url>%2F20180113-NTU-ML-0%2F</url>
-    <content type="text"><![CDATA[前言“机器学习基石”是 Coursera 上一门关于机器学习的课程，由国立台湾大学的老师林轩田讲授。该课程一共有16节课，主要介绍了机器学习领域的基础理论知识。 授课大纲课程的大纲如下，以下的每个小项目对应到约一小时的课程： When Can Machines Learn? [何时可以使用机器学习]– The Learning Problem [机器学习问题]– Learning to Answer Yes/No [二元分类]– Types of Learning [各式机器学习问题]– Feasibility of Learning [机器学习的可行性] Why Can Machines Learn? [为什么机器可以学习]– Training versus Testing [训练与测试]– Theory of Generalization [举一反三的一般化理论]– The VC Dimension [VC 维度]– Noise and Error [噪声时错误] How Can Machines Learn? [机器可以怎么样学习]– Linear Regression [线性回归]– Linear Soft Classification [软性的线性分类]– Linear Classification beyond Yes/No [二元分类以外的分类问题]– Nonlinear Transformation [非线性转换] How Can Machines Learn Better? [机器可以怎么样学得更好]– Hazard of Overfitting [过度训练的危险]– Preventing Overfitting I: Regularization [避免过度训练一：控制调适]– Preventing Overfitting II: Validation [避免过度训练二：自我检测]– Three Learning Principles [三个机器学习的重要原则] 计划我将把课程按照自己的理解，整理成一份通俗易懂的笔记，一方面记录所学知识，另一方面与大家一起分享，共同进步。 点击右侧可关注我的 github 地址。 笔记链接NTU-ML-机器学习问题NTU-ML-感知器算法]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-        <tag>Notes</tag>
-      </tags>
-  </entry>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[NTU-ML-13-Hazard of Overfitting]]></title>
+      <url>/20180331-NTU-ML-13/</url>
+      <content type="html"><![CDATA[<p>这节课主要讨论一下机器学习中过拟合的问题。</p>
+<h2 id="What-is-Overfitting"><a href="#What-is-Overfitting" class="headerlink" title="What is Overfitting?"></a>What is Overfitting?</h2><h3 id="Overfitting"><a href="#Overfitting" class="headerlink" title="Overfitting"></a>Overfitting</h3><p>什么是过拟合？首先来看一下之前介绍过的 VC 曲线<br><img src="/20180331-NTU-ML-13/learning_curve.png" alt=""></p>
+<p>随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 先变小再变大。我们把 $E_{\text{out}}$ 最小位置所对应的 $d_{\text{VC}}$ 称为 $d_{\text{VC}}^{*}$，于是把曲线分成了两部分。</p>
+<ul>
+<li>在 $d_{\text{VC}}^{*}$ 左边部分，$E_{\text{in}}$ 与 $E_{\text{out}}$ 都比较大，说明模型对样本的拟合较差，这种情况称为欠拟合。</li>
+<li>在 $d_{\text{VC}}^{*}$ 右边部分，随着 $d_{\text{VC}}$ 的变大，$E_{\text{in}}$ 逐渐变小，而 $E_{\text{out}}$ 却逐渐变大，说明模型对训练样本拟合得很好，但是泛化能力较差，这种情况称为过拟合。</li>
+</ul>
+<h3 id="Cause-of-Overfitting"><a href="#Cause-of-Overfitting" class="headerlink" title="Cause of Overfitting"></a>Cause of Overfitting</h3><p>发生过拟合的原因主要有：</p>
+<ol>
+<li>使用过于复杂的模型，$d_{\text{VC}}$ 过大；</li>
+<li>数据存在噪声；</li>
+<li>训练样本数过少。</li>
+</ol>
+<h2 id="The-Role-of-Noise-and-Data-Size"><a href="#The-Role-of-Noise-and-Data-Size" class="headerlink" title="The Role of Noise and Data Size"></a>The Role of Noise and Data Size</h2><h3 id="Case-Study"><a href="#Case-Study" class="headerlink" title="Case Study"></a>Case Study</h3><p>现在假设我们有两组数据，第一组数据由一个 10 阶的目标函数加噪声生成，第二组数据由一个 50 阶的目标函数生成。分别使用 2 阶以及 10 阶的多项式模型来学习这两组数据。</p>
+<p><img src="/20180331-NTU-ML-13/case_res.png" alt=""></p>
+<p>从上图可以看出，无论学习哪组数据，$E_{\text{in}}(g_2)$ 大于 $E_{\text{in}}(g_{10})$，而 $E_{\text{out}}(g_2)$ 小于 $E_{\text{out}}(g_{10})$。因此，对于这两组学习，可以说 $g_{10}$ 发生了过拟合。</p>
+<h3 id="Learning-Curves-Revisited"><a href="#Learning-Curves-Revisited" class="headerlink" title="Learning Curves Revisited"></a>Learning Curves Revisited</h3><p>从学习曲线来看，两个模型的学习曲线如下：<br><img src="/20180331-NTU-ML-13/learning_curve_2.png" alt=""></p>
+<p>可见，当样本数目 $N$ 足够大时，两个模型会收敛，这时右边模型的 $E_{in}$ 与 $E_{out}$ 都会比左边的小。但是当样本数 $N$ 不够时，对右边模型来说，尽管 $E_{in}$ 很小，但是 $E_{out}$ 会特别大，这就是发生了过拟合。可以说是 $N$ 过小造成的，也可以说是 $d_{\text{VC}}$ 过大造成的。</p>
+<h3 id="The-No-Noise-Case"><a href="#The-No-Noise-Case" class="headerlink" title="The No Noise Case"></a>The No Noise Case</h3><p>第二组数据是由一个 50 阶的目标函数生成，没有加噪声。但是两个模型学习的结果仍然是，$\mathcal{H}_{10}$ 过拟合。这种情况可以这样解释：目标函数本身就很复杂，这本质上来讲也是一种噪声，我们称之为确定性噪声（Deterministic Noise），我们将在下面进行进一步解释。</p>
+<h2 id="Deterministic-Noise"><a href="#Deterministic-Noise" class="headerlink" title="Deterministic Noise"></a>Deterministic Noise</h2><p>我们来探讨一下影响过拟合的一些因素。</p>
+<h3 id="Impact-of-Noise-and-Data-Size"><a href="#Impact-of-Noise-and-Data-Size" class="headerlink" title="Impact of Noise and Data Size"></a>Impact of Noise and Data Size</h3><p>假设我们产生的数据分布由两部分组成：第一部分是目标函数 $f(\mathbf{x})$ 是一个 $Q_f$ 阶多项式，第二部分是服从高斯分布的随机噪声 $\epsilon$，其中方差是 $\sigma^2$。此外，数据样本数是 $N$。</p>
+<p>$(N,\sigma^2)$ 与 $(N,Q_f)$ 对过拟合的影响可以表示成下图。其中，红色越深，代表过拟合程度越高，蓝色越深，代表过拟合程度越低。可以看出，$N$ 越小，$\sigma^2$ 越大，$Q_f$ 越大，越容易过拟合。我们把 $\sigma^2$ 成为随机噪声，$Q_f$ 称为确定性噪声。<br><img src="/20180331-NTU-ML-13/impact.png" alt=""></p>
+<h3 id="Deterministic-Noise-1"><a href="#Deterministic-Noise-1" class="headerlink" title="Deterministic Noise"></a>Deterministic Noise</h3><p>确定性噪声可以这样来分析，当目标函数 $f$ 不在 $\mathcal{H}$ 的范围里的时候，我们无法从 $\mathcal{H}$ 中选到 $f$，（比如上面的例子，我们无法在 $\mathcal{H}_{10}$ 中选择出阶数为 50 的目标函数 $f$）。这种情况下，$\mathcal{H}$ 中的最优解 $h$ 与 $f$ 是存在一定差距中，这个差距就叫做确定性噪声。</p>
+<p>确定性噪声对过拟合的影响与随机噪声大致一样。与随机噪声不同的是，确定性噪声取决于 $\mathcal{H}$，并且当给定 $\mathbf{x}$ 的时候，确定性噪声就确定下来了。</p>
+<h2 id="Dealing-with-Overfitting"><a href="#Dealing-with-Overfitting" class="headerlink" title="Dealing with Overfitting"></a>Dealing with Overfitting</h2><p>有许多手段可以解决过拟合问题：</p>
+<ul>
+<li>start from simple model</li>
+<li>data cleaning/pruning</li>
+<li>data hinting</li>
+<li>regularization</li>
+<li>validation</li>
+</ul>
+<p>下一讲将介绍其中的 regularization，尽情期待。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-12-Nonlinear Transformation]]></title>
+      <url>/20180331-NTU-ML-12/</url>
+      <content type="html"><![CDATA[<p>上一篇文章，我们总结了三种线性模型，并使用它们解决了二分类以及多分类问题。这篇文章主要介绍怎样解决非线性问题。</p>
+<h2 id="Quadratic-Hypothesis"><a href="#Quadratic-Hypothesis" class="headerlink" title="Quadratic Hypothesis"></a>Quadratic Hypothesis</h2><p>当数据非线性可分的时候，我们需要使用特征转换，将原来非线性空间上的特征转换到新的线性空间，然后再使用之前学过的线性模型进行分类。</p>
+<p>特征转换如下：<br>$$\mathbf{x} \in \mathcal{X} \mathop{\rightarrow}^{\Phi} \mathbf{z} \in \mathcal{Z}<br>$$ 于是将非线性可分的样本 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} $ 转换为线性可分的样本 $\big\{ \big( \mathbf{z}_n,y_n \big) \big\} $</p>
+<p>举一个例子说明：</p>
+<p>下图中的样本 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} $ 是非线性可分的，但是可以使用圆将其分类。在使用特征变换 $$<br>\mathbf{z} = \Phi(\mathbf{x}) = (1, x_1^2, x_2^2)<br>$$ 之后，预测函数为 $$<br>h(\mathbf{x}) = \tilde{h}(\mathbf{z}) = \text{sign} \big( \tilde{\mathbf{w}}^T \Phi(\mathbf{x}) \big) = \text{sign} \big(<br>\tilde{w}_0 + \tilde{w}_1 x_{1}^{2} + \tilde{w}_2 x_{2}^{2} \big)<br>$$ 于是选择合适的参数，便可以使用直线将 $\mathbf{z}_n$ 进行分类，也就是使用圆将 $\mathbf{x}_n$ 进行分类。在这个例子中<br>$$<br>h(\mathbf{x}) = \tilde{h}(\mathbf{z}) = \text{sign} \big( \tilde{\mathbf{w}}^T \mathbf{z} \big) = \text{sign} \big(<br>0.6 + (-1) \cdot x_{1}^{2} + (-1) \cdot x_{2}^{2} \big) $$</p>
+<p><img src="/20180331-NTU-ML-12/example.png" alt=""></p>
+<p>当参数 $\tilde{\mathbf{w}}$ 取不同值的时候，在 $\mathbf{z}$ 域上看都是直线，但是在 $\mathbf{x}$ 域上看可以是圆、椭圆、双曲线等等不同的二次曲线。</p>
+<h2 id="Nonlinear-Transform"><a href="#Nonlinear-Transform" class="headerlink" title="Nonlinear Transform"></a>Nonlinear Transform</h2><p>可见，找到一个好的 Transform 方法，可以使得原始数据（不管是不是线性可分）分类的结果好。</p>
+<p><img src="/20180331-NTU-ML-12/good_quadratic_hypothesis.png" alt=""></p>
+<p>因此，在遇到非线性可分的样本的时候，通常的做法是：</p>
+<ol>
+<li>将原始数据进行转换 $\big\{ \big( \mathbf{x}_n,y_n \big) \big\} \mathop{\rightarrow}^{\Phi} \big\{ \big( \mathbf{z}_n,y_n \big) \big\}$</li>
+<li>使用线性分类算法对转换后的数据 $\big\{ \big( \mathbf{z}_n,y_n \big) \big\}$ 进行分类</li>
+<li>返回 $g(\mathbf{x}) = \text{sign} \big( \tilde{\mathbf{w}}^T \Phi(\mathbf{x}) \big)$</li>
+</ol>
+<h2 id="Price-of-Nonlinear-Transform"><a href="#Price-of-Nonlinear-Transform" class="headerlink" title="Price of Nonlinear Transform"></a>Price of Nonlinear Transform</h2><p>当然，这样的做法也是有缺点的。</p>
+<h3 id="Computation-Storage-Price"><a href="#Computation-Storage-Price" class="headerlink" title="Computation/Storage Price"></a>Computation/Storage Price</h3><p>考虑 $Q$ 次多项式的特征转换<br><img src="/20180331-NTU-ML-12/qth_transform.png" alt=""></p>
+<p>可见，参数的个数是 $1 + \tilde{d} = O(Q^d)$，当 $Q$ 比较大时，时间复杂度以及空间复杂度都很大。</p>
+<h3 id="Model-Complexity-Price"><a href="#Model-Complexity-Price" class="headerlink" title="Model Complexity Price"></a>Model Complexity Price</h3><p>模型的 VC dimension 是 $d_{\text{VC}} (mathcal{H}_{\Phi_Q}) \le 1 + \tilde{d}$ 可见当 $Q$ 比较大时，模型的 VC dimension 也很大。由此带来的问题是，可能会</p>
+<h3 id="Danger-of-Visual-Choices"><a href="#Danger-of-Visual-Choices" class="headerlink" title="Danger of Visual Choices"></a>Danger of Visual Choices</h3><p>还有一个问题是，在选择转化函数 $\Phi$ 的时候，可能加入了自己的脑力计算成果，这是不好的。</p>
+<p><img src="/20180331-NTU-ML-12/danger_of_visual_choices.png" alt=""></p>
+<h2 id="Structured-Hypothesis-Sets"><a href="#Structured-Hypothesis-Sets" class="headerlink" title="Structured Hypothesis Sets"></a>Structured Hypothesis Sets</h2><h3 id="Structured-Hypothesis-Sets-1"><a href="#Structured-Hypothesis-Sets-1" class="headerlink" title="Structured Hypothesis Sets"></a>Structured Hypothesis Sets</h3><p>下面，我们讨论一下从 $\mathbf{x}$ 域到 $\mathbf{z}$ 域的多项式变换。</p>
+<p><img src="/20180331-NTU-ML-12/structured_hypothesis_sets.png" alt=""></p>
+<p>可见不同阶次构成的 hypothesis 有如下关系<br>$$ \mathcal{H}_0 \subset \mathcal{H}_1 \subset \mathcal{H}_2 \subset \cdots \subset \mathcal{H}_Q<br>$$ 对于 VC dimension 有<br>$$<br>d_{\text{VC}}(\mathcal{H}_0) \leq d_{\text{VC}}(\mathcal{H}_1) \leq d_{\text{VC}}(\mathcal{H}_2) \leq \cdots \leq d_{\text{VC}}(\mathcal{H}_Q)<br>$$ 对于 $E_{\text{in}}$ 有<br>$$ E_{\text{in}}(g_0) \geq E_{\text{in}}(g_1) \geq E_{\text{in}}(g_2) \geq \cdots \geq E_{\text{in}}(g_Q)$$</p>
+<p>我们把这种结构叫做 Structured Hypothesis Sets。</p>
+<h3 id="Linear-Model-First"><a href="#Linear-Model-First" class="headerlink" title="Linear Model First"></a>Linear Model First</h3><p>根据以前介绍过的学习曲线<br><img src="/20180331-NTU-ML-12/learning_curve.png" alt=""></p>
+<p>可以看出，当多项式的阶数增大时，$d_{\text{VC}}$ 变大，$E_{\text{in}}$ 变小，但是 model complexity 会变大。因此，需要选取合适的阶数使得 $E_{\text{out}}$ 较小。</p>
+<p>一般的做法是，从一阶的 hypothesis 开始，如果 $E_{\text{in}}$  足够小，就选择一阶，否则逐渐增加阶数，直到满足要求为止。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-6-Theory of Generalization]]></title>
+      <url>/20180325-NTU-ML-6/</url>
+      <content type="html"><![CDATA[<h2 id="Restriction-of-Break-Point"><a href="#Restriction-of-Break-Point" class="headerlink" title="Restriction of Break Point"></a>Restriction of Break Point</h2><p>上次我们说到，需要探究 “break point” $k$ 与 $m_\mathcal{H}(N)$ 之间的关系。回顾一下，$m_\mathcal{H}(N)$ 表示假设空间在 $N$ 个样本点上能产生的最大二分数量，$k$ 表示不能满足完全分类情形的样本点数。</p>
+<p>让我们来探讨一下，当 $k$ 确定时，$m_\mathcal{H}(N)$ 的最大可能取值，下面使用一个例子来进行探讨。</p>
+<h3 id="Example-Break-Point-k-2"><a href="#Example-Break-Point-k-2" class="headerlink" title="Example: Break Point $k=2$"></a>Example: Break Point $k=2$</h3><p>根据 break point 的定义</p>
+<ul>
+<li>当样本数为 $N=1$ 时，需要满足样本完全二分的情况，因此 $m_\mathcal{H}(1) = 2^1 = 2$</li>
+<li>当样本数为 $N=2$ 时，不可满足样本完全二分的情况，因此 $m_\mathcal{H}(2) &lt; 2^2 = 4$，最多为 $m_\mathcal{H}(2)=3$</li>
+<li>当样本数为 $N=3$ 时，同样不可满足样本完全二分的情况，因此 $m_\mathcal{H}(3) &lt; 2^3 = 8$，但是由于 $m_\mathcal{H}(2)$ 已经存在上限 $m_\mathcal{H}(2)&lt;4$，因此 $m_\mathcal{H}(3)$ 的值会有更严格的上限。根据实验可以得到 $m_\mathcal{H}(3) &lt; 5$。</li>
+</ul>
+<p>$k=2$ 时 $m_\mathcal{H}(3) &lt; 5$ 的含义是：当样本数为 $N=3$ 时，假设空间最多有 $4$ 种分类结果，使得对任意 $k=2$ 个样本，不能满足完全分类的情形。</p>
+<p>以上的分析比较晦涩难懂，我们使用图片重新说明一下。可以看到当只有 $1,2,3$ 种分类结果的时候，任意两个样本都不会出现完全分类的情形。当有 $4$ 种分类结果的时候，可能会出现有两个样本完全分类的情况，也可能不出现这种情况。而有 $5$ 种分类结果的时候，始终会出现有两个样本完全分类的情况。因此，二分类结果最多只能有 $4$ 种。</p>
+<p><img src="/20180325-NTU-ML-6/m_2_3.png" alt=""><br><img src="/20180325-NTU-ML-6/m_4.png" alt=""><br><img src="/20180325-NTU-ML-6/m_5.png" alt=""><br><img src="/20180325-NTU-ML-6/m_concultion.png" alt=""></p>
+<h2 id="Bounding-Function-Basic-Cases"><a href="#Bounding-Function-Basic-Cases" class="headerlink" title="Bounding Function: Basic Cases"></a>Bounding Function: Basic Cases</h2><p>我们将刚才讨论的东西起一个名字，叫做 bounding function $B(N,k)$，表示当 break point 为 $k$ 的时候，$m_\mathcal{H}(N)$ 的最大可能的值。</p>
+<p>那么经过前面的例子，我们可以得到一些结论：</p>
+<ul>
+<li>$k=1$ 时，$B(N,k)=1$（任意一个点都不能被完全分类，因此只能有一种分类结果）</li>
+<li>$k&gt;N$ 时，$B(N,k)=2^N$（总共就 $N$ 个点，最多就 $2^N$ 种分类结果）；</li>
+<li>$k=N$ 时，$B(N,k)=2^N-1$（减去一种分类结果，则任意 $N$ 个点不会被完全分类）；</li>
+<li>$B(3,2)=4$（刚才的例子）；</li>
+</ul>
+<p>于是我们得到了下面这个表格：<br>$$<br>\begin{array}{c|lcr}&amp;&amp;&amp;&amp;k\\<br>B(N,k)&amp;1&amp;2&amp;3&amp;4&amp;5&amp;6&amp;\cdots \\<br>\hline<br>1&amp;1&amp;2&amp;2&amp;2&amp;2&amp;2&amp;\cdots\\<br>2&amp;1&amp;3&amp;4&amp;4&amp;4&amp;4&amp;\cdots\\<br>3&amp;1&amp;4&amp;7&amp;8&amp;8&amp;8&amp;\cdots\\<br>4&amp;1&amp;&amp;&amp;15&amp;16&amp;16&amp;\cdots\\<br>5&amp;1&amp;&amp;&amp;&amp;31&amp;32&amp;\cdots\\<br>6&amp;1&amp;&amp;&amp;&amp;&amp;63&amp;\cdots\\<br>\vdots&amp;\vdots&amp;&amp;&amp;&amp;&amp;&amp;\ddots<br>\end{array}<br>$$</p>
+<h2 id="Bounding-Function-Inductive-Cases"><a href="#Bounding-Function-Inductive-Cases" class="headerlink" title="Bounding Function: Inductive Cases"></a>Bounding Function: Inductive Cases</h2><p>至此，我们已经解决了一半的问题。不过，表格里打问号的才是我们要讨论的重点，我们试着通过递推的方法得到这些值。</p>
+<h3 id="Dichotomies-of-B-4-3"><a href="#Dichotomies-of-B-4-3" class="headerlink" title="Dichotomies of $B(4,3)$"></a>Dichotomies of $B(4,3)$</h3><p>我们用计算机列举出 $B(4,3)$ 的所有可能，同时将这些结果重新排列，如下图所示：<br><img src="/20180325-NTU-ML-6/B_4_3.png" alt=""></p>
+<p>其中橙色的表示前 $3$ 个样本点成对出现，数量记为 $2\alpha$，绿色的表示前 $3$ 个样本点单独出现，数量记为 $\beta$，那么有 $B(4,3) = 2 \alpha + \beta$。</p>
+<p>$B(4,3)$ 表示所有 $4$ 个样本点中，任意 $3$ 个都不会被完全分类。那么去掉第 $4$ 个样本，可以得到：</p>
+<ul>
+<li>$\alpha+\beta$ 中，前 $3$ 个样本点中的任意 $3$ 个不会被完全分类，$\alpha + \beta \le B(3,3)$；</li>
+<li>$\alpha$ 中，前 $3$ 个样本点中的任意 $2$ 个不会被完全分类，$\alpha \le B(3,2)$（因此第 $4$ 个点会被完全分类）；<br><img src="/20180325-NTU-ML-6/B_4_3_1.png" alt=""><br><img src="/20180325-NTU-ML-6/B_4_3_2.png" alt=""></li>
+</ul>
+<p>因此：<br>$$B(4,3) = 2\alpha+\beta=(\alpha+\beta)+\alpha\le B(3,3)+B(3,2)$$</p>
+<p>推广到其他：<br>$$B(N,k)\le B(N-1,k)+B(N-1,k-1)$$</p>
+<p>数学归纳法可以证明：<br>$$B(N,k) \leq \sum_{i=0}^{k-1} {N \choose i}$$</p>
+<p>因此可以得到，当 break point $k$ 存在时</p>
+<p>$$m_\mathcal{H}(N) \le B(N,k) \leq \sum_{i=0}^{k-1} {N \choose i}$$ $m_\mathcal{H}(N)$ 是 $N$ 的多项式函数。</p>
+<h3 id="Mathematical-Induction"><a href="#Mathematical-Induction" class="headerlink" title="Mathematical Induction"></a>Mathematical Induction</h3><p>下面使用数学归纳法证明 $B(N,k) \le\sum_{i=0}^{k-1}{N \choose i}$</p>
+<ul>
+<li>$k=1$ 时，不等式恒成立，因此只讨论 $k \ge 2$ 的情形；</li>
+<li>$N=1$ 时，不等式成立；</li>
+<li>假设 $N=No$ 时，不等式成立，下面证明 $N=No+1$ 时，不等式成立。</li>
+</ul>
+<p>$$<br>\begin{aligned}<br>B(N_{o}+1,k) &amp;\leq B(N_{o},k) + B(N_{o},k-1) \\\<br>&amp;\leq \sum_{i=0}^{k-1}\binom{N_{o}}{i}+\sum_{i=0}^{k-2}\binom{N_{o}}{i} \\\<br>&amp;=1+\sum_{i=1}^{k-1}\binom{N_{o}}{i}+\sum_{i=1}^{k-1}\binom{N_{o}}{i-1} \\\<br>&amp;=1+\sum_{i=1}^{k-1}[\binom{N_{o}}{i}+\binom{N_{o}}{i-1}] \\\<br>&amp;=1+\sum_{i=1}^{k-1}\binom{N_{o}+1}{i}=\sum_{i=0}^{k-1}\binom{N_{o}+1}{i}<br>\end{aligned}<br>$$</p>
+<h2 id="A-Pictorial-Proof"><a href="#A-Pictorial-Proof" class="headerlink" title="A Pictorial Proof"></a>A Pictorial Proof</h2><p>于是利用有限的 $m_{\mathcal{H}}(N)$ 来替换无限的 $M$，得到 $\mathcal{H}$ 遇到Bad Sample的概率上界：<br>$$\mathbb{P}_\mathcal{D}[BAD\ D]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)$$</p>
+<p>用更加精准的数学符号来表示上面的不等式：<br>$$\mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)$$</p>
+<p>但事实上上面的不等式是不严谨的，因为 $m_{\mathcal{H}}(N)$ 描述的是 $\mathcal{H}$ 作用于数据量为 $N$ 的资料 $\mathcal{D}$ 有效的方程数，因此 $\mathcal{H}$ 当中每一个 $h$ 作用于 $\mathcal{D}$ 都能算出一个 $E_{in}$ 来，一共能有 $m_{\mathcal{H}}(N)$ 个不同的 $E_{in}$，是一个有限的数。但在out of sample的世界里(总体)，往往存在无限多个点，平面中任意一条直线，随便转一转动一动，就能产生一个不同的 $E_{out}$ 来。$E_{in}$ 的可能取值是有限个的，而 $E_{out}$ 的可能取值是无限的，无法直接套用union bound，我们得先把上面那个无限多种可能的 $E_{out}$ 换掉。</p>
+<p>下面涉及到许多数学公式，先挖个坑，有时间补上。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-11-Linear Models for Classification]]></title>
+      <url>/20180325-NTU-ML-11/</url>
+      <content type="html"><![CDATA[<p>这节课主要介绍使用线性模型来解决分类问题。</p>
+<h2 id="Linear-Models-for-Binary-Classification"><a href="#Linear-Models-for-Binary-Classification" class="headerlink" title="Linear Models for Binary Classification"></a>Linear Models for Binary Classification</h2><h3 id="Linear-Models-Revisited"><a href="#Linear-Models-Revisited" class="headerlink" title="Linear Models Revisited"></a>Linear Models Revisited</h3><p>之前我们介绍了三种线性模型，分别是 Linear Classification，Linear Regression 以及 Logistic Regression。</p>
+<p>这几个模型，都是对样本特征进行加权，得到一个分数 $$s = \mathbf{w}^T \mathbf{x} $$ 再通过 $s$ 构成预测函数 $h(\mathbf{x})$ 以及误差函数 $\text{err}(s,y)$。</p>
+<ul>
+<li>Linear Classification<br>$$ \begin{aligned}<br>&amp;h(\mathbf{x}) = \text{sign}(s)\\<br>&amp;\text{err}(h,\mathbf{x},y) = \big[\big[ h(\mathbf{x}) \neq y \big]\big]\\<br>&amp;\text{err}(s,y) = \big[\big[ \text{sign}(s) \neq y \big]\big] = \big[\big[ \text{sign}(sy) \neq 1 \big]\big]\\<br>\end{aligned} $$</li>
+<li>Linear Regression<br>$$ \begin{aligned}<br>&amp;h(\mathbf{x}) = s\\<br>&amp;\text{err}(h,\mathbf{x},y) = \big( h(\mathbf{x}) - y \big)^2 \\<br>&amp;\text{err}(s,y) = (s-y)^2 = (ys - 1)^2<br>\end{aligned} $$</li>
+<li>Logistic Regression<br>$$ \begin{aligned}<br>&amp;h(\mathbf{x}) = \theta (s)\\<br>&amp;\text{err}(h,\mathbf{x},y) = - \text{ln} h(y \mathbf{x})\\<br>&amp;\text{err}(s,y) = \text{ln} \big( 1+\text{exp}(-ys) \big)\\<br>\end{aligned} $$</li>
+</ul>
+<p><img src="/20180325-NTU-ML-11/linear_models.png" alt=""></p>
+<p>这三种模型的 error function 都引入了 $ys$，我们可以理解成，$ys$ 是表示分类准确率的一个分数，$ys$ 越大，分类准确率越高。</p>
+<h3 id="Visualizing-Error-Functions"><a href="#Visualizing-Error-Functions" class="headerlink" title="Visualizing Error Functions"></a>Visualizing Error Functions</h3><p>图形化表示这三者的 error function，如下<br><img src="/20180325-NTU-ML-11/error_function.png" alt=""><br>其中我们将 Logistic Regression 的 error function 进行了一个缩放。</p>
+<h3 id="Theoretical-Implication-of-Upper-Bound"><a href="#Theoretical-Implication-of-Upper-Bound" class="headerlink" title="Theoretical Implication of Upper Bound"></a>Theoretical Implication of Upper Bound</h3><p>可以看出，$\text{err}_{\text{sqr}}$ 与 $\text{err}_{\text{scaled ce}}$ 都是 $\text{err}_{\text{0/1}}$ 的 upper bound 函数。</p>
+<p>$$ \text{err}_{\text{0/1}}(s,y) \leq \text{err}_{\text{SCE}}(s,y) = \frac{1}{\text{ln}2} \text{err}_{\text{CE}}(s,y)<br>$$ 可以推出 $$<br>\begin{aligned}<br>&amp;E_{\text{in}}^{\text{0/1}}(\mathbf{w}) \leq  E_{\text{in}}^{\text{SCE}}(\mathbf{w}) = \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w})\\<br>&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq  E_{\text{out}}^{\text{SCE}}(\mathbf{w}) = \frac{1}{\text{ln}2} E_{\text{out}}^{\text{CE}}(\mathbf{w})\\<br>\end{aligned}<br>$$ 根据 VC 理论可以得到 $$<br>\begin{aligned}<br>&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq E_{\text{in}}^{\text{0/1}}(\mathbf{w}) + \Omega ^ {\text{0/1}}<br>\leq \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w}) + \Omega ^ {\text{0/1}}\\<br>&amp;E_{\text{out}}^{\text{0/1}}(\mathbf{w}) \leq \frac{1}{\text{ln}2} E_{\text{out}}^{\text{CE}}(\mathbf{w}) \leq \frac{1}{\text{ln}2} E_{\text{in}}^{\text{CE}}(\mathbf{w}) + \Omega ^ {\text{0/1}}\\<br>\end{aligned}<br>$$</p>
+<p>说明 $\text{err}_{\text{sqr}}$ 或者 $\text{err}_{\text{scaled ce}}$ 很小的时候，意味着 $\text{err}_{\text{0/1}}$ 也很小。因此，Linear Regression 和 Logistic Regression 都可以用来解决 Linear Classification 的问题。通常，我们使用 Linear Regression 得到 $\mathbf{w}_{0}$，再用 Logistic Regression 进行求解。</p>
+<h3 id="Regression-for-Classification"><a href="#Regression-for-Classification" class="headerlink" title="Regression for Classification"></a>Regression for Classification</h3><p>PLA，Linear Regression 以及 Logistic Regression 处理分类问题时，优缺点总结如下</p>
+<ul>
+<li>PLA:<br>优点：数据线性可分时，$\text{err}_{\text{0/1}}$ 可以降到最低；<br>缺点：数据非线性可分时，需要使用 Pocket 算法，较难最优化；</li>
+<li>Linear Regression:<br>优点：最容易做最优化；<br>缺点：在 $ys$ 很大或很小时，Bound 是很宽松的；</li>
+<li>Logistic Regression:<br>优点：较容易最优化；<br>缺点：在 $ys$ 是很小的负数时，Bound 是宽松的；</li>
+</ul>
+<h2 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h2><h3 id="Two-Iterative-Optimization-Schemes"><a href="#Two-Iterative-Optimization-Schemes" class="headerlink" title="Two Iterative Optimization Schemes"></a>Two Iterative Optimization Schemes</h3><p>之前我们介绍过 PLA 以及 Logistic Regression，这两种算法都使用迭代的方法来更新参数的值<br>$$ \mathbf{w}_{t+1} = \mathbf{w}_{t} + \eta \ \mathbf{v}$$ </p>
+<ul>
+<li>PLA 每次迭代只计算一个点，时间复杂度 $O(1)$</li>
+<li>Logistic Regression 每次迭代要对所有点都进行计算，时间复杂度 $O(N)$</li>
+</ul>
+<p>下面介绍一种算法：随机梯度下降算法 (Stochastic Gradient Descent，SGD)，可以提高更新参数的速度。</p>
+<h3 id="Stochastic-Gradient-Descent-SGD"><a href="#Stochastic-Gradient-Descent-SGD" class="headerlink" title="Stochastic Gradient Descent (SGD)"></a>Stochastic Gradient Descent (SGD)</h3><p>SGD 算法每次迭代只找到一个点，计算该点的梯度，作为我们下一步更新参数的依据。这样就保证了每次迭代的计算量大大减小，我们可以把整体的梯度看成这个随机过程的一个期望值。</p>
+<ul>
+<li>Stochastic Gradient<br>$\nabla_{\text{w}} \ \text{err}(\mathbf{w}, \mathbf{x}_n, y_n)$ with random $n$</li>
+<li>True Gradient<br>$\nabla_{\text{w}} \ E_{\text{in}}(\mathbf{w}) = {\underset{\text{random}\ n}{\epsilon}} \nabla_{\text{w}} \ \text{err}(\mathbf{w}, \mathbf{x}_n, y_n)$</li>
+</ul>
+<p>于是，可以将 SGD 中梯度下降的方向理解成真实的梯度方向加上均值为零的随机噪声方向：<br>$${\text{stochastic gradient}} = {\text{true gradient}} + {\text{zero-mean noise directions}}<br>$$ 在运行足够多轮后，SGD 的效果与 GD 的效果是大致一样的。</p>
+<p>下面对 SGD 做一个小结：</p>
+<ul>
+<li>优点：计算量低，适用于大数据或者在线学习</li>
+<li>缺点：每次迭代并不能保证按照正确的方向前进，不够稳定</li>
+</ul>
+<h3 id="PLA-amp-SGD-Logistic-Regression"><a href="#PLA-amp-SGD-Logistic-Regression" class="headerlink" title="PLA &amp; SGD Logistic Regression"></a>PLA &amp; SGD Logistic Regression</h3><p>PLA 与 SGD Logistic Regression 这两种算法在参数更新上有相似之处</p>
+<ul>
+<li>SGD Logistic Regression<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \cdot \theta(-y_n \mathbf{w}_t^T \mathbf{x}_n) (y_n \mathbf{x}_n)$$</li>
+<li>PLA<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + 1 \cdot \big[\big[ y_n \neq \text{sign}(\mathbf{w}_t^T \mathbf{x}_n) \big]\big] (y_n \mathbf{x}_n)$$</li>
+</ul>
+<p>可以把 SGD Logistic Regression 看成是 soft PLA：</p>
+<ul>
+<li>PLA：每次迭代只对分错的样本进行修正</li>
+<li>SGD Logistic Regression：每次迭代都会进行修正（不管分对分错）</li>
+<li>当 $\eta = 1$ 且 $\mathbf{w}_t^T \mathbf{x}_n$ 时，PLA 相当于 SGD Logistic Regression </li>
+</ul>
+<h2 id="Multiclass-via-Logistic-Regression"><a href="#Multiclass-via-Logistic-Regression" class="headerlink" title="Multiclass via Logistic Regression"></a>Multiclass via Logistic Regression</h2><p>之前我们讨论的都是使用分类器解决二类别分类问题，接下来我们准备讨论使用分类器解决多类别分类问题。</p>
+<p>我们举一个例子来进行讲解，需要将下图的图形分为正方形、菱形、三角形、星形四类：<br><img src="/20180325-NTU-ML-11/multiclass.png" alt=""></p>
+<p>一种策略是将 $k$ 分类问题转化为 $k$ 个二分类问题：是不是第 $i( i =1,2 \cdots k)$ 类，然后再根据这些问题的答案决定每个样本的类别，如下图所示。<br><img src="/20180325-NTU-ML-11/ova_res_1.png" alt=""></p>
+<p>这种策略存在的问题是，可能出现分不了的情况，如某些区域同时被多个类判断为正（负）类。为了解决这个问题，可以改用软性分类器，即让上述的二分类问题输出概率而不是类别信息。<br><img src="/20180325-NTU-ML-11/ova_res_2.png" alt=""></p>
+<p>这种策略称为 One-Versus-All（OVA），是一种常用的多类别分类策略。<br><img src="/20180325-NTU-ML-11/ova.png" alt=""></p>
+<h2 id="Multiclass-via-Binary-Classification"><a href="#Multiclass-via-Binary-Classification" class="headerlink" title="Multiclass via Binary Classification"></a>Multiclass via Binary Classification</h2><p>上面介绍的 OVA 策略存在一个问题，当正负样本数不平衡的时候，会影响分类的性能，因此提出了另外一种策略。</p>
+<p>在 OVO 策略下，每 2 个类别之间形成一个二分类问题，于是将 $k$ 分类问题转化为 $C_{k}^{2}$ 个二分类问题，然后再根据这些问题的答案决定每个样本的类别，如下图所示。<br><img src="/20180325-NTU-ML-11/ovo_res.png" alt=""></p>
+<p>这种策略称为 One-versus-One（OVO），是一种常用的多类别分类策略。<br><img src="/20180325-NTU-ML-11/ovo.png" alt=""></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-10-Logistic Regression]]></title>
+      <url>/20180325-NTU-ML-10/</url>
+      <content type="html"><![CDATA[<p>这一节主要介绍 Logistic Regression 算法。</p>
+<h2 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h2><p>Logistic Regression 是一个分类算法，主要用于二分类的情况，算法预测的是样本属于某个类别的概率，即 $h(\mathbf{x}) = P(+1 | \mathbf{x})$。</p>
+<p>因为 $h(\mathbf{x})$ 表示的是一个概率值，为了使其范围在 0 到 1 之间，我们使用了 Logistic 函数<br>$$\theta(s) = \frac{1}{1+e^{-s}}$$ 于是 $$<br>h(\mathbf{x}) = \theta(\mathbf{w}^T\mathbf{x}) = \frac{1}{1+e^{-\mathbf{w}^T\mathbf{x}}}$$</p>
+<p>将取值范围为负无穷到正无穷的 $\mathbf{w}^T\mathbf{x}$ 映射到了 0 到 1。</p>
+<h2 id="Logistic-Regression-Error"><a href="#Logistic-Regression-Error" class="headerlink" title="Logistic Regression Error"></a>Logistic Regression Error</h2><p>有了 $h(\mathbf{x})$ 之后，我们还需要找出 $E_{\text{in}}(\mathbf{w})$ 的表达式，在 Logistic Regression 算法中，$E_{\text{in}}(\mathbf{w})$ 是通过最大似然准则得到的。</p>
+<p>首先介绍一下似然这个概念。假设我们有一笔数据 $$\mathcal{D}=\big\{ (\mathbf{x}_{1}, +1),\mathbf{x}_{2}, -1),\cdots,\mathbf{x}_{N}, -1), \big\}$$ 那么通过真实的函数 $f$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{probability}(f) = P(\mathbf{x}_1)f(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-f(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-f(\mathbf{x}_N))<br>$$ 同理，通过预测函数 $h$ 得到这批数据的概率可以写成下面的表达式：<br>$$\text{likelihood}(h) = P(\mathbf{x}_1)h(\mathbf{x}_1) \cdot P(\mathbf{x}_2)(1-h(\mathbf{x}_2)) \cdots P(\mathbf{x}_N)(1-h(\mathbf{x}_N))<br>$$<br>我们的目标是要预测 $h$ 使它接近 $f$，而通常来说 $\text{probability}(f)$ 很大，所以我们可以最大化 $\text{likelihood}(h)$。这时意味着 $h$ 生成 $\mathcal{D}$ 的似然（或者说概率）很大，一定程度上可以说，$h \approx f$。</p>
+<p>接下来的工作就是要最大化 $\text{likelihood}(h)$<br>$$g = \underset{h}{\text{argmax}} \ \ \text{likelihood}(h)<br>$$ 将常量 $P(\mathbf{x})$ 去掉，同时注意到 $1-h(\mathbf{x}) = h(\mathbf{-x})$，有<br>$$\text{likelihood}(h)<br>\propto \prod \limits_{i=1}^n h(y_n\mathbf{x}_n) = \prod \limits_{i=1}^n \theta(y_n \mathbf{w}^T_n\mathbf{x}_n)<br>$$ 取对数，并做一下相关变换，得到<br>$$\min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} -\ln \theta(y_n \mathbf{w}^T \mathbf{x}_n)<br>$$ 即 $$ \min_\mathbf{w} \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 因此，这就是 Logistic Regression 的损失函数<br>$$\text{err}(\mathbf{w}, \mathbf{x}, y) = \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 称之为交叉熵损失函数。</p>
+<h2 id="Gradient-of-Logistic-Regression-Error"><a href="#Gradient-of-Logistic-Regression-Error" class="headerlink" title="Gradient of Logistic Regression Error"></a>Gradient of Logistic Regression Error</h2><p>为了最小化损失函数<br>$$E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \ln \left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)<br>$$ 通常采取的方法是梯度下降法，如图所示：<br><img src="/20180325-NTU-ML-10/min_error.png" alt=""></p>
+<p>为方便表示，我们使用 $\Box$ 表示 $\left( 1 + \text{exp} ( -y_n \mathbf{w}^T \mathbf{x}_n ) \right)$，使用 $\bigcirc$ 表示 $( -y_n \mathbf{w}^T \mathbf{x}_n )$。</p>
+<p>那么求导过程如下：<br>$$\begin{aligned}<br>\frac{\partial E_{\text{in}}(\mathbf{w})}{\partial w_i}<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{\partial \ln (\Box)} {\partial \Box}\Big)<br>\Big( \frac{\partial  (1 + \text{exp}(\bigcirc)) } {\partial \bigcirc} \Big)<br>\Big( \frac{\partial -y_n \mathbf{w}^T \mathbf{x}_n} {\partial w_i}\Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\Big( \frac{1}{\Box} \Big)<br>\Big( \text{exp}(\bigcirc) \Big)<br>\Big( -y_n x_{n,i} \Big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\frac{\text{exp}(\bigcirc)} {1 + \text{exp}(\bigcirc)}<br>\big( -y_n x_{n,i} \big)\\<br>&amp;=\frac{1}{N} \sum_{n=1}^{N} \<br>\theta(\bigcirc) \big( -y_n x_{n,i}\big)<br>\end{aligned}<br>$$ 于是<br>$$\nabla E_{\text{in}}(\mathbf{w}) = \frac{1}{N} \sum_{n=1}^{N} \ \theta \big( -y_n \mathbf{w}^T \mathbf{x}_n \big)<br>\big( -y_n \mathbf{x}_n\big)<br>$$ 我们的目标是使得 $\nabla E_{\text{in}}(\mathbf{w}) = 0$，这里可以分为两种情况</p>
+<ul>
+<li>所有 $\theta(\cdot)$ 都为 $0$，这时表示所有 $y_n \mathbf{w}^T \mathbf{x}_n \gg 0$，说明线性可分</li>
+<li>加权结果为 $0$，说明线性不可分</li>
+</ul>
+<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>下面来讲一下梯度下降法，这是一种迭代的方法，通过不断的迭代来更新参数的值：<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} + \eta \mathbf{v}<br>$$ 其中 $\eta$ 表示的是步长，$\mathbf{v}$ 表示的是方向。<br>我们暂时假定步长是给定的，那么在每一次的迭代过程中，等价于求解下面的问题：<br>$$\underset{||\mathbf{v}=1||}{\text{min}} E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v})<br>$$ 当 $\eta$ 很小的时候，使用泰勒展开，有<br>$$E_{\text{in}}(\mathbf{w}_t + \eta \mathbf{v}) \approx E_{\text{in}}(\mathbf{w}_t) + \eta \mathbf{v}^T \nabla E_{\text{in}}(\mathbf{w}_t)<br>$$ 其中 $E_{\text{in}}(\mathbf{w}_t)$ 以及 $\nabla E_{\text{in}}(\mathbf{w}_t)$ 是已知的，$\eta$ 是正数，于是上式中最佳的 $\mathbf{v}$ 为：<br>$$\mathbf{v} = - \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 于是迭代过程为<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_1 \frac{\nabla E_{\text{in}}(\mathbf{w}_t)}{||\nabla E_{\text{in}}(\mathbf{w}_t)||}<br>$$ 这就是负梯度方向，因此在负梯度方向上 $E_{\text{in}}$ 下降最快。</p>
+<h3 id="choice-of-eta"><a href="#choice-of-eta" class="headerlink" title="choice of $\eta$"></a>choice of $\eta$</h3><p>$\eta$ 的大小对 $E_{\text{in}}$ 优化的过程也有一定影响，如下图所示<br><img src="/20180325-NTU-ML-10/choice_of_eta.png" alt=""></p>
+<ul>
+<li>$\eta$ 太小：优化速度太慢</li>
+<li>$\eta$ 太大：优化过程不稳定</li>
+</ul>
+<p>因此比较合适的选择是，使 $\eta$ 随着 $||\nabla E_{\text{in}}(\mathbf{w}_t)||$ 变化，于是我们令 $$\eta_2 = \eta_1 \cdot ||\nabla E_{\text{in}}(\mathbf{w}_t)||<br>$$ 带入上面的式子，得到<br>$$\mathbf{w}_{t+1} \leftarrow \mathbf{w}_{t} - \eta_2 ||\nabla E_{\text{in}}(\mathbf{w}_t)|| $$</p>
+<h3 id="Logistic-Regression-Algorithm"><a href="#Logistic-Regression-Algorithm" class="headerlink" title="Logistic Regression Algorithm"></a>Logistic Regression Algorithm</h3><p>综合上面的内容，我们得到了 Logistic Regression 算法，如图所示：<br><img src="/20180325-NTU-ML-10/LR_Algo.png" alt=""></p>
+<p>以上就是 Logistic Regression 算法的介绍。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-9-Linear Regression]]></title>
+      <url>/20180322-NTU-ML-9/</url>
+      <content type="html"><![CDATA[<p>这一节主要介绍线性回归算法。</p>
+<h2 id="Linear-Regression-Problem"><a href="#Linear-Regression-Problem" class="headerlink" title="Linear Regression Problem"></a>Linear Regression Problem</h2><p>对于输出空间 $\mathcal{Y} = \Bbb{R}$ 的一类问题，一个比较简单的想法就是：将 Linear Classification 的决策函数中的 sign 函数去掉，使用各种特征的加权结果来表示 $y$<br>$$y \approx \sum_{i = 0}^{d} w_i x_i = \textbf{w}^T \textbf{x}$$ 这就是线性回归算法，它的假设空间为 $$h(\textbf{x}) = \textbf{w}^T \textbf{x}$$ 线性回归的目标是寻找一条直线 （$\Bbb{R}^2$） 或者一个平面 （$\Bbb{R}^3$）或者超平面（$\Bbb{R}^n$），使得误差最小，常用的误差函数是平方误差 $$E_{in}(\textbf{w}) = \frac{1}{N} \sum_{n = 1}^{N} \left( h(\textbf{x}_n) - y_n \right)^2$$$$E_{out}(\textbf{w}) = \underset{(x,y) \sim P}{\epsilon} \Big( \textbf{w}^T \textbf{x} - y \Big)$$</p>
+<h2 id="Linear-Regression-Algorithm"><a href="#Linear-Regression-Algorithm" class="headerlink" title="Linear Regression Algorithm"></a>Linear Regression Algorithm</h2><p>将 $E_{in}$ 写成矩阵形式<br>$$<br>\begin{split}<br>E_{in}(\textbf{w}) &amp;= \frac{1}{N} \sum_{n = 1}^{N} \left(h(\textbf{x}_n) - y_n\right)^2 \\<br>&amp;= \frac{1}{N} \Bigg\Vert<br>\begin{matrix}<br>\textbf{x}_1^T \textbf{w} - y_1 \\<br>\textbf{x}_2^T \textbf{w} - y_2 \\<br>\cdot \cdot \cdot \\<br>\textbf{x}_N^T \textbf{w} - y_N \\<br>\end{matrix}<br>\Bigg\Vert^2 \\<br>&amp;= \frac{1}{N} \Vert X \textbf{w} - \textbf{y} \Vert^2<br>\end{split}<br>$$<br>其中<br>$$<br>X = \Bigg[<br>\begin{matrix}<br>x_1^T, 1 \\<br>x_2^T, 1 \\<br>\cdot \cdot \cdot \\<br>x_N^T, 1 \\<br>\end{matrix}<br>\Bigg]<br>\in \Bbb{R}^{N \times (d+1)}<br>$$$$\textbf{w} \in \Bbb{R}^{(d+1) \times 1}$$$$\textbf{y} \in \Bbb{R}^{N \times 1}$$<br>我们的目标是找到一个 $\textbf{w}$，使得 $E_{in}(\textbf{w})$ 尽可能小。因此，将 $E_{in}(\textbf{w})$ 对 $\textbf{w}$ 求导，得到：<br>$$\nabla E_{in} (\textbf{w}) = \frac{2}{N} X^T(X\textbf{w} - \textbf{y})<br>$$令$\nabla E_{in}(\textbf{w}) = 0$，得到 $\textbf{w}$ 的最优解 $$\textbf{w}_{\text{LIN}} = \big( X^TX\big)^{-1}X^T\textbf{y}=X^{\dagger}\textbf{y}<br>$$ 其中 $$X^{\dagger}=\big(X^TX\big)^{-1}X^T<br>$$ 称为矩阵 $X$ 的伪逆，于是 $$h(\textbf{x}) = \textbf{w}_{\text{LIN}}^T \textbf{x}$$</p>
+<p>将上面做一个小结，得到 Linear Regression 算法的流程如下：<br><img src="/20180322-NTU-ML-9/LinReg_Algo.png" alt=""></p>
+<h2 id="Generalization-Issue"><a href="#Generalization-Issue" class="headerlink" title="Generalization Issue"></a>Generalization Issue</h2><p>下面我们来分析一下 Linear Regression 的 $E_{in}$<br>$$\begin{aligned}<br>E_{in}({w_{LIN}})&amp;=\frac{1}{N}||{y-\hat{y}}||^2\\<br>&amp;=\frac{1}{N}||y-XX^{\dagger}y||^2 \\<br>&amp;=\frac{1}{N}||(I-H)y||^2 \\<br>\end{aligned}<br>$$ 其中 $H = XX^{\dagger}$ 是投影矩阵，把 $y$ 投影到 $X$ 的 $d+1$ 个向量构成的平面上，$H$ 有如下的性质：</p>
+<ul>
+<li>对称性 $H=H^T$</li>
+<li>幂等性 $H^2=H$</li>
+<li>半正定性 $\lambda_i \geq 0$</li>
+<li>$trace(I-{H}) = N-(d+1)$</li>
+</ul>
+<p><img src="/20180322-NTU-ML-9/illustrative_proof.png" alt=""><br>假设 $y = f(X) + \text{noise}, f(x) \in \text{span}$，那么如上图所示，有<br>$$\begin{aligned}<br>E_{in}({w_{LIN}})<br>&amp;=\frac{1}{N}||(I-{H})y||^2 \\<br>&amp;=\frac{1}{N}||(I-{H})noise||^2 \\<br>&amp;=\frac{1}{N}trace(I-{H})||noise||^2 \\<br>&amp;=\frac{1}{N}(N-(d+1))||noise||^2<br>\end{aligned}<br>$$ 得到：<br>$$E_{in}({w_{LIN}})=||noise||^2 \cdot \big( 1 - \frac{d+1}{N} \big)$$ $$E_{out}({w_{LIN}})=||noise||^2 \cdot \big( 1 + \frac{d+1}{N} \big)$$<br><img src="/20180322-NTU-ML-9/learning_curve.png" alt=""><br>两者最终都向 $\sigma^2$ (noise level)收敛，差距是 $\frac{2(d+1)}{N}$，因此说明算法是可行的。</p>
+<h2 id="Linear-Regression-for-Binary-Classification"><a href="#Linear-Regression-for-Binary-Classification" class="headerlink" title="Linear Regression for Binary Classification"></a>Linear Regression for Binary Classification</h2><p>对比一下 Linear Classification 与 Linear Regression：</p>
+<ul>
+<li>Linear Regression<ul>
+<li>用于分类问题</li>
+<li>$\mathcal{Y} = \{ +1, -1\}$</li>
+<li>$h(\textbf{x})=\text{sign}(\textbf{w}^T\textbf{x})$</li>
+<li>NP-hard，难于求解</li>
+</ul>
+</li>
+<li>Linear Regression<ul>
+<li>用于回归问题</li>
+<li>$\mathcal{Y} = \Bbb{R}$</li>
+<li>$h(\textbf{x})=\textbf{w}^T\textbf{x}$</li>
+<li>易于求解</li>
+</ul>
+</li>
+</ul>
+<p>因为 $$\text{err}_{0/1} = \big[\big[ \text{sign}(\textbf{w}^T\textbf{x}) \neq y\big]\big] \leq \text{err}_{\text{sqr}} = (\textbf{w}^T\textbf{x} - y)^2<br>$$ 所以可以将 Linear Regression 用于分类问题上：</p>
+<ol>
+<li>run Linear Regression on binary classification data $\mathcal{D}$</li>
+<li>return $g(\textbf{x}) = \text{sign}(\textbf{w}_{\text{LIN}}^T\textbf{x})$</li>
+</ol>
+<p>以上便是 Linear Regression 的内容。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-8-Noise and Error]]></title>
+      <url>/20180317-NTU-ML-8/</url>
+      <content type="html"><![CDATA[<p>这一节主要讨论在有噪声的情况下，VC维理论是否仍适用。</p>
+<h2 id="Noise-and-Probabilistic-Target"><a href="#Noise-and-Probabilistic-Target" class="headerlink" title="Noise and Probabilistic Target"></a>Noise and Probabilistic Target</h2><p>回顾之前提到的机器学习的流程图，学习的目的，就是找到一个函数 $g$，使得它与目标函数 $f$ 差不多。<br><img src="/20180317-NTU-ML-8/flow_1.png" alt=""></p>
+<p>然而在现实生活中，往往伴随着噪声：<br><img src="/20180317-NTU-ML-8/flow_2.png" alt=""></p>
+<p>这些噪声的类别是多种多样的</p>
+<ul>
+<li>noise in $y$：如标签标错了</li>
+<li>noise in $x$：如原本的数据就存在噪声</li>
+</ul>
+<p>没有噪音时，$x$ 服从同一个概率分布 $P$，$y=f(x)$ 是一个固定的值；有噪声时，$x$ 仍然服从同一个概率分布 $P$，$y \sim P(y|x)$ 不再是一个固定的值。</p>
+<p>以之前提到的珠子为例子，珠子的两种颜色分别表示了 $h(x)$ 与 $f(x)$ 相等或者不等的情况。我们通过抽样，利用珠子属于某种颜色的频率来估计 $h(x) = f(x)$ 的概率。</p>
+<p>在没有噪声的情况下，$y$ 是固定的，因此珠子的颜色是确定的。在有噪声的情况下，$y$ 不是固定的，因此珠子的颜色是变化的，此时我们仍然可以进行抽样的实验，只不过在进行统计的时候，我们记录的是珠子在抽出来那一刻的颜色。这样，我们就可以跟以前一样，通过频率来估计概率。</p>
+<p>因此，只要 $x \sim P$ 并且 $y \sim P(y|x)$，也就是说 $(x,y) \sim P(x,y)$，VC维理论仍然适用。于是，学习的目的，从预测 $f$ 变成了预测 $p(y|x)$，其中 $p(y|x)$ 由 $f(x)$ 以及噪声构成。</p>
+<p>对于 $f$，我们可以将其想象为分布 $P(y|x)$ 的一种特殊形式。</p>
+<ul>
+<li>$y = f(x)$时，$P(y|x) = 1$ </li>
+<li>$y \neq f(x)$时，$P(y|x) = 0$</li>
+</ul>
+<p>这样就可以将无噪声以及有噪声的情况统一起来，学习的流程图更新成以下形式：<br><img src="/20180317-NTU-ML-8/flow_2.png" alt=""></p>
+<h2 id="Error-Measure"><a href="#Error-Measure" class="headerlink" title="Error Measure"></a>Error Measure</h2><p>我们需要有一个准则来衡量所选择的假设函数 $g$ 与目标函数 $f$ 相似程度，通常的方法是定义一个错误函数（也叫做代价函数） $E(g,f)$。</p>
+<p>这个错误函数描述的是在整个样本空间（不只是训练样本）中，$g$ 与 $f$ 的相似程度，并且通常来讲，是 $g$ 与 $f$ 在每个样本点上的错误的平均。<br>$$E_{in}(g) = \frac{1}{N} \sum_{n=1}^{N} err \Big( g(x_n), f(x_n) \Big)$$$$E_{out}(g) = \underset{x \sim P}{\epsilon} err \Big( g(x_n), f(x_n) \Big)$$</p>
+<p>常用的两种错误衡量方式 $err \big( g(x), f(x) \big) = err \big( \tilde{y}, y \big)$：</p>
+<ul>
+<li>0/1 error for classification：$err \big( \tilde{y}, y \big) = \big[ \tilde{y} \neq y \big] $</li>
+<li>squared error for regression：$err \big( \tilde{y}, y \big) = \big( \tilde{y} - y \big) ^ 2 $</li>
+</ul>
+<p>错误衡量准则会对学习过程起到指导作用，因此对于同一个问题，使用不同的错误衡量准则，得到的结果可能不一样。</p>
+<p>对机器学习流程图进一步修改，加入了错误衡量的模块，该模块对算法和最终的假设选择都起着很大影响。<br><img src="/20180317-NTU-ML-8/flow_3.png" alt=""></p>
+<h2 id="Algorithmic-Error-Measure"><a href="#Algorithmic-Error-Measure" class="headerlink" title="Algorithmic Error Measure"></a>Algorithmic Error Measure</h2><p>在现实中，要设计出真正的错误衡量有时候会很困难，在设计错误衡量方式时，常常使用替代的方式 $\hat{err}$：</p>
+<ul>
+<li>有意义的错误衡量<br>例如 0/1 error，表示的是 flipping 的噪声，如果 0/1 error 很小，说明出错的样本数很少；<br>例如 squared error，表示的是噪声是高斯的分布，如果 squared error 很小，说明高斯噪声很少；</li>
+<li>对设计算法容易的错误衡量<br>例如有闭式解的算法对应的错误衡量方式；<br>例如具有凸函数性质的错误衡量方式。</li>
+</ul>
+<p>于是，学习的流程图改为下面的形式，其中 $err$ 表示的是真正的错误衡量方式，而$\hat{err}$ 表示的是我们用在算法中的错误衡量方式，我们使用 $\hat{err}$ 来替代 $err$ 进行算法中的优化以及假设函数的选择。<br><img src="/20180317-NTU-ML-8/flow_4.png" alt=""></p>
+<h2 id="Weighted-Classification"><a href="#Weighted-Classification" class="headerlink" title="Weighted Classification"></a>Weighted Classification</h2><p>我们可以使用 cost matrix 表示 0/1 error<br><img src="/20180317-NTU-ML-8/cost_matrix.png" alt=""></p>
+<p>其中 false reject 表示的是把 $y=+1$ 预测为 $y=-1$，false accept 表示的是把 $y=-1$ 预测为 $y=+1$。</p>
+<p>当这两类错误的 cost 相等时，表示这两类错误的重要性一致，当这两类错误的 cost 不相等时，表示其中一种错误更加严重，代价更高。</p>
+<p>于是我们可以根据实际的需要，赋予两种错误不同的代价，这叫做 weighted classification。</p>
+<p>下面是一个 cost matrix 的例子，在这个例子中，把 $y=+1$ 预测为 $y=-1$ 的代价是 $1$，而把 $y=-1$ 预测为 $y=+1$ 的代价是 $1000$，因此算法会惩罚后一种错误分类的情况。<br><img src="/20180317-NTU-ML-8/weighted_classification.png" alt=""></p>
+<p>通过改变样本的数目，可以将 weighted classification 转化为一般的 classification。用上一个例子来说明，我们可以将数据集中 $y=-1$ 的样本复制 1000 份，这样就相当于在没有加权的 0/1 error 下进行实验。于是可以使用之前用于 0/1 error 的算法，比如 pocket 算法。<br><img src="/20180317-NTU-ML-8/connect_error.png" alt=""></p>
+<p>将上面 cost matrix 的转化嵌入到算法中，便得到了 weighted pocket 算法<br><img src="/20180317-NTU-ML-8/weighted_pocket.png" alt=""></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-7-The VC Dimension]]></title>
+      <url>/20180313-NTU-ML-7/</url>
+      <content type="html"><![CDATA[<h3 id="todo"><a href="#todo" class="headerlink" title="todo"></a>todo</h3>]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-5-Training versus Testing]]></title>
+      <url>/20180311-NTU-ML-5/</url>
+      <content type="html"><![CDATA[<p>接着上一篇所讨论的问题，继续讨论。</p>
+<h2 id="Recap-and-Preview"><a href="#Recap-and-Preview" class="headerlink" title="Recap and Preview"></a>Recap and Preview</h2><p>回顾一下机器学习的流程图：<br><img src="http://images2015.cnblogs.com/blog/1115873/201703/1115873-20170304171209563-1374809968.png" alt=""><br><img src="/20180311-NTU-ML-5/learning_flow.png" alt=""></p>
+<p>机器学习可以理解为寻找到 $g$，使得 $g \approx f$，也就是 $E_{out}(g) \approx 0$ 的过程。<br>为了完成这件事情，有两个关键的步骤：</p>
+<ul>
+<li>保证 $E_{out}(g) \approx E_{in}(g)$，由 “训练” 过程来完成</li>
+<li>保证 $E_{in}(g) \approx 0$，由 “验证” 过程来完成</li>
+</ul>
+<p>当这两件事情都得到保证之后，我们就可以得到 $E_{out}(g) \approx 0$，于是完成了学习。</p>
+<p>$M$ 的取值（hypothesis 的数目）会影响上面说的两个步骤：</p>
+<ul>
+<li>$M$ 太小，能保证 $E_{out}(g) \approx E_{in}(g)$，但是不能保证 $E_{in}(g) \approx 0$<br>（因为可选择的 hypothesis 的数目太少）；</li>
+<li>$M$ 太大，能保证 $E_{in}(g) \approx 0$，但是不能保证 $E_{out}(g) \approx E_{in}(g)$$\big(\begin{split}<br>\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}]<br>\le2M\exp(-2\epsilon^2N)<br>\end{split}<br>\big)$。</li>
+</ul>
+<p>因此需要想办法解决 $M$ 较大时，$E_{out}(g) \approx E_{in}(g)$ 的问题。</p>
+<h2 id="Effective-Number-of-Lines"><a href="#Effective-Number-of-Lines" class="headerlink" title="Effective Number of Lines"></a>Effective Number of Lines</h2><p>由上一篇文章我们知道：<br>$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \le 2M \exp(-2 \epsilon^2 N)$$</p>
+<p>对于这个式子，$M = \infty$ 时，右侧的值很大，$E_{out}(g) \approx E_{in}(g)$ 不能保证。我们的想法是：尝试用一个合适的数 $m_H$ 代替式子中的 $M$，使无穷变成有限，如下式：<br>$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \stackrel{?}{\le} 2 \cdot m_{\mathcal{H}} \cdot \exp(-2 \epsilon^2 N)$$</p>
+<p>第一个式子中的 $M$ 来源于 “Union Bound”<br>$$\Bbb{P} [ \mathcal{B}_{1} \hphantom{1} or \hphantom{1} \mathcal{B}_{2} \hphantom{1} or \dots \mathcal{B}_{M} ] \le \Bbb{P} [ \mathcal{B}_{1}] + \Bbb{P} [ \mathcal{B}_{2}] + \dots + \Bbb{P} [ \mathcal{B}_{M}]$$</p>
+<p>其中 $\Bbb{P}[\mathcal{B}_{M}]$ 表示的是第 $M$ 个假设函数 $h_M$ 在数据集上发生坏事情（即存在 BAD DATA，$E_{out}(h_M) \neq E_{in}(h_M)$）的概率。</p>
+<p>然而当 $M$ 很大时，假设集中存在许多相似的假设函数 $h$，它们发生坏事情的概率和情形都很接近，这样使用 “Union Bound” 来计算整个假设集发生坏事情的概率，便存在许多重复的地方，于是算出来的概率会比实际的高很多（over-estimating）。</p>
+<p>我们换一种思路，从数据点的分类结果来对假设集进行分类，这样就避免了假设之间相互重合的问题。以二元分类来阐述怎么解决这个问题：我们根据分类结果，对 $h$ 进行分类。</p>
+<table>
+<thead>
+<tr>
+<th>样本点大小 $N$</th>
+<th>假设集 $H$ 等价类（考虑最多的情况）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2 类：$\{o\}$、$\{x\}$</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4 类：$\{oo\}$、$\{ox\}$、$\{xo\}$、$\{xx\}$</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>N</td>
+<td>$2^{N} 类$</td>
+</tr>
+</tbody>
+</table>
+<p>对于一个大小为 $N$ 的数据集，任意一个假设函数 $h$ 都属于上述 $2^N$ 个等价类之间的一个，因此我们可以用 $2^N$ 来代替原不等式中的 $M$。</p>
+<h2 id="Effective-Number-of-Hypotheses"><a href="#Effective-Number-of-Hypotheses" class="headerlink" title="Effective Number of Hypotheses"></a>Effective Number of Hypotheses</h2><p>我们把上面提到的等价类的概念起一个名字叫做 Dichotomy。<br><img src="/20180311-NTU-ML-5/dichotomy.png" alt=""></p>
+<p>具体的 Dichotomy 的 size 与这 $N$ 个数据的具体取值有关（但是不会大于 $2^N$），为方便讨论我们取最大那个 size 来分析，取名为 growth function，记作 $m_\mathcal{H}(N)$，意思是假设空间在 $N$ 个样本点上能产生的最大二分数量。<br>$$m_\mathcal{H}(N) = \max \limits_{\textbf{x}_1,\textbf{x}_2,…,\textbf{x}_N \in \mathcal{X}} \big| \mathcal{H}(\textbf{x}_1,\textbf{x}_2,…,\textbf{x}_N) \big|$$<br>接下来我们需要计算 $m_\mathcal{H}(N)$，首先考虑几种不同的模型的 $m_\mathcal{H}(N)$</p>
+<ul>
+<li><p>Positive Rays<br>确定一个点，规定在这个点的正方向为正，即 $h(x)=+1$，反方向为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = N + 1$，如下图所示。<br><img src="/20180311-NTU-ML-5/positive_rays.png" alt=""></p>
+</li>
+<li><p>Positive Intervals<br>确定两个点，规定在这两个点之间为正，即 $h(x)=+1$，两个点之外为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = {N+1 \choose 2} + 1$，如下图所示。<br><img src="/20180311-NTU-ML-5/positive_intervals.png" alt=""></p>
+</li>
+<li><p>Convex Sets<br>顶点在同一个圆上的凸多边形，规定圆上与多边形相交的点为正，即 $h(x)=+1$，没有与多边形相交的点为负，即 $h(x)=-1$。在这种情况下 $m_\mathcal{H}(N) = 2^N$，如下图所示。<br><img src="/20180311-NTU-ML-5/convex_sets.png" alt=""></p>
+</li>
+<li><p>2D perceptrons<br>就是前面举的平面上的点分类的例子，某些情况下 $m_\mathcal{H}(N) &lt; 2^N$。</p>
+</li>
+</ul>
+<p>将上面几种情况总结如下：</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>$m_\mathcal{H}(N)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Positive Rays</td>
+<td>$m_\mathcal{H}(N) = N + 1$</td>
+</tr>
+<tr>
+<td>Positive Intervals</td>
+<td>$m_\mathcal{H}(N) = {N+1 \choose 2} + 1$</td>
+</tr>
+<tr>
+<td>Convex Sets</td>
+<td>$m_\mathcal{H}(N) = 2^N$</td>
+</tr>
+<tr>
+<td>2D perceptrons</td>
+<td>$m_\mathcal{H}(N) &lt; 2^N$ in some case</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Break-Point"><a href="#Break-Point" class="headerlink" title="Break Point"></a>Break Point</h2><p>我们希望 $m_H(N)$ 是多项式形式而不是指数形式的，这样当 $N$ 很大的时候，不等式右边趋近于0，才能保证 $E_{out}(g) \approx E_{in}(g)$：<br>$$\Bbb{P} \Big[\Big| E_{in}(g) - E_{out}(g) \Big| &gt; \epsilon\Big] \stackrel{?}{\le} 2 \cdot m_{\mathcal{H}} \cdot \exp(-2 \epsilon^2 N)$$</p>
+<p>因此，将 $m_{\mathcal{H}}$ 替换为 $2^N$ 还不够，为此我们引入一个概念叫 break point，定义如下</p>
+<ul>
+<li>if no $k$  inputs can be shattered by $\mathcal{H}$, call $k$ a break point for $\mathcal{H}$<ul>
+<li>$m_{\mathcal{H}}(k) &lt; 2^{k}$</li>
+<li>$k+1$, $k+2$, $k+3$, $…$ also break points</li>
+<li>will study minimum break point $k$</li>
+</ul>
+</li>
+</ul>
+<p>对应的，上面所提到的四种模型的 break point 如下：</p>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th>$m_\mathcal{H}(N)$</th>
+<th>break point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Positive Rays</td>
+<td>$m_\mathcal{H}(N) = N + 1$</td>
+<td>break point at 2</td>
+</tr>
+<tr>
+<td>Positive Intervals</td>
+<td>$m_\mathcal{H}(N) = {N+1 \choose 2} + 1$</td>
+<td>break point at 3</td>
+</tr>
+<tr>
+<td>Convex Sets</td>
+<td>$m_\mathcal{H}(N) = 2^N$</td>
+<td>no break point</td>
+</tr>
+<tr>
+<td>2D perceptrons</td>
+<td>$m_\mathcal{H}(N) &lt; 2^N$ in some case</td>
+<td>break point at 4</td>
+</tr>
+</tbody>
+</table>
+<p>我们猜测 $m_\mathcal{H}(N)$ 与 break point 有下面的关系：</p>
+<ul>
+<li>no break point：$m_\mathcal{H}(N) = 2^N$</li>
+<li>break point $k$：$m_\mathcal{H}(N) = O(N^{k-1})$</li>
+</ul>
+<p>如果猜测成立，那么在有 break point 的情况下，$m_H(N)$ 便是一个多项式形式，这样就能保证 $E_{out}(g) \approx E_{in}(g)$ 了。</p>
+<p>因此，接下来我们需要探讨，break point 与 $m_\mathcal{H}(N)$ 之间的关系，我们将在下几篇文章中对此进行讨论。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-4-Feasibility of Learning]]></title>
+      <url>/20180311-NTU-ML-4/</url>
+      <content type="html"><![CDATA[<p>在这篇文章中，我们主要探讨，机器到底能不能进行学习这个问题。</p>
+<h2 id="Learning-is-Impossible"><a href="#Learning-is-Impossible" class="headerlink" title="Learning is Impossible?"></a>Learning is Impossible?</h2><p>从前面的文章中，我们已经知道，机器学习的过程，就是通过现有的训练集 $D$ 学习，得到预测函数 $h$，并且使得它接近于目标函数 $f$。</p>
+<p>我们必须思考的问题是：<br>这种预测是可能的么？也就是说，机器能通过学习得到 $h$，使得 $h \approx f$ 吗？</p>
+<h3 id="No-free-lunch"><a href="#No-free-lunch" class="headerlink" title="No free lunch"></a>No free lunch</h3><p>机器学习领域有一个著名的理论，叫做 “没有免费的午餐” 定理（No Free Lunch Theorem, 简称 NFL 定理）。用比较通俗易懂的话来讲，意思就是说：“学习” 可能是做不到的。</p>
+<p>在训练样本集（in-sample）中，可以求得一个最佳的假设 $g$，该假设最大可能的接近目标函数 $f$，但是在训练样本集之外的其他样本（out-of-sample）中，假设 $g$ 和目标函数 $f$ 可能差别很远。</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>我们举一个例子来说明上面这段话的意思。现在假设有这样一个数据集 $X=\{000,001,…,111\}$ 总共8个数据，使用函数 $f$ 对数据集中的每一个数据分类（圈或叉）。现在我们手头有5个训练样本，我们想让机器使用这些训练样本学习到函数$f$。<br><img src="/20180311-NTU-ML-4/classification_example_1.png" alt=""></p>
+<p>由于机器只能看到训练集的样本（5个），因此它能学习得到函数 $g$，使得在这些训练样本上，$g$ 与 $f$ 的预测结果一样。</p>
+<p>但是，因为机器看不见训练集外的样本（剩下的3个），对于这些样本，机器只能自己猜测$g(x)$的值。而无论机器预测的结果是怎么样的，我们总能够找到$f$，使得在这些训练集外的样本上，$g \neq f$。</p>
+<p><img src="/20180311-NTU-ML-4/no_free_lunch.png" alt=""></p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>从上面的例子我们可以看出，机器能学习的，只是它看得见的样本（in-sample），而对于它看不见的样本（out-of-sample），学习效果就很难保证了。</p>
+<p>如果是这样子的话，机器学习的作用的很有限了，毕竟我们更需要的，是机器机帮我们处理没见过的数据。</p>
+<p>嗯，事情一定没这么简单。</p>
+<h2 id="Probability-to-the-Rescue"><a href="#Probability-to-the-Rescue" class="headerlink" title="Probability to the Rescue"></a>Probability to the Rescue</h2><p>我们想象这样一个场景：有一个罐子，这个罐子里装有橙色和绿色两种颜色的珠子，我们如何在不查遍所有珠子的情况下，得知罐子中橙子珠子所占的比例呢？一个想法就是使用抽样的方法，通过频率来预测概率。</p>
+<p>假设罐子中橙色珠子的概率为 $\mu$（未知），则绿色珠子的概率为 $1-\mu$；假设通过抽样查出的橙色珠子比例为 $v$（已知），则绿色珠子的比例为 $1-v$。那么我们可不可以通过 $v$ 来预测 $\mu$ 呢？</p>
+<p><img src="/20180311-NTU-ML-4/hoeffding&#39;s_inequality_1.png" alt=""></p>
+<h3 id="Hoeffding’s-inequality"><a href="#Hoeffding’s-inequality" class="headerlink" title="Hoeffding’s inequality"></a>Hoeffding’s inequality</h3><p>数学上有个霍夫丁不等式，专门回答了这个问题。这个不等式是这样子的：</p>
+<p>当样本数量 $N$ 足够大时，$v$ 和 $\mu$ 有如下关系：<br>$$\Bbb{P}[\left|\nu-\mu\right|\gt\epsilon]\le2\exp\big(-2\epsilon^2N\big)$$</p>
+<p>从上面的式子可以看出，随着样本数量 $N$ 的逐渐增大，$v$ 与 $\mu$ 接近的概率也逐渐增大，因此可以说 $v$ 与 $\mu$ 大概近似相等（probably approximately correct，PAC），因此，选择合适的 $N$ 以及 $\epsilon$，就可以通过 $v$ 预测 $\mu$。</p>
+<h2 id="Connection-to-Learning"><a href="#Connection-to-Learning" class="headerlink" title="Connection to Learning"></a>Connection to Learning</h2><p>我们可以将以上的情景与机器学习问题对应起来，如下图所示：</p>
+<p><img src="/20180311-NTU-ML-4/connection.png" alt=""></p>
+<p>相对应的概念如下所示：</p>
+<ul>
+<li>罐子：数据集，包括 in-sample 以及 out-of-sample </li>
+<li>橙色珠子：数据 $x_n$, 其中 $h(x_n) \neq f(x_n)$</li>
+<li>绿色珠子：数据 $x_n$, 其中 $h(x_n) = f(x_n)$</li>
+<li>橙色珠子概率 $\mu$：$h(x) \neq f(x)$ 的概率</li>
+<li>抽到的珠子：训练样本（我们看得到的那些）</li>
+<li>抽到橙色珠子：在某个样本点 $x_n$ 上，$h(x_n) \neq f(x_n) = y_n$</li>
+<li>抽到绿色珠子：在某个样本点 $x_n$ 上，$h(x_n) = f(x_n) = y_n$</li>
+<li>橙色珠子频率 $v$：$h(x) \neq f(x)$ 的频率</li>
+<li>抽样动作：判断 $h(x_n)$ 与 $f(x_n)=y_n$ 是否相等</li>
+</ul>
+<p>于是在样本数足够多的情况下，我们可以通过测试 $h(x_n) \neq y_n$ 的频率来推断 $h(x) \neq f(x)$ 的概率。这里需要注意的是，$x_n$ 需要是独立同分布的，但是我们并不需要知道具体的分布函数是什么。</p>
+<h3 id="Learning-Flow"><a href="#Learning-Flow" class="headerlink" title="Learning Flow"></a>Learning Flow</h3><p>我们对学习流程图进行完善，如下图所示：</p>
+<p><img src="/20180311-NTU-ML-4/flow_1.png" alt=""></p>
+<p>我们在流程图中增加了一个数据的分布函数 $P$，我们并不知道这个分布具体的样子（但是没关系），我们利用这个分布进行抽样，产生训练样本，同时利用这些训练样本，计算 $h(x) \neq f(x)$ 的频率 $E_{in}(h)$，并且使用这个频率来估计 $h(x) \neq f(x)$ 的概率 $E_{out}(h)$。这里所说的 $h$，是我们从假设集 (hypothesis set) 中选择的一个特定的 $h$。</p>
+<p><img src="/20180311-NTU-ML-4/infer.png" alt=""></p>
+<h3 id="The-Formal-Guarantee"><a href="#The-Formal-Guarantee" class="headerlink" title="The Formal Guarantee"></a>The Formal Guarantee</h3><p>将霍夫丁不等式中的 $\mu$ 换成 $E_{out}(h)$，$v$ 换成 $E_{in}(h)$，就可以得到下面的式子：</p>
+<p>$$\Bbb{P}\left[\left|E_{in}(h)-E_{out}(h)\right|\gt\epsilon\right]\le2\exp\big(-2\epsilon^2N\big)$$</p>
+<p>上面的公式保证了在一定条件下，$E_{in}(h)$ 与 $E_{out}(h)$ 不会相差太远，那么只要我们能选择合适的 $h$ 使得 $E_{in}(h)$ 比较小，那么 $E_{out}(h)$ 也会比较小。</p>
+<h3 id="Verification-of-One-h"><a href="#Verification-of-One-h" class="headerlink" title="Verification of One $h$"></a>Verification of One $h$</h3><p>整理一下，对于一个固定的 $h$，霍夫丁不等式告诉我们，在样本数足够多的情况下，如果 $E_{in}(h)$ 很小，那么 $E_{out}(h)$ 也会大概率比较小。</p>
+<p>机器学习要做的事，是通过算法 $\mathcal{A}$ 从假设集 $H$ 中选择 $g$，使得 $g$ 尽可能接近 $f$。换句话来讲，需要在假设集 $H$ 中找到一个 $h$，使得 $E_{in}(h)$ 很小，然后把 $h$ 当成最终的预测函数 $g$。</p>
+<p>我们现在做的事情，因为只涉及了一个 $h$，准确来讲不是 “学习”，而是 “验证”，即对于一个 $h$，通过 $E_{in}(h)$ 估计 $E_{out}(h)$。</p>
+<p><img src="/20180311-NTU-ML-4/flow_2.png" alt=""></p>
+<p>我们还需要探讨，如果算法是在多个 $h$ 中进行选择（而不是只有一个 $h$，不需要选择），那么情况有什么变化。也就是从探讨 $E_{in}(h)$ 与 $E_{out}(h)$ 的关系，变成探讨 $E_{in}(g)$ 与 $E_{out}(g)$ 的关系。</p>
+<h2 id="Connection-to-Real-Learning"><a href="#Connection-to-Real-Learning" class="headerlink" title="Connection to Real Learning"></a>Connection to Real Learning</h2><p>首先我们考虑假设集中的假设是有限多个的情况。</p>
+<p>来看一下下面这个表格，表格中的每一行表示一个固定的 $h$ 的情况，表格中的每一列表示一笔数据集，表格里的 “BAD” 表示，在这笔数据集上，对于某个特定的 $h$，$E_{in}(h)$ 与 $E_{out}(h)$ 相差很大，我们把这样的数据叫做是这个 $h$ 上的 BAD data。</p>
+<p><img src="/20180311-NTU-ML-4/bad_data.png" alt=""></p>
+<p>霍夫丁不等式告诉我们，对于一个固定的$h$，出现 $E_{in}(h)$ 与 $E_{out}(h)$ 相差很大的概率很小，也就是说，对于表格中的每一行， BAD data 出现的概率很小，在这样的情况下，我们才能通过 $E_{in}$ 来预测 $E_{out}$。<br>$$<br>\Bbb{P}\big[ \big| E_{in}(h) - E_{out}(h) \big| &gt; \epsilon \big] \le 2 \exp  \big( -2 \epsilon^2 N \big)<br>$$<br>同样的，当有多个 $h$ 可选择时，我们也希望 BAD data 出现的概率小，这样才能让算法在假设集中自由选择 $h$，保证能通过$E_{in}$ 来预测 $E_{out}$。</p>
+<p>这种情况下，只要数据对于某个 $h$ 而言是 BAD data，它在这个假设集中就是 BAD data，其出现的概率为：<br>$$<br>\begin{split}<br>\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}]<br>&amp;=\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_1\ or\ BAD\ \mathcal{D}\ for\ h_2\ or\ …\ or\ BAD\ \mathcal{D}\ for\ h_M]\\<br>&amp;\le\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_1]+ \Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_2]+ …+\Bbb{P}_{\mathcal{D}}[BAD\ \mathcal{D}\ for\ h_M]<br>\\<br>&amp;\le2\exp\big(-2\epsilon^2N\big)+\exp\big(-2\epsilon^2N\big)+\exp\big(-2\epsilon^2N\big)+…+\exp\big(-2\epsilon^2N\big)\\<br>&amp;=2M\exp\big(-2\epsilon^2N\big)<br>\end{split}<br>$$其中 $M$ 表示的是假设集中 $h$ 的个数。</p>
+<p>因此得到结论：如果 $M$ 的值是有限的，在 $N$ 足够大的情况下，BAD data 出现的概率很小，即无论哪个 $h$，都有 $E_{in}(h) \approx E_{out}(h)$ （PAC），那么我们通过合适的算法选择一个 $E_{in}$ 小的 $h$，就能保证 $E_{out}$ 小（PAC），于是学习成功了。</p>
+<p>最后完善学习流程图：</p>
+<p><img src="/20180311-NTU-ML-4/flow_3.png" alt=""></p>
+<p>以上，我们讨论了假设集中的假设是有限多个的情况下，$E_{in}(g)$ 与 $E_{out}(g)$ 的关系。关于假设集中的假设是无限多个的情况，将在接下来的文章中讨论。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-3-Types of Learning]]></title>
+      <url>/20180118-NTU-ML-3/</url>
+      <content type="html"><![CDATA[<p>这节课主要介绍机器学习问题的一些分类。</p>
+<h2 id="Learning-with-Different-Output-Space-mathcal-Y"><a href="#Learning-with-Different-Output-Space-mathcal-Y" class="headerlink" title="Learning with Different Output Space $\mathcal{Y}$"></a>Learning with Different Output Space $\mathcal{Y}$</h2><p>按照数据的输出，可以把 ML 分为以下几类：</p>
+<ul>
+<li>二类别分类问题：$\mathcal{Y} \in \{0, 1\}$</li>
+<li>多类别分类问题：$\mathcal{Y} \in \{0, 1, \cdots, K\}$</li>
+<li>回归问题：$\mathcal{Y} \in R$</li>
+<li>结构学习</li>
+</ul>
+<h2 id="Learning-with-Different-Data-Label-y-n"><a href="#Learning-with-Different-Data-Label-y-n" class="headerlink" title="Learning with Different Data Label $y_n$"></a>Learning with Different Data Label $y_n$</h2><p>按照数据的标签，可以把 ML 分为以下几类：</p>
+<ul>
+<li>supervised： 所有 $x_n$ 都具有 $y_n$</li>
+<li>unsupervised： 所有 $x_n$ 都没有 $y_n$</li>
+<li>semi-supervised： 一些 $x_n$ 具有 $y_n$</li>
+</ul>
+<h2 id="Learning-with-Different-Protocol-f"><a href="#Learning-with-Different-Protocol-f" class="headerlink" title="Learning with Different Protocol $f$"></a>Learning with Different Protocol $f$</h2><p>按照数据的传输方式，可以把 ML 分为以下几类：</p>
+<ul>
+<li>batch： 一次性把所有的数据给算法</li>
+<li>online： 连续的数据，一次处理一个数据</li>
+<li>active： 机器通过主动询问某些问题来学习</li>
+</ul>
+<h2 id="Learning-with-Different-Input-Space-mathcal-X"><a href="#Learning-with-Different-Input-Space-mathcal-X" class="headerlink" title="Learning with Different Input Space $\mathcal{X}$"></a>Learning with Different Input Space $\mathcal{X}$</h2><p>按照数据的输入，可以把 ML 分为以下几类：</p>
+<ul>
+<li>concrete： 精细的、复杂的、有序的，已经完成预处理的数据</li>
+<li>raw： 原始的，未经处理或者经过很少处理的数据</li>
+<li>abstract：抽象的，无法轻易表明含义的数据</li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-2-Learning to Answer Yes/No]]></title>
+      <url>/20180115-NTU-ML-2/</url>
+      <content type="html"><![CDATA[<p>这节课主要介绍感知器算法（Perceptron Learning Algorithm）。</p>
+<h2 id="Perceptron-Hypothesis-Set"><a href="#Perceptron-Hypothesis-Set" class="headerlink" title="Perceptron Hypothesis Set"></a>Perceptron Hypothesis Set</h2><p>对于一个线性可分的二分类问题，我们可以采用感知器 （Perceptron）这种假设集。</p>
+<p>采用这种假设集进行分类的思想是这样的：<br>我们假设样本的类别是由样本每一个特征 $\textbf{x}_i$ 共同决定，其中不同的特征的重要程度不一样。于是我们通过对所有的特征进行加权 $\sum_{i=1}^d \textbf{w}_i \textbf{x}_i$，得到一个“分数”，将这个“分数”与一个阈值 $threshold$ 进行比较，如果“分数”大于阈值，那么这个样本属于一个类别（类别“+1”），如果“分数”小于阈值，那么这个样本属于另一个类别（类别“-1”）。</p>
+<p>这种模型可以用下面的表达式表示出来：<br>$$<br>\begin{split}<br>h(\textbf{x})<br>&amp;= sign \Bigg( \Big( \sum_{i=1}^d \textbf{w}_i \textbf{x}_i \Big) - threshold \Bigg) \ \ \ \ h\in \mathcal{H} \\<br>&amp;= sign \Bigg( \Big( \sum_{i=1}^d \textbf{w}_i \textbf{x}_i \Big) + \Big(- threshold \Big) \cdot \Big( +1 \Big) \Bigg) \\<br>&amp;= sign \Big( \sum_{i=0}^d \textbf{w}_i \textbf{x}_i \Big) \\<br>&amp;= sign \Big( \textbf{w}^T \textbf{x} \Big)<br>\end{split}<br>$$</p>
+<p>其中不同的向量 $\textbf{w}$ 代表了不同的假设函数 $h(\textbf{x})$，我们的目标是使用一些算法调整 $w$ 的值，使得假设函数 $h(\textbf{x})$ 与我们要预测的函数 $f(\textbf{x})$ 尽可能的接近。</p>
+<p>我们的想法是：如果 $h(\textbf{x})$ 与 $f(\textbf{x})$ 足够接近，那么它们作用在训练集 $D$ 上的结果会是一样的，即对训练集中的 $\textbf{x}$，有 $f(\textbf{x}) = h(\textbf{x})$。反过来说，如果对所有训练集中的 $\textbf{x}$，有 $f(\textbf{x}) = h(\textbf{x})$，那么在一定程度上，我们可以认为 $h(\textbf{x})$ 与 $f(\textbf{x})$ 是接近的。</p>
+<h2 id="Perceptron-Learning-Algorithm-PLA"><a href="#Perceptron-Learning-Algorithm-PLA" class="headerlink" title="Perceptron Learning Algorithm (PLA)"></a>Perceptron Learning Algorithm (PLA)</h2><p>这个模型中训练 $\textbf{w}$ 的算法称为感知器算法（Perceptron Learning Algorithm），算法的思想是（尽可能地）对预测错误的样本进行修正，使得分类器的预测结果越来越好。预测错误的样本可以分为以下两种类型：</p>
+<p>当 $f(\textbf{x})=y=+1$ 而预测结果 $h(\textbf{x})=sign(\textbf{w}^T\textbf{x})=-1$ 时，说明此时 $\textbf{w}$ 与 $\textbf{x}$ 的内积过小，夹角过大，需要让 $\textbf{w}$ 靠近 $\textbf{x}$，因此将 $\textbf{w}$ 改为 $\textbf{w}+\textbf{x}=\textbf{w}+y\textbf{x}$;</p>
+<p>当 $f(\textbf{x})=y=-1$ 而预测结果 $h(\textbf{x})=sign(\textbf{w}^T\textbf{x})=+1$ 时，说明此时 $\textbf{w}$ 与 $\textbf{x}$ 的内积过大，夹角过小，需要让 $\textbf{w}$ 远离 $\textbf{x}$，因此将 $\textbf{w}$ 改为 $\textbf{w}-\textbf{x}=\textbf{w}+y\textbf{x}$;</p>
+<p>反复修正预测错误的样本点直到所有训练样本都预测正确，选择预测错误的样本的顺序没有限制，可以按自然顺序，也可以随机选择。</p>
+<p>算法描述如下图：</p>
+<p><img src="/20180115-NTU-ML-2/algo_1.png" alt=""></p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>我们举一个例子来说明 PLA 算法的过程。<br><img src="/20180115-NTU-ML-2/example_1.png" alt=""><br><img src="/20180115-NTU-ML-2/example_2.png" alt=""><br><img src="/20180115-NTU-ML-2/example_3.png" alt=""><br><img src="/20180115-NTU-ML-2/example_4.png" alt=""><br><img src="/20180115-NTU-ML-2/example_5.png" alt=""></p>
+<h3 id="Guarantee-of-PLA"><a href="#Guarantee-of-PLA" class="headerlink" title="Guarantee of PLA"></a>Guarantee of PLA</h3><p>目前我们还有一些问题没有讨论，其中比较重要的一个问题是，<strong>PLA是不是收敛的</strong>，即算法最终能不能停止下来。</p>
+<p>首先我们讨论<strong>线性可分</strong>的情况，线性不可分的情况在下一节中讨论。当数据集是线性可分时，表示存在 $\textbf{w}_f$ 使得 $y_n = sign(\textbf{w}_f^T \textbf{x}_n)$，下面证明PLA是收敛的，即 $\textbf{w}$ 能收敛到 $\textbf{w}_f$，即算法能停止下来。</p>
+<ol>
+<li>$\textbf{w}_f$ 与 $\textbf{w}_t$ 的内积会单调递增<br><img src="/20180115-NTU-ML-2/proof_1.png" alt=""></li>
+<li>$\textbf{w}_t$ 的长度有限制<br><img src="/20180115-NTU-ML-2/proof_2.png" alt=""></li>
+</ol>
+<p>以上两点可以推出：<br><img src="/20180115-NTU-ML-2/proof_3.png" alt=""><br>当算法从 $\textbf{w}_0 = 0$ 开始时，算法更新次数 $T \leq \frac{R^2}{\rho^2}$<br>其中 $$R^2 = \max \limits_{n}\{f(\textbf{x})\}$$$$ \quad \rho = \min \limits_{n} y_n \frac{\textbf{w}_f^T}{||\textbf{w}_f^T||} \textbf{x}_n$$<br>因此说明了算法最终会收敛。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们对PLA进行一下总结：<br><img src="/20180115-NTU-ML-2/conclusion_1.png" alt=""></p>
+<h3 id="收敛性"><a href="#收敛性" class="headerlink" title="收敛性"></a>收敛性</h3><p>在数据是线性可分的条件下，算法能收敛。</p>
+<h3 id="算法的优点"><a href="#算法的优点" class="headerlink" title="算法的优点"></a>算法的优点</h3><p>算法容易简单、实现；<br>算法速度快；<br>在任意维度下都能工作。</p>
+<h3 id="算法的缺点"><a href="#算法的缺点" class="headerlink" title="算法的缺点"></a>算法的缺点</h3><p>需要数据是线性可分的条件；<br>不知道算法什么时候收敛。</p>
+<h2 id="Non-Separable-Data"><a href="#Non-Separable-Data" class="headerlink" title="Non-Separable Data"></a>Non-Separable Data</h2><p>当数据集是线性不可分时，表示数据中有噪声（这里的噪声是相对于感知器这个假设集而言的）。在这种情况下，学习的过程发生了一点改变：<br><img src="/20180115-NTU-ML-2/learning_flow_1.png" alt=""></p>
+<p>对感知器模型来说，此时可能无法使所有样本都正确分类，此时我们应该退而求其次，找尽可能犯错少的分界面，我们的学习的目标从<br>$$ \arg \limits_{ \textbf{w} } y_n = sign( \textbf{w}^T \textbf{x}_n) $$ 变成了<br>$$ \arg \min \limits_{w} \sum {[[y_n \neq sign(w^Tx_n)]]}$$不幸的是，这是一个 NP-hard 问题。</p>
+<p><img src="/20180115-NTU-ML-2/np_hard.png" alt=""></p>
+<p>此时的一种思路是使用贪心算法，于是PLA可以改进成Pocket算法：<br><img src="/20180115-NTU-ML-2/algo_2.png" alt=""></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-1-The Learning Problem]]></title>
+      <url>/20180113-NTU-ML-1/</url>
+      <content type="html"><![CDATA[<h1 id="Introdction"><a href="#Introdction" class="headerlink" title="Introdction"></a>Introdction</h1><h3 id="What-is-Machine-Learning"><a href="#What-is-Machine-Learning" class="headerlink" title="What is Machine Learning"></a>What is Machine Learning</h3><ul>
+<li><p>机器学习：计算机通过数据和计算获得一定技巧的过程。</p>
+</li>
+<li><p>技巧：指的是在某些事情上表现更加出色，比如预测、识别等等。</p>
+</li>
+</ul>
+<h3 id="Why-using-Machine-Learning"><a href="#Why-using-Machine-Learning" class="headerlink" title="Why using Machine Learning"></a>Why using Machine Learning</h3><ul>
+<li><p>一些数据或者信息，人来无法获取，可能是一些人无法识别的事物，或是数据信息量特别大；</p>
+</li>
+<li><p>人的处理满足不了需求，比如：定义很多很多的规则满足物体识别或者其他需求；在短时间内通过大量信息做出判断等等。</p>
+</li>
+</ul>
+<h3 id="When-to-use-Machine-Learning"><a href="#When-to-use-Machine-Learning" class="headerlink" title="When to use Machine Learning"></a>When to use Machine Learning</h3><ul>
+<li><p>存在一个模式或者说表现可以让我们对它进行改进提高；</p>
+</li>
+<li><p>规则并不容易那么定义；</p>
+</li>
+<li><p>需要有数据。</p>
+</li>
+</ul>
+<h2 id="Components-of-Machine-Learning"><a href="#Components-of-Machine-Learning" class="headerlink" title="Components of Machine Learning"></a>Components of Machine Learning</h2><p>一个机器学习问题，主要由以下几部分构成：</p>
+<ul>
+<li>输入： $\textbf{x} \in \mathcal{X}$</li>
+<li>输出： $\textbf{y} \in \mathcal{Y}$</li>
+<li>目标函数：$f: \mathcal{X} \rightarrow \mathcal{Y}$</li>
+<li>数据：$\mathcal{D} = \{ (\textbf{x}_1, \textbf{y}_1), (\textbf{x}_2, \textbf{y}_2) \ldots (\textbf{x}_N, \textbf{y}_N),\}$</li>
+<li>假设：$g: \mathcal{X} \rightarrow \mathcal{Y}$</li>
+</ul>
+<p>目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，我们手头有一组由 $f$ 生成的数据 $\mathcal{D}$，目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。</p>
+<h2 id="Learning-Flow"><a href="#Learning-Flow" class="headerlink" title="Learning Flow"></a>Learning Flow</h2><p>以一个更加详细的流程图来说明这一过程：</p>
+<p><img src="/20180113-NTU-ML-1/what.png" alt=""></p>
+<p>目标函数 $f: \mathcal{X} \rightarrow \mathcal{Y}$ 将输入 $\mathcal{X}$ 映射为输出 $\mathcal{Y}$，$\mathcal{X}$ 与 $\mathcal{Y}$ 在一起构成了数据 $\mathcal{D}$，我们的目标就是通过对数据的学习，得到一个假设 $g: \mathcal{X} \rightarrow \mathcal{Y}$，使得 $g$ 与 $f$ 尽量接近。为此，我们必须选定一个假设空间 $\mathcal{H}$，然后使用算法 $\mathcal{A}$，选择 $\mathcal{H}$ 里的一个假设作为 $g$。</p>
+<p>在这里有几个需要注意的地方：</p>
+<ul>
+<li>机器学习的输入在这个流程图中就变成了两个部分，一个是训练样本集，而另一个就是假设空间 $\mathcal{H}$。</li>
+<li>我们所说的机器学习模型在这个流程图中也不仅仅是算法 $\mathcal{A}$，而且还包含了假设空间 $\mathcal{H}$。</li>
+</ul>
+<p>上图还是一个相对比较简单的机器学习流程图，在往后的文章中会不断的根据新学的知识继续扩展这幅图的元素。</p>
+<h2 id="Machine-Learning-and-Other-Fields"><a href="#Machine-Learning-and-Other-Fields" class="headerlink" title="Machine Learning and Other Fields"></a>Machine Learning and Other Fields</h2><ul>
+<li>ML VS DM<br>两者密不可分：</li>
+</ul>
+<ol>
+<li>两者是一致的<br>能够找出的有用信息就是我们要求得的近似目标函数的假设。</li>
+<li>两者是互助的<br>能够找出的有用信息就能帮助我们找出近似的假设，反之也可行。</li>
+<li>两者的区别<br>传统的数据挖掘更关注与从大量的数据中的计算问题。</li>
+</ol>
+<ul>
+<li><p>ML VS AI<br>机器学习是实现人工智能的一种方式。</p>
+</li>
+<li><p>ML VS Statistic</p>
+</li>
+</ul>
+<ol>
+<li>统计是一种实现机器学习的方法。</li>
+<li>传统的统计学习更关注与数学公式，而非计算本身。</li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NTU-ML-《机器学习基石》笔记系列]]></title>
+      <url>/20180113-NTU-ML-0/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>“机器学习基石”是 Coursera  上一门关于机器学习的课程，由国立台湾大学的老师林轩田讲授。该课程一共有16节课，主要介绍了机器学习领域的基础理论知识。</p>
+<h2 id="授课大纲"><a href="#授课大纲" class="headerlink" title="授课大纲"></a>授课大纲</h2><p>课程的大纲如下，以下的每个小项目对应到约一小时的课程：</p>
+<p>When Can Machines Learn? [何时可以使用机器学习]<br>– The Learning Problem [机器学习问题]<br>– Learning to Answer Yes/No [二元分类]<br>– Types of Learning [各式机器学习问题]<br>– Feasibility of Learning [机器学习的可行性]</p>
+<p>Why Can Machines Learn? [为什么机器可以学习]<br>– Training versus Testing [训练与测试]<br>– Theory of Generalization [举一反三的一般化理论]<br>– The VC Dimension [VC 维度]<br>– Noise and Error [噪声时错误]</p>
+<p>How Can Machines Learn? [机器可以怎么样学习]<br>– Linear Regression [线性回归]<br>– Linear Soft Classification [软性的线性分类]<br>– Linear Classification beyond Yes/No [二元分类以外的分类问题]<br>– Nonlinear Transformation [非线性转换]</p>
+<p>How Can Machines Learn Better? [机器可以怎么样学得更好]<br>– Hazard of Overfitting [过度训练的危险]<br>– Preventing Overfitting I: Regularization [避免过度训练一：控制调适]<br>– Preventing Overfitting II: Validation [避免过度训练二：自我检测]<br>– Three Learning Principles [三个机器学习的重要原则]</p>
+<h2 id="计划"><a href="#计划" class="headerlink" title="计划"></a>计划</h2><p>我将把课程按照自己的理解，整理成一份通俗易懂的笔记，一方面记录所学知识，另一方面与大家一起分享，共同进步。</p>
+<p>点击右侧可关注我的 github 地址。</p>
+<h2 id="笔记链接"><a href="#笔记链接" class="headerlink" title="笔记链接"></a>笔记链接</h2><p><a href="../20180113-NTU-ML-1">NTU-ML-1-The Learning Problem</a><br><a href="../20180115-NTU-ML-2">NTU-ML-2-Learning to Answer Yes/No</a><br><a href="../20180118-NTU-ML-3">NTU-ML-3-Types of Learning</a><br><a href="../20180311-NTU-ML-4">NTU-ML-4-Feasibility of Learning</a><br><a href="../20180311-NTU-ML-5">NTU-ML-5-Training versus Testing</a><br><a href="../20180325-NTU-ML-6">NTU-ML-6-Theory of Generalization</a><br><a href="../20180313-NTU-ML-7">NTU-ML-7-The VC Dimension</a><br><a href="../20180317-NTU-ML-8">NTU-ML-8-Noise and Error</a><br><a href="../20180322-NTU-ML-9">NTU-ML-9-Linear Regression</a><br><a href="../20180325-NTU-ML-10">NTU-ML-10-Logistic Regression</a><br><a href="../20180325-NTU-ML-11">NTU-ML-11-Linear Models for Classification</a><br><a href="../20180331-NTU-ML-12">NTU-ML-12-Nonlinear Transformation</a><br><a href="../20180331-NTU-ML-13">NTU-ML-13-Hazard of Overfitting</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
 </search>
